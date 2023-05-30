@@ -1,4 +1,4 @@
-package org.klodnicki;
+package org.klodnicki.database;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;

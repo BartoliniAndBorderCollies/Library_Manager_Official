@@ -1,6 +1,7 @@
 package org.klodnicki;
 
 import org.hibernate.Session;
+import org.klodnicki.database.HibernateUtil;
 
 public class Main {
     public static void main(String[] args) {
