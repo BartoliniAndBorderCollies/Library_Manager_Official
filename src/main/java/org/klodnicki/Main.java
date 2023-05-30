@@ -1,19 +1,25 @@
 package org.klodnicki;
 
-import org.hibernate.Session;
-import org.klodnicki.database.HibernateUtil;
+
+import org.klodnicki.command.CreateAccount;
+import org.klodnicki.controller.AccountController;
+import org.klodnicki.controller.MenuController;
+import org.klodnicki.database.AccountRepository;
+import org.klodnicki.service.AccountService;
+import org.klodnicki.service.CommandService;
+import org.klodnicki.view.View;
 
 public class Main {
     public static void main(String[] args) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        View view = new View();
+        AccountRepository accountRepository = new AccountRepository();
+        AccountService accountService = new AccountService(accountRepository);
+        AccountController accountController = new AccountController(accountService, view);
+        CommandService commandService = new CommandService();
+        CreateAccount createAccount = new CreateAccount(accountController);
+        MenuController menuController = new MenuController(view, createAccount, commandService);
 
-        // Check database version (because there is nothing else in database)
-        String sql = "select version()";
+        menuController.run();
 
-        String result = session.createNativeQuery(sql, String.class).getSingleResult();
-        System.out.println(result);
-
-        session.close();
-        HibernateUtil.shutdown();
     }
 }
