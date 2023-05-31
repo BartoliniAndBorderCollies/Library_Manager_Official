@@ -16,9 +16,9 @@ public class Account {
     @Column(nullable = false)
     private String lastName;
     @Column(nullable = false)
-    private int pesel;
+    private String pesel;
     @Column
-    private int phoneNumber;
+    private String phoneNumber;
     @Column
     private String email;
     @Column(nullable = false)
@@ -27,7 +27,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(String firstName, String secondName, String lastName, int pesel, int phoneNumber, String email, String address) {
+    public Account(String firstName, String secondName, String lastName, String pesel, String phoneNumber, String email, String address) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;

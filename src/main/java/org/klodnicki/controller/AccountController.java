@@ -24,8 +24,8 @@ public class AccountController {
         String firstName = menuController.displayOnMenuAndAskForInput(FIRST_NAME);
         String secondName = menuController.displayOnMenuAndAskForInput(SECOND_NAME);
         String lastName = menuController.displayOnMenuAndAskForInput(LAST_NAME);
-        int pesel = Integer.parseInt(menuController.displayOnMenuAndAskForInput(PESEL));
-        int phoneNumber = Integer.parseInt(menuController.displayOnMenuAndAskForInput(PHONE_NUMBER));
+        String pesel = menuController.displayOnMenuAndAskForInput(PESEL);
+        String phoneNumber = menuController.displayOnMenuAndAskForInput(PHONE_NUMBER);
         String email = menuController.displayOnMenuAndAskForInput(EMAIL);
         String address = menuController.displayOnMenuAndAskForInput(ADDRESS);
 
