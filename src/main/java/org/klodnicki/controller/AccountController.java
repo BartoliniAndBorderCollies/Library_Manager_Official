@@ -24,13 +24,11 @@ public class AccountController {
         String firstName = menuController.displayOnMenuAndAskForInput(FIRST_NAME);
         String secondName = menuController.displayOnMenuAndAskForInput(SECOND_NAME);
         String lastName = menuController.displayOnMenuAndAskForInput(LAST_NAME);
-
-        // TODO: fix pesel and phone
-//        int pesel = menuController.displayOnMenuAndAskForInput(PESEL);
-//        int phoneNumber = menuController.displayOnMenuAndAskForInput(PHONE_NUMBER);
+        int pesel = Integer.parseInt(menuController.displayOnMenuAndAskForInput(PESEL));
+        int phoneNumber = Integer.parseInt(menuController.displayOnMenuAndAskForInput(PHONE_NUMBER));
         String email = menuController.displayOnMenuAndAskForInput(EMAIL);
         String address = menuController.displayOnMenuAndAskForInput(ADDRESS);
 
-//        accountService.create(firstName, secondName, lastName, pesel, phoneNumber, email, address);
+        accountService.create(firstName, secondName, lastName, pesel, phoneNumber, email, address);
     }
 }
