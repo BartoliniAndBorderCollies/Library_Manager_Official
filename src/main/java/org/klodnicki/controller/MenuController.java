@@ -11,12 +11,21 @@ public class MenuController {
                         
             Type a command. For help type "help"
             """;
+
+    private static final String USER_COMMAND = "Command:";
+
     private final MenuView menuView = new MenuView();
     private final MenuService menuService = new MenuService();
 
     public void run() {
         menuService.addMainMenuCommands(this);
         menuView.update(WELCOME);
+
+        String userInput = askForInput(USER_COMMAND);
+        menuService.executeCommand(userInput);
+
+        // wynik operacji wyżej
+        menuView.update("");
     }
 
     public String displayOnMenuAndAskForInput(String message) {
