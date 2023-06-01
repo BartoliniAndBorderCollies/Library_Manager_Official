@@ -14,6 +14,8 @@ public class MenuController {
 
     private static final String USER_COMMAND = "Command:";
 
+    private static final String OPERATION_SUCCESS = "Operation succeeded!";
+
     private final MenuView menuView = new MenuView();
     private final MenuService menuService = new MenuService();
 
@@ -23,9 +25,7 @@ public class MenuController {
 
         String userInput = askForInput(USER_COMMAND);
         menuService.executeCommand(userInput);
-
-        // wynik operacji wyżej
-        menuView.update("");
+        menuView.update(OPERATION_SUCCESS);
     }
 
     public String displayOnMenuAndAskForInput(String message) {

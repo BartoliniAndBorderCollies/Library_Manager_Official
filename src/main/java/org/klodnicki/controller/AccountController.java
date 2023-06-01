@@ -15,6 +15,9 @@ public class AccountController {
     private static final String EMAIL = "Email:";
     private static final String ADDRESS = "Address:";
 
+    private static final String ABORT_OPERATION = "An operation has been canceled.";
+
+
     public AccountController(MenuController menuController) {
         this.menuController = menuController;
     }
@@ -34,6 +37,7 @@ public class AccountController {
             accountService.create(firstName, secondName, lastName, pesel, phoneNumber, email, address);
         } catch (IllegalArgumentException e) {
             menuController.displayOnMenu(e.getMessage());
+            menuController.displayOnMenu(ABORT_OPERATION);
         }
     }
 }
