@@ -15,7 +15,7 @@ public class AccountService {
                 throw new IllegalArgumentException("Pesel must have 11 digits.");
 
             }
-            if (phoneNumber == null && email == null) {
+            if (phoneNumber.equals("") && email.equals("")){
                 throw new IllegalArgumentException("Phone number or email address must have a value.");
             }
 
