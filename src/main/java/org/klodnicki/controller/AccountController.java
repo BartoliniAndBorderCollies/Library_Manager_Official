@@ -10,8 +10,8 @@ public class AccountController {
     private static final String FIRST_NAME = "First name:";
     private static final String SECOND_NAME = "Second name:";
     private static final String LAST_NAME = "Last name:";
-    private static final String PESEL = "Pesel (must be numbers only):";
-    private static final String PHONE_NUMBER = "Phone number (must be numbers only):";
+    private static final String PESEL = "Pesel (must have 11 digits):";
+    private static final String PHONE_NUMBER = "Phone number:";
     private static final String EMAIL = "Email:";
     private static final String ADDRESS = "Address:";
 
@@ -19,16 +19,22 @@ public class AccountController {
         this.menuController = menuController;
     }
 
-    public void create() {
-        menuController.displayOnMenu(CREATE_INFO);
-        String firstName = menuController.displayOnMenuAndAskForInput(FIRST_NAME);
-        String secondName = menuController.displayOnMenuAndAskForInput(SECOND_NAME);
-        String lastName = menuController.displayOnMenuAndAskForInput(LAST_NAME);
-        String pesel = menuController.displayOnMenuAndAskForInput(PESEL);
-        String phoneNumber = menuController.displayOnMenuAndAskForInput(PHONE_NUMBER);
-        String email = menuController.displayOnMenuAndAskForInput(EMAIL);
-        String address = menuController.displayOnMenuAndAskForInput(ADDRESS);
+    public void create() throws IllegalArgumentException {
 
-        accountService.create(firstName, secondName, lastName, pesel, phoneNumber, email, address);
+        try {
+            menuController.displayOnMenu(CREATE_INFO);
+            String firstName = menuController.displayOnMenuAndAskForInput(FIRST_NAME);
+            String secondName = menuController.displayOnMenuAndAskForInput(SECOND_NAME);
+            String lastName = menuController.displayOnMenuAndAskForInput(LAST_NAME);
+            String pesel = menuController.displayOnMenuAndAskForInput(PESEL);
+            String phoneNumber = menuController.displayOnMenuAndAskForInput(PHONE_NUMBER);
+            String email = menuController.displayOnMenuAndAskForInput(EMAIL);
+            String address = menuController.displayOnMenuAndAskForInput(ADDRESS);
+
+            accountService.create(firstName, secondName, lastName, pesel, phoneNumber, email, address);
+
+        } catch (IllegalArgumentException e) {
+            menuController.displayOnMenu(e.getMessage());
+        }
     }
 }

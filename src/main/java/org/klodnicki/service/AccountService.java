@@ -8,11 +8,17 @@ public class AccountService {
     private final AccountRepository accountRepository = new AccountRepository();
 
 
-    public void create(String firstName, String secondName, String lastName, String pesel, String phoneNumber, String email, String address) {
-        if(phoneNumber == null && email == null) {
-            System.out.println("Phone number or email address must have a value."); //TODO: sout shouldnt be here
-            return;
-        }
+    public void create(String firstName, String secondName, String lastName, String pesel, String phoneNumber,
+                       String email, String address) {
+
+            if (pesel.length() != 11) {
+                throw new IllegalArgumentException("Pesel must have 11 digits.");
+
+            }
+            if (phoneNumber == null && email == null) {
+                throw new IllegalArgumentException("Phone number or email address must have a value.");
+            }
+
         accountRepository.create(new Account(firstName, secondName, lastName, pesel, phoneNumber, email, address));
     }
 }
