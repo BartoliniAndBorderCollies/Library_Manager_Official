@@ -4,7 +4,10 @@ import org.klodnicki.controller.MenuController;
 
 public class Main {
     public static void main(String[] args) {
-        MenuController menuController = new MenuController();
-        menuController.run();
+
+        do {
+            MenuController menuController = new MenuController();
+            menuController.run();
+        }while(true);
     }
 }
