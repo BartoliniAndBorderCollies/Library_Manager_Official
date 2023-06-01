@@ -21,18 +21,17 @@ public class AccountController {
 
     public void create() throws IllegalArgumentException {
 
+        menuController.displayOnMenu(CREATE_INFO);
+        String firstName = menuController.displayOnMenuAndAskForInput(FIRST_NAME);
+        String secondName = menuController.displayOnMenuAndAskForInput(SECOND_NAME);
+        String lastName = menuController.displayOnMenuAndAskForInput(LAST_NAME);
+        String pesel = menuController.displayOnMenuAndAskForInput(PESEL);
+        String phoneNumber = menuController.displayOnMenuAndAskForInput(PHONE_NUMBER);
+        String email = menuController.displayOnMenuAndAskForInput(EMAIL);
+        String address = menuController.displayOnMenuAndAskForInput(ADDRESS);
+
         try {
-            menuController.displayOnMenu(CREATE_INFO);
-            String firstName = menuController.displayOnMenuAndAskForInput(FIRST_NAME);
-            String secondName = menuController.displayOnMenuAndAskForInput(SECOND_NAME);
-            String lastName = menuController.displayOnMenuAndAskForInput(LAST_NAME);
-            String pesel = menuController.displayOnMenuAndAskForInput(PESEL);
-            String phoneNumber = menuController.displayOnMenuAndAskForInput(PHONE_NUMBER);
-            String email = menuController.displayOnMenuAndAskForInput(EMAIL);
-            String address = menuController.displayOnMenuAndAskForInput(ADDRESS);
-
             accountService.create(firstName, secondName, lastName, pesel, phoneNumber, email, address);
-
         } catch (IllegalArgumentException e) {
             menuController.displayOnMenu(e.getMessage());
         }
