@@ -1,9 +1,12 @@
 package org.klodnicki.service;
 
 import org.klodnicki.command.CreateAccount;
+import org.klodnicki.command.MenuCommand;
 import org.klodnicki.controller.AccountController;
 import org.klodnicki.controller.MenuController;
 import org.klodnicki.model.Menu;
+
+import java.util.List;
 
 public class MenuService {
 
@@ -13,8 +16,14 @@ public class MenuService {
         menu.addCommand(new CreateAccount(new AccountController(menuController)));
     }
 
-    public void executeCommand(String userInput) {
-        // TODO: walidacja userInput
-        menu.executeCommand(userInput);
+    public boolean executeCommand(String userInput) {
+        List<MenuCommand> commands = menu.getCommands();
+        for (MenuCommand command: commands) {
+            if(userInput.equalsIgnoreCase(command.getName())) {
+                menu.executeCommand(command);
+                return true;
+            }
+        }
+        return false;
     }
 }

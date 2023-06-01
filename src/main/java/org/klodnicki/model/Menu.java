@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-    private final List<MenuCommand> commands = new ArrayList<>();;
+    private final List<MenuCommand> commands = new ArrayList<>();
 
     public void addCommand(MenuCommand command) {
         commands.add(command);
@@ -17,11 +17,7 @@ public class Menu {
         return commands;
     }
 
-    public void executeCommand(String userInput) {
-        for (MenuCommand command: commands) {
-            if(userInput.equalsIgnoreCase(command.getName())) {
-                command.execute();
-            }
-        }
+    public void executeCommand(MenuCommand command) {
+        command.execute();
     }
 }

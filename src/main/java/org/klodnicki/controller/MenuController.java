@@ -15,6 +15,7 @@ public class MenuController {
     private static final String USER_COMMAND = "Command:";
 
     private static final String OPERATION_SUCCESS = "Operation succeeded!";
+    private static final String ABORT_OPERATION = "Operation has been canceled. Not found such command.";
 
     private final MenuView menuView = new MenuView();
     private final MenuService menuService = new MenuService();
@@ -24,8 +25,11 @@ public class MenuController {
         menuView.update(WELCOME);
 
         String userInput = askForInput(USER_COMMAND);
-        menuService.executeCommand(userInput);
-        menuView.update(OPERATION_SUCCESS);
+        if(menuService.executeCommand(userInput)) {
+            menuView.update(OPERATION_SUCCESS);
+        }
+        menuView.update(ABORT_OPERATION);
+
     }
 
     public String displayOnMenuAndAskForInput(String message) {
