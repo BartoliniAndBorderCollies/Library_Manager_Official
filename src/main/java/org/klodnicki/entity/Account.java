@@ -9,15 +9,15 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "first_name")
     private String firstName;
-    @Column
+    @Column (name = "second_name")
     private String secondName;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "last_name")
     private String lastName;
     @Column(nullable = false)
     private String pesel;
-    @Column
+    @Column (name = "phone_number")
     private String phoneNumber;
     @Column
     private String email;
