@@ -14,8 +14,8 @@ public class AccountController {
     private static final String PHONE_NUMBER = "Phone number:";
     private static final String EMAIL = "Email:";
     private static final String ADDRESS = "Address:";
-
     private static final String ABORT_OPERATION = "An operation has been canceled.";
+    private static final String SUCCESS = "Success! An account has been created!";
 
 
     public AccountController(MenuController menuController) {
@@ -38,6 +38,8 @@ public class AccountController {
         } catch (IllegalArgumentException e) {
             menuController.displayOnMenu(e.getMessage());
             menuController.displayOnMenu(ABORT_OPERATION);
+            return;
         }
+        menuController.displayOnMenu(SUCCESS);
     }
 }
