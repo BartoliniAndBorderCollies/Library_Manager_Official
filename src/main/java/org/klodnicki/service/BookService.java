@@ -9,6 +9,11 @@ public class BookService {
 
     public void add(String title, String author, String isbn, String publisher, int publicationYear, int edition,
                     String genre, String description, String language, int copiesNumber) {
+
+        if(title.equals("") || author.equals("")) {
+            throw new IllegalArgumentException("Title and author must have a value.");
+        }
+
         bookRepository.add(new Book(title, author, isbn, publisher, publicationYear, edition, genre, description,
                 language, copiesNumber));
     }

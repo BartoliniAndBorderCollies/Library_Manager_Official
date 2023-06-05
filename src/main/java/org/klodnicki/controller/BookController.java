@@ -18,6 +18,8 @@ public class BookController {
     private static final String DESCRIPTION = "Description:";
     private static final String LANGUAGE = "Language:";
     private static final String COPIES_NUMBER = "Number of copies:";
+    private static final String ABORT_OPERATION = "An operation has been canceled.";
+    private static final String SUCCESS_BOOK_ADDED = "A book has been successfully added.";
 
     public BookController(MenuController menuController) {
         this.menuController = menuController;
@@ -36,7 +38,14 @@ public class BookController {
         String language = menuController.displayOnMenuAndAskForInput(LANGUAGE);
         int copiesNumber = Integer.parseInt(menuController.displayOnMenuAndAskForInput(COPIES_NUMBER));
 
-        bookService.add(title, author, isbn, publisher, publicationYear, edition, genre, description, language,
-                copiesNumber);
+        try {
+            bookService.add(title, author, isbn, publisher, publicationYear, edition, genre, description, language,
+                    copiesNumber);
+        }catch (IllegalArgumentException e) {
+            menuController.displayOnMenu(e.getMessage());
+            menuController.displayOnMenu(ABORT_OPERATION);
+            return;
+        }
+        menuController.displayOnMenu(SUCCESS_BOOK_ADDED);
     }
 }
