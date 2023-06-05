@@ -36,6 +36,17 @@ public class Book {
 
     public Book(String title, String author, String isbn, String publisher, int publicationYear, int edition,
                 String genre, String description, String language, int copiesNumber) {
+
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.publisher = publisher;
+        this.publicationYear = publicationYear;
+        this.edition = edition;
+        this.genre = genre;
+        this.description = description;
+        this.language = language;
+        this.copiesNumber = copiesNumber;
     }
 
     public Long getId() {
