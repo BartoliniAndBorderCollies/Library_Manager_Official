@@ -31,6 +31,13 @@ public class Book {
     @Column(name = "copies_number")
     private int copiesNumber;
 
+    public Book() {
+    }
+
+    public Book(String title, String author, String isbn, String publisher, int publicationYear, int edition,
+                String genre, String description, String language, int copiesNumber) {
+    }
+
     public Long getId() {
         return id;
     }
