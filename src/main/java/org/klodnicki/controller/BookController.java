@@ -21,27 +21,40 @@ public class BookController {
     private static final String ABORT_OPERATION = "An operation has been canceled.";
     private static final String SUCCESS_BOOK_ADDED = "A book has been successfully added.";
 
+    private static final String MUST_BE_NUMBER = "Year, edition and copies must be numbers.";
+
     public BookController(MenuController menuController) {
         this.menuController = menuController;
     }
 
-    public void add() {
+    public void add() throws IllegalArgumentException {
+        int publicationYear;
+        int edition;
+        int copiesNumber;
         menuController.displayOnMenu(ADD_INFO);
         String title = menuController.displayOnMenuAndAskForInput(TITLE);
         String author = menuController.displayOnMenuAndAskForInput(AUTHOR);
         String isbn = menuController.displayOnMenuAndAskForInput(ISBN);
+
+        try {
+            publicationYear = Integer.parseInt(menuController.displayOnMenuAndAskForInput(PUBLICATION_YEAR));
+            edition = Integer.parseInt(menuController.displayOnMenuAndAskForInput(EDITION));
+            copiesNumber = Integer.parseInt(menuController.displayOnMenuAndAskForInput(COPIES_NUMBER));
+        } catch (NumberFormatException e) {
+            menuController.displayOnMenu(MUST_BE_NUMBER);
+            menuController.displayOnMenu(ABORT_OPERATION);
+            return;
+        }
+
         String publisher = menuController.displayOnMenuAndAskForInput(PUBLISHER);
-        int publicationYear = Integer.parseInt(menuController.displayOnMenuAndAskForInput(PUBLICATION_YEAR));
-        int edition = Integer.parseInt(menuController.displayOnMenuAndAskForInput(EDITION));
         String genre = menuController.displayOnMenuAndAskForInput(GENRE);
         String description = menuController.displayOnMenuAndAskForInput(DESCRIPTION);
         String language = menuController.displayOnMenuAndAskForInput(LANGUAGE);
-        int copiesNumber = Integer.parseInt(menuController.displayOnMenuAndAskForInput(COPIES_NUMBER));
 
         try {
             bookService.add(title, author, isbn, publisher, publicationYear, edition, genre, description, language,
                     copiesNumber);
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             menuController.displayOnMenu(e.getMessage());
             menuController.displayOnMenu(ABORT_OPERATION);
             return;
