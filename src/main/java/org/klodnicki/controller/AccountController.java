@@ -15,7 +15,7 @@ public class AccountController {
     private static final String EMAIL = "Email:";
     private static final String ADDRESS = "Address:";
     private static final String ABORT_OPERATION = "An operation has been canceled.";
-    private static final String SUCCESS = "Success! An account has been created!";
+    private static final String SUCCESS_ACCOUNT_CREATION = "Success! An account has been created!";
 
 
     public AccountController(MenuController menuController) {
@@ -40,6 +40,6 @@ public class AccountController {
             menuController.displayOnMenu(ABORT_OPERATION);
             return;
         }
-        menuController.displayOnMenu(SUCCESS);
+        menuController.displayOnMenu(SUCCESS_ACCOUNT_CREATION);
     }
 }
