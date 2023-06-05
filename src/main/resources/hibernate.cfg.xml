@@ -17,5 +17,7 @@
         <property name="hibernate.hbm2ddl.auto">create</property>
 
         <mapping class="org.klodnicki.entity.Account"/>
+        <mapping class="org.klodnicki.entity.Book"/>
+
     </session-factory>
 </hibernate-configuration>
