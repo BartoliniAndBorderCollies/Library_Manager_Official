@@ -12,12 +12,12 @@ public class BookController {
     private static final String AUTHOR = "Author:";
     private static final String ISBN = "ISBN:";
     private static final String PUBLISHER = "Publisher:";
-    private static final String PUBLICATION_YEAR = "Year of publication:";
-    private static final String EDITION = "Edition:";
+    private static final String PUBLICATION_YEAR = "Year of publication (must be a number):";
+    private static final String EDITION = "Edition (must be a number):";
     private static final String GENRE = "Genre";
     private static final String DESCRIPTION = "Description:";
     private static final String LANGUAGE = "Language:";
-    private static final String COPIES_NUMBER = "Number of copies:";
+    private static final String COPIES_NUMBER = "Number of copies (must be a number):";
     private static final String ABORT_OPERATION = "An operation has been canceled.";
     private static final String SUCCESS_BOOK_ADDED = "A book has been successfully added.";
 
