@@ -2,11 +2,9 @@ package org.klodnicki.service;
 
 import org.klodnicki.repository.AccountRepository;
 import org.klodnicki.entity.Account;
-import org.klodnicki.view.MenuView;
 
 public class AccountService {
     private final AccountRepository accountRepository = new AccountRepository();
-
 
     public void create(String firstName, String secondName, String lastName, String pesel, String phoneNumber,
                        String email, String address) {
@@ -20,5 +18,9 @@ public class AccountService {
             }
 
         accountRepository.create(new Account(firstName, secondName, lastName, pesel, phoneNumber, email, address));
+    }
+
+    public Account findAccountByFirstNameAndLastNameAndPesel(String firstName, String lastName, String pesel) {
+        return accountRepository.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
     }
 }
