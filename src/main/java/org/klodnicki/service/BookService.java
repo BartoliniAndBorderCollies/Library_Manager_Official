@@ -17,4 +17,8 @@ public class BookService {
         bookRepository.add(new Book(title, author, isbn, publisher, publicationYear, edition, genre, description,
                 language, copiesNumber));
     }
+
+    public Book findBookByTitleAndAuthor(String title, String author) {
+        return bookRepository.findBookByTitleAndAuthor(title, author);
+    }
 }

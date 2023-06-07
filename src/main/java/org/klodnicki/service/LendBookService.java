@@ -1,6 +1,7 @@
 package org.klodnicki.service;
 
 import org.klodnicki.entity.Account;
+import org.klodnicki.entity.Book;
 
 public class LendBookService {
 
@@ -18,5 +19,9 @@ public class LendBookService {
 
     public Account findAccountByFirstNameAndLastNameAndPesel(String firstName, String lastName, String pesel) {
         return accountService.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
+    }
+
+    public Book findBookByTitleAndAuthor(String title, String author) {
+        return bookService.findBookByTitleAndAuthor(title, author);
     }
 }
