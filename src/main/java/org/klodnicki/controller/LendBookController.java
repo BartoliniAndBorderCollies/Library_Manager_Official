@@ -1,12 +1,14 @@
 package org.klodnicki.controller;
 
+import org.klodnicki.service.AccountService;
+import org.klodnicki.service.BookService;
 import org.klodnicki.service.LendBookService;
 
 public class LendBookController {
 
     private final MenuController menuController;
 
-    private final LendBookService lendBookService = new LendBookService();
+    private final LendBookService lendBookService = new LendBookService(new AccountService(), new BookService());
 
     public LendBookController(MenuController menuController) {
         this.menuController = menuController;
