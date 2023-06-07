@@ -21,4 +21,8 @@ public class BookService {
     public Book findBookByTitleAndAuthor(String title, String author) {
         return bookRepository.findBookByTitleAndAuthor(title, author);
     }
+
+    public void update(Book book) {
+        bookRepository.update(book);
+    }
 }
