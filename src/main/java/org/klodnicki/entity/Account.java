@@ -2,6 +2,8 @@ package org.klodnicki.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "accounts")
 public class Account {
@@ -9,6 +11,11 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @OneToMany (fetch = FetchType.LAZY, //jedno konto może miec wiele ksiązek
+    mappedBy = "account")
+    private List<Book> books;
+
     @Column(nullable = false, name = "first_name")
     private String firstName;
     @Column (name = "second_name")
