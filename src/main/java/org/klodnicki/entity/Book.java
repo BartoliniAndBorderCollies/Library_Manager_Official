@@ -10,6 +10,10 @@ public class Book {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.EAGER) // bo książka bedzie przynależeć do któregoś konta, a nie konto do książki
+    @JoinColumn(name = "account_id")
+    private Account account;
+
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
@@ -30,6 +34,14 @@ public class Book {
     private String language;
     @Column(name = "copies_number")
     private int copiesNumber;
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
     public Book() {
     }
