@@ -22,4 +22,10 @@ public class BookRepository {
 
         return query.getSingleResult();
     }
+
+    public void update(Book book) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(book);
+        entityManager.getTransaction().commit();
+    }
 }
