@@ -21,8 +21,8 @@ public class LendBookService {
         Account account = findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
         Book book = findBookByTitleAndAuthor(title, author);
 
-        account.addBook(book);
-        bookService.update(book);
+        book.setAccount(account); //lub account.addBook(book)
+        bookService.update(book); // lub accountService.update(account)
 
         //wypożyczyć tzn przypisać daną książkę do danego konta, czyli dodać ją do listy?
         // ilość kopii to ilość dostępnych egzemplarzy?
