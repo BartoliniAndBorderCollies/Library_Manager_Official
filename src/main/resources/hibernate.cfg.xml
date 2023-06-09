@@ -18,7 +18,7 @@
 
 
         <mapping class="org.klodnicki.entity.Account"/>
-        <mapping class="org.klodnicki.entity.Book"/>
+        <mapping class="org.klodnicki.entity.BookInfo"/>
 
     </session-factory>
 </hibernate-configuration>
