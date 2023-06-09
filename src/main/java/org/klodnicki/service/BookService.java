@@ -1,6 +1,6 @@
 package org.klodnicki.service;
 
-import org.klodnicki.entity.Book;
+import org.klodnicki.entity.BookInfo;
 import org.klodnicki.repository.BookRepository;
 
 public class BookService {
@@ -14,15 +14,15 @@ public class BookService {
             throw new IllegalArgumentException("Title and author must have a value.");
         }
 
-        bookRepository.add(new Book(title, author, isbn, publisher, publicationYear, edition, genre, description,
+        bookRepository.add(new BookInfo(title, author, isbn, publisher, publicationYear, edition, genre, description,
                 language, copiesNumber));
     }
 
-    public Book findBookByTitleAndAuthor(String title, String author) {
+    public BookInfo findBookByTitleAndAuthor(String title, String author) {
         return bookRepository.findBookByTitleAndAuthor(title, author);
     }
 
-    public void update(Book book) {
-        bookRepository.update(book);
+    public void update(BookInfo bookInfo) {
+        bookRepository.update(bookInfo);
     }
 }
