@@ -1,7 +1,7 @@
 package org.klodnicki.service;
 
 import org.klodnicki.entity.Account;
-import org.klodnicki.entity.Book;
+import org.klodnicki.entity.BookInfo;
 
 public class LendBookService {
 
@@ -18,15 +18,21 @@ public class LendBookService {
         // nie mialem pola account a chcialem zastosowac metode addBook, pole nie moze byc wiec account uzyskalem
         //poprzez ponizszy find
 
+        BookInfo bookInfo = findBookByTitleAndAuthor(title, author);
+        if (bookInfo.getCopiesNumber() <= 0) {
+            throw new IllegalArgumentException("This book is not available.");
+        }
+
         Account account = findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
-        Book book = findBookByTitleAndAuthor(title, author);
+        if (account.getBooks().size() > 10) {
+            throw new IllegalArgumentException("Maximum limit is reached. The reader cannot borrow more than 10 books.");
+        }
 
-        book.setAccount(account); //lub account.addBook(book)
-        bookService.update(book); // lub accountService.update(account)
+        bookInfo.addAccount(account); //lub account.addBook(book)
+        // TODO: set number of copies
+        int i = bookInfo.getCopiesNumber() - 1;
 
-        //wypożyczyć tzn przypisać daną książkę do danego konta, czyli dodać ją do listy?
-        // ilość kopii to ilość dostępnych egzemplarzy?
-        // przypisanie książki do konta zmniejszą o jeden ilość dostępnych kopii
+        bookService.update(bookInfo); // lub accountService.update(account)
 
     }
 
@@ -34,7 +40,7 @@ public class LendBookService {
         return accountService.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
     }
 
-    public Book findBookByTitleAndAuthor(String title, String author) {
+    public BookInfo findBookByTitleAndAuthor(String title, String author) {
         return bookService.findBookByTitleAndAuthor(title, author);
     }
 }

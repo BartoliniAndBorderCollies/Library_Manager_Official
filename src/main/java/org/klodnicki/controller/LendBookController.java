@@ -25,7 +25,7 @@ public class LendBookController {
     private static final String AUTHOR = "Author:";
 
 
-    public void lend() {
+    public void lend() throws IllegalArgumentException {
         menuController.displayOnMenu(LEND_BOOK_PROCEDURE);
         menuController.displayOnMenu(READER_INFORMATION);
         String firstName = menuController.displayOnMenuAndAskForInput(FIRST_NAME);
@@ -36,6 +36,10 @@ public class LendBookController {
         String title = menuController.displayOnMenuAndAskForInput(BOOK_TITLE);
         String author = menuController.displayOnMenuAndAskForInput(AUTHOR);
 
-        lendBookService.lend(firstName, lastName, pesel, title, author);
+        try {
+            lendBookService.lend(firstName, lastName, pesel, title, author);
+        } catch (IllegalArgumentException e) {
+            menuController.displayOnMenu(e.getMessage());
+        }
     }
 }
