@@ -82,5 +82,9 @@ public class BookInfo {
     public void addAccount(Account account) {
         accounts.add(account);
     }
+
+    public void setCopiesNumber(int copiesNumber) {
+        this.copiesNumber = copiesNumber;
+    }
 }
 

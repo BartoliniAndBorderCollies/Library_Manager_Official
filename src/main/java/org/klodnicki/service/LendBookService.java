@@ -29,11 +29,11 @@ public class LendBookService {
         }
 
         bookInfo.addAccount(account); //lub account.addBook(book)
-        // TODO: set number of copies
-        int i = bookInfo.getCopiesNumber() - 1;
+
+        int leftCopiesNumber = bookInfo.getCopiesNumber() - 1;
+        bookInfo.setCopiesNumber(leftCopiesNumber);
 
         bookService.update(bookInfo); // lub accountService.update(account)
-
     }
 
     public Account findAccountByFirstNameAndLastNameAndPesel(String firstName, String lastName, String pesel) {
