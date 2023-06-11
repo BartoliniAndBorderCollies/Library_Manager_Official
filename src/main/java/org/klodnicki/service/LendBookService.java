@@ -22,12 +22,12 @@ public class LendBookService {
         // nie mialem pola account a chcialem zastosowac metode addBook, pole nie moze byc wiec account uzyskalem
         //poprzez ponizszy find
 
-        BookInfo bookInfo = findBookByTitleAndAuthor(title, author);
+        BookInfo bookInfo = bookService.findBookByTitleAndAuthor(title, author);
         if (bookInfo.getCopiesNumber() <= 0) {
             throw new NotEnoughBookCopiesException();
         }
 
-        Account account = findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
+        Account account = accountService.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
         if (account.getBooks().size() > LENT_BOOK_LIMIT) {
             throw new MaximumBookBorrowedLimitException();
         }
@@ -38,13 +38,5 @@ public class LendBookService {
         bookInfo.setCopiesNumber(leftCopiesNumber);
 
         bookService.update(bookInfo); // lub accountService.update(account)
-    }
-
-    public Account findAccountByFirstNameAndLastNameAndPesel(String firstName, String lastName, String pesel) {
-        return accountService.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
-    }
-
-    public BookInfo findBookByTitleAndAuthor(String title, String author) {
-        return bookService.findBookByTitleAndAuthor(title, author);
     }
 }
