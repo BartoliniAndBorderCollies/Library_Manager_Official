@@ -9,6 +9,7 @@ public class LendBookService {
 
     private final AccountService accountService;
     private final BookService bookService;
+    private static final int LENT_BOOK_LIMIT = 10;
 
     public LendBookService(AccountService accountService, BookService bookService) {
         this.accountService = accountService;
@@ -27,7 +28,7 @@ public class LendBookService {
         }
 
         Account account = findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
-        if (account.getBooks().size() > 10) {
+        if (account.getBooks().size() > LENT_BOOK_LIMIT) {
             throw new MaximumBookBorrowedLimitException();
         }
 
