@@ -41,14 +41,6 @@ public class BookInfo {
     @Column(name = "copies_number")
     private int copiesNumber;
 
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
-
     public BookInfo() {
     }
 
@@ -65,6 +57,14 @@ public class BookInfo {
         this.description = description;
         this.language = language;
         this.copiesNumber = copiesNumber;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public Long getId() {
