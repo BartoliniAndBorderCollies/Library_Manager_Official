@@ -2,6 +2,8 @@ package org.klodnicki.service;
 
 import org.klodnicki.entity.Account;
 import org.klodnicki.entity.BookInfo;
+import org.klodnicki.exception.MaximumBookBorrowedLimitException;
+import org.klodnicki.exception.NotEnoughBookCopiesException;
 
 public class LendBookService {
 
@@ -13,19 +15,20 @@ public class LendBookService {
         this.bookService = bookService;
     }
 
-    public void lend(String firstName, String lastName, String pesel, String title, String author) {
+    public void lend(String firstName, String lastName, String pesel, String title, String author) throws
+            NotEnoughBookCopiesException, MaximumBookBorrowedLimitException {
 
         // nie mialem pola account a chcialem zastosowac metode addBook, pole nie moze byc wiec account uzyskalem
         //poprzez ponizszy find
 
         BookInfo bookInfo = findBookByTitleAndAuthor(title, author);
         if (bookInfo.getCopiesNumber() <= 0) {
-            throw new IllegalArgumentException("This book is not available.");
+            throw new NotEnoughBookCopiesException();
         }
 
         Account account = findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
         if (account.getBooks().size() > 10) {
-            throw new IllegalArgumentException("Maximum limit is reached. The reader cannot borrow more than 10 books.");
+            throw new MaximumBookBorrowedLimitException();
         }
 
         bookInfo.addAccount(account); //lub account.addBook(book)
