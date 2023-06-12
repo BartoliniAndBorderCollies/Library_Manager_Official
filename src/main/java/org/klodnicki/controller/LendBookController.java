@@ -19,13 +19,15 @@ public class LendBookController {
 
     private static final String LEND_BOOK_PROCEDURE = "In order to lend a book please fill the following information. " +
             "\nRemember that each reader can have maximum 10 books borrowed at the same time.";
-    private static final String READER_INFORMATION = "Reader infomation:";
+    private static final String READER_INFORMATION = "Reader information:";
     private static final String FIRST_NAME = "First name:";
     private static final String LAST_NAME = "Last name:";
     private static final String PESEL = "Pesel:";
     private static final String BOOK_INFORMATION = "Book information:";
     private static final String BOOK_TITLE = "Title of a book:";
     private static final String AUTHOR = "Author:";
+    private static final String MORE_THAN_ONE_EDITION = "This book has more than one edition.";
+    private static final String EDITION_CHOICE = "Select edition of your choice:";
     private static final String ABORT_OPERATION = "An operation has been canceled.";
     private static final String LEND_BOOK_SUCCESS = "Success! The book has been successfully lent.";
     private static final String NOT_FOUND = "No result found.";
@@ -42,8 +44,25 @@ public class LendBookController {
         String title = menuController.displayOnMenuAndAskForInput(BOOK_TITLE);
         String author = menuController.displayOnMenuAndAskForInput(AUTHOR);
 
+        if(lendBookService.ifHasMoreThanOneEdition(title, author)) {
+            menuController.displayOnMenu(MORE_THAN_ONE_EDITION);
+            menuController.displayOnMenu(lendBookService.findBooksByTitleAndAuthorReturnList(title, author).toString());
+            String edition = menuController.displayOnMenuAndAskForInput(EDITION_CHOICE);
+            try {
+                lendBookService.lendWithEdition(firstName, lastName, pesel, title, author, edition);
+            } catch (NotEnoughBookCopiesException | MaximumBookBorrowedLimitException e) {
+                menuController.displayOnMenu(e.getMessage());
+                menuController.displayOnMenu(ABORT_OPERATION);
+                return;
+            } catch (NoResultException e) {
+                menuController.displayOnMenu(NOT_FOUND);
+                menuController.displayOnMenu(ABORT_OPERATION);
+                return;
+            }
+        }
+
         try {
-            lendBookService.lend(firstName, lastName, pesel, title, author);
+            lendBookService.lendWithoutEdition(firstName, lastName, pesel, title, author);
         } catch (NotEnoughBookCopiesException | MaximumBookBorrowedLimitException e) {
             menuController.displayOnMenu(e.getMessage());
             menuController.displayOnMenu(ABORT_OPERATION);

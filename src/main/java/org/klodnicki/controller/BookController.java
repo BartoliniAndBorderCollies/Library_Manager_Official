@@ -29,7 +29,7 @@ public class BookController {
 
     public void add() throws IllegalArgumentException {
         int publicationYear;
-        int edition;
+        String edition;
         int copiesNumber;
         menuController.displayOnMenu(ADD_INFO);
         String title = menuController.displayOnMenuAndAskForInput(TITLE);
@@ -38,7 +38,7 @@ public class BookController {
 
         try {
             publicationYear = Integer.parseInt(menuController.displayOnMenuAndAskForInput(PUBLICATION_YEAR));
-            edition = Integer.parseInt(menuController.displayOnMenuAndAskForInput(EDITION));
+            edition = menuController.displayOnMenuAndAskForInput(EDITION);
             copiesNumber = Integer.parseInt(menuController.displayOnMenuAndAskForInput(COPIES_NUMBER));
         } catch (NumberFormatException e) {
             menuController.displayOnMenu(MUST_BE_NUMBER);
