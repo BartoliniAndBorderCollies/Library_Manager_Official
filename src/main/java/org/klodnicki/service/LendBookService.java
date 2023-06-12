@@ -29,7 +29,7 @@ public class LendBookService {
 
         Account account = accountService.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
         if (account.getBooks().size() > LENT_BOOK_LIMIT) {
-            throw new MaximumBookBorrowedLimitException();
+            throw new MaximumBookBorrowedLimitException(LENT_BOOK_LIMIT);
         }
 
         bookInfo.addAccount(account); //lub account.addBook(book)

@@ -2,9 +2,9 @@ package org.klodnicki.exception;
 
 public class MaximumBookBorrowedLimitException extends Exception{
 
-    private static final String MESSAGE = "Maximum limit is reached. The reader cannot borrow more than 10 books.";
+    private static final String MESSAGE = "Maximum limit is reached. The reader cannot borrow more than %d books.";
 
-    public MaximumBookBorrowedLimitException() {
-        super(MESSAGE);
+    public MaximumBookBorrowedLimitException(int lentBookLimit) {
+        super(String.format(MESSAGE, lentBookLimit));
     }
 }
