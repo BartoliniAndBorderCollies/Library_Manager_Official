@@ -31,7 +31,7 @@ public class BookInfo {
     @Column(name = "publication_year")
     private int publicationYear;
     @Column
-    private int edition;
+    private String edition;
     @Column
     private String genre;
     @Column
@@ -44,7 +44,7 @@ public class BookInfo {
     public BookInfo() {
     }
 
-    public BookInfo(String title, String author, String isbn, String publisher, int publicationYear, int edition,
+    public BookInfo(String title, String author, String isbn, String publisher, int publicationYear, String edition,
                     String genre, String description, String language, int copiesNumber) {
 
         this.title = title;
@@ -85,6 +85,10 @@ public class BookInfo {
 
     public void setCopiesNumber(int copiesNumber) {
         this.copiesNumber = copiesNumber;
+    }
+
+    public String getEdition() {
+        return edition;
     }
 }
 
