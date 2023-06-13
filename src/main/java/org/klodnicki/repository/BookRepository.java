@@ -1,10 +1,13 @@
 package org.klodnicki.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.TypedQuery;
 import org.klodnicki.entity.BookInfo;
 
 import java.util.List;
+import java.util.Optional;
 
 public class BookRepository {
 
@@ -16,13 +19,26 @@ public class BookRepository {
         entityManager.getTransaction().commit();
     }
 
-    public BookInfo findBookByTitleAndAuthor(String title, String author) {
+    public Optional<BookInfo> findBookByTitleAndAuthor(String title, String author) {
         String hqlQuery = "FROM BookInfo b WHERE b.title = :title AND b.author = :author";
         TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
         query.setParameter("title", title);
         query.setParameter("author", author);
+        // 1 solution: always return List of objects
 
-        return query.getSingleResult();
+        // 2 solution: returning optional. TO BE COMPLETED with orElseThrow
+        BookInfo singleResult = null;
+        try {
+            singleResult = query.getSingleResult();
+        } catch (NoResultException e) {
+            return Optional.empty();
+        } catch (NonUniqueResultException e) {
+            // Returns first element
+            for (BookInfo bookInfo : query.getResultList()) {
+                return Optional.of(bookInfo);
+            }
+        }
+        return Optional.ofNullable(singleResult);
     }
 
     public BookInfo findBookByTitleAndAuthorAndEdition(String title, String author, String edition) {
