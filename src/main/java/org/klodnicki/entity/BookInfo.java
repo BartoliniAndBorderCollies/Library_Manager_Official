@@ -90,5 +90,21 @@ public class BookInfo {
     public String getEdition() {
         return edition;
     }
+
+    @Override
+    public String toString() {
+        return "BookInfo{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", edition='" + edition + '\'' +
+                ", genre='" + genre + '\'' +
+                ", description='" + description + '\'' +
+                ", language='" + language + '\'' +
+                ", copiesNumber=" + copiesNumber +
+                '}';
+    }
 }
 
