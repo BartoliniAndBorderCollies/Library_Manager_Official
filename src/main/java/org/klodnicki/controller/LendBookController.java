@@ -18,7 +18,7 @@ public class LendBookController {
     }
 
     private static final String LEND_BOOK_PROCEDURE = "In order to lend a book please fill the following information. " +
-            "\nRemember that each reader can have maximum 10 books borrowed at the same time.";
+            "\nRemember that each reader can have maximum " + LendBookService.LENT_BOOK_LIMIT + " books borrowed at the same time.";
     private static final String READER_INFORMATION = "Reader information:";
     private static final String FIRST_NAME = "First name:";
     private static final String LAST_NAME = "Last name:";
