@@ -43,26 +43,16 @@ public class LendBookController {
         menuController.displayOnMenu(BOOK_INFORMATION);
         String title = menuController.displayOnMenuAndAskForInput(BOOK_TITLE);
         String author = menuController.displayOnMenuAndAskForInput(AUTHOR);
+        String edition = null;
 
-        if(lendBookService.ifHasMoreThanOneEdition(title, author)) {
+        if (lendBookService.ifHasMoreThanOneEdition(title, author)) {
             menuController.displayOnMenu(MORE_THAN_ONE_EDITION);
-            menuController.displayOnMenu(lendBookService.findBooksByTitleAndAuthorReturnList(title, author).toString());
-            String edition = menuController.displayOnMenuAndAskForInput(EDITION_CHOICE);
-            try {
-                lendBookService.lendWithEdition(firstName, lastName, pesel, title, author, edition);
-            } catch (NotEnoughBookCopiesException | MaximumBookBorrowedLimitException e) {
-                menuController.displayOnMenu(e.getMessage());
-                menuController.displayOnMenu(ABORT_OPERATION);
-                return;
-            } catch (NoResultException e) {
-                menuController.displayOnMenu(NOT_FOUND);
-                menuController.displayOnMenu(ABORT_OPERATION);
-                return;
-            }
+            menuController.displayOnMenu(lendBookService.prepareListOfBooks(title, author));
+            edition = menuController.displayOnMenuAndAskForInput(EDITION_CHOICE);
         }
 
         try {
-            lendBookService.lendWithoutEdition(firstName, lastName, pesel, title, author);
+            lendBookService.lend(firstName, lastName, pesel, title, author, edition);
         } catch (NotEnoughBookCopiesException | MaximumBookBorrowedLimitException e) {
             menuController.displayOnMenu(e.getMessage());
             menuController.displayOnMenu(ABORT_OPERATION);
@@ -72,7 +62,6 @@ public class LendBookController {
             menuController.displayOnMenu(ABORT_OPERATION);
             return;
         }
-
         menuController.displayOnMenu(LEND_BOOK_SUCCESS);
     }
 }
