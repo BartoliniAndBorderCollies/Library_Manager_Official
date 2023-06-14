@@ -3,6 +3,7 @@ package org.klodnicki.controller;
 import org.klodnicki.service.MenuService;
 import org.klodnicki.view.MenuView;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuController {
@@ -40,5 +41,9 @@ public class MenuController {
 
     public void displayOnMenu(String message) {
         menuView.update(message);
+    }
+
+    public void displayOnMenu(List<String> messages) {
+            menuView.update(messages);
     }
 }
