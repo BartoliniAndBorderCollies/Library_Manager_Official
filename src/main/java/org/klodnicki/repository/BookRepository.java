@@ -51,7 +51,7 @@ public class BookRepository {
         return query.getSingleResult();
     }
 
-    public List<BookInfo> findBooksByTitleAndAuthorReturnList(String title, String author) {
+    public List<BookInfo> findBooksByTitleAndAuthor(String title, String author) {
         String hqlQuery = "FROM BookInfo b WHERE b.title = :title AND b.author = :author";
         TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
         query.setParameter("title", title);

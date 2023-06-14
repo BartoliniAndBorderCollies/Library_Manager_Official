@@ -21,7 +21,7 @@ public class BookService {
     }
 
     public BookInfo findBookByTitleAndAuthor(String title, String author) {
-        return bookRepository.findBookByTitleAndAuthor(title, author);
+        return bookRepository.findBookByTitleAndAuthor(title, author).orElseThrow();
     }
 
     public BookInfo findBookByTitleAndAuthorAndEdition(String title, String author, String edition) {
@@ -33,6 +33,6 @@ public class BookService {
     }
 
     public List<BookInfo> findBooksByTitleAndAuthorReturnList (String title, String author) {
-        return bookRepository.findBooksByTitleAndAuthorReturnList(title, author);
+        return bookRepository.findBooksByTitleAndAuthor(title, author);
     }
 }
