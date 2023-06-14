@@ -4,6 +4,8 @@ import org.klodnicki.entity.Account;
 import org.klodnicki.entity.BookInfo;
 import org.klodnicki.exception.MaximumBookBorrowedLimitException;
 import org.klodnicki.exception.NotEnoughBookCopiesException;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class LendBookService {
@@ -17,51 +19,17 @@ public class LendBookService {
         this.bookService = bookService;
     }
 
-    public void lendWithoutEdition(String firstName, String lastName, String pesel, String title, String author) throws
-            NotEnoughBookCopiesException, MaximumBookBorrowedLimitException {
+    public void lend(String firstName, String lastName, String pesel, String title, String author, String edition)
+            throws NotEnoughBookCopiesException, MaximumBookBorrowedLimitException {
 
-        // nie mialem pola account a chcialem zastosowac metode addBook, pole nie moze byc wiec account uzyskalem
-        //poprzez ponizszy find
-
-        BookInfo bookInfo = bookService.findBookByTitleAndAuthor(title, author);
-        if (bookInfo.getCopiesNumber() <= 0) {
-            throw new NotEnoughBookCopiesException();
+        BookInfo bookInfo;
+        if (edition == null) {
+            bookInfo = bookService.findBookByTitleAndAuthor(title, author);
+        } else {
+            bookInfo = bookService.findBookByTitleAndAuthorAndEdition(title, author, edition);
         }
 
-        Account account = accountService.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
-        if (account.getBooks().size() > LENT_BOOK_LIMIT) {
-            throw new MaximumBookBorrowedLimitException(LENT_BOOK_LIMIT);
-        }
-
-        bookInfo.addAccount(account); //lub account.addBook(book)
-
-        int leftCopiesNumber = bookInfo.getCopiesNumber() - 1;
-        bookInfo.setCopiesNumber(leftCopiesNumber);
-
-        bookService.update(bookInfo); // lub accountService.update(account)
-    }
-
-    public boolean ifHasMoreThanOneEdition(String title, String author) {
-        List<BookInfo> listOfTheSameBooks = bookService.findBooksByTitleAndAuthorReturnList(title, author);
-
-        for (int i = 0; i < listOfTheSameBooks.size(); i++) {
-            for (int j = 0; j < listOfTheSameBooks.size(); j++) {
-                if (listOfTheSameBooks.get(i).getEdition().equals(listOfTheSameBooks.get(j).getEdition())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public List<BookInfo> findBooksByTitleAndAuthorReturnList(String title, String author) {
-        return bookService.findBooksByTitleAndAuthorReturnList(title, author);
-    }
-
-    public void lendWithEdition(String firstName, String lastName, String pesel, String title, String author, String edition) throws
-            NotEnoughBookCopiesException, MaximumBookBorrowedLimitException {
-
-        BookInfo bookInfo = bookService.findBookByTitleAndAuthorAndEdition(title, author, edition);
+        // All the validation
         if (bookInfo.getCopiesNumber() <= 0) {
             throw new NotEnoughBookCopiesException();
         }
@@ -77,5 +45,21 @@ public class LendBookService {
         bookInfo.setCopiesNumber(leftCopiesNumber);
 
         bookService.update(bookInfo);
+    }
+
+    public boolean ifHasMoreThanOneEdition(String title, String author) {
+        return bookService.findBooksByTitleAndAuthorReturnList(title, author).size() > 1;
+    }
+
+    public List<BookInfo> findBooksByTitleAndAuthorReturnList(String title, String author) {
+        return bookService.findBooksByTitleAndAuthorReturnList(title, author);
+    }
+
+    public List<String> prepareListOfBooks(String title, String author) {
+        List<String> results = new ArrayList<>();
+        for (int i = 0; i < findBooksByTitleAndAuthorReturnList(title, author).size(); i++) {
+            results.add(findBooksByTitleAndAuthorReturnList(title, author).get(i).toString());
+        }
+        return results;
     }
 }
