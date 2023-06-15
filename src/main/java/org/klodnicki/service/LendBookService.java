@@ -4,6 +4,7 @@ import org.klodnicki.entity.Account;
 import org.klodnicki.entity.BookInfo;
 import org.klodnicki.exception.MaximumBookBorrowedLimitException;
 import org.klodnicki.exception.NotEnoughBookCopiesException;
+import org.klodnicki.exception.NotFoundInDatabaseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class LendBookService {
     }
 
     public void lend(String firstName, String lastName, String pesel, String title, String author, String edition)
-            throws NotEnoughBookCopiesException, MaximumBookBorrowedLimitException {
+            throws NotEnoughBookCopiesException, MaximumBookBorrowedLimitException, NotFoundInDatabaseException {
 
         BookInfo bookInfo;
         if (edition == null) {

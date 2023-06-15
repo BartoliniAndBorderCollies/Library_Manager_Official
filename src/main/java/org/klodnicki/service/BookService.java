@@ -1,6 +1,7 @@
 package org.klodnicki.service;
 
 import org.klodnicki.entity.BookInfo;
+import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.repository.BookRepository;
 
 import java.util.List;
@@ -20,12 +21,15 @@ public class BookService {
                 language, copiesNumber));
     }
 
-    public BookInfo findBookByTitleAndAuthor(String title, String author) {
-        return bookRepository.findBookByTitleAndAuthor(title, author).orElseThrow();
+    public BookInfo findBookByTitleAndAuthor(String title, String author) throws NotFoundInDatabaseException {
+        return bookRepository.findBookByTitleAndAuthor(title, author).orElseThrow(() ->
+                new NotFoundInDatabaseException(BookInfo.class));
     }
 
-    public BookInfo findBookByTitleAndAuthorAndEdition(String title, String author, String edition) {
-        return bookRepository.findBookByTitleAndAuthorAndEdition(title, author, edition);
+    public BookInfo findBookByTitleAndAuthorAndEdition(String title, String author, String edition) throws
+            NotFoundInDatabaseException{
+        return bookRepository.findBookByTitleAndAuthorAndEdition(title, author, edition).orElseThrow(() ->
+                new NotFoundInDatabaseException(BookInfo.class));
     }
 
     public void update(BookInfo bookInfo) {
