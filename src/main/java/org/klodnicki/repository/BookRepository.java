@@ -41,14 +41,25 @@ public class BookRepository {
         return Optional.ofNullable(singleResult);
     }
 
-    public BookInfo findBookByTitleAndAuthorAndEdition(String title, String author, String edition) {
+    public Optional<BookInfo> findBookByTitleAndAuthorAndEdition(String title, String author, String edition) {
         String hqlQuery = "FROM BookInfo b WHERE b.title = :title AND b.author = :author AND b.edition = :edition";
         TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
         query.setParameter("title", title);
         query.setParameter("author", author);
         query.setParameter("edition", edition);
 
-        return query.getSingleResult();
+        BookInfo singleResult = null;
+        try {
+            singleResult = query.getSingleResult();
+        } catch (NoResultException e) {
+            return Optional.empty();
+        } catch (NonUniqueResultException e) {
+            // Returns first element
+            for (BookInfo bookInfo : query.getResultList()) {
+                return Optional.of(bookInfo);
+            }
+        }
+        return Optional.ofNullable(singleResult);
     }
 
     public List<BookInfo> findBooksByTitleAndAuthor(String title, String author) {

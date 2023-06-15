@@ -3,6 +3,7 @@ package org.klodnicki.controller;
 import jakarta.persistence.NoResultException;
 import org.klodnicki.exception.MaximumBookBorrowedLimitException;
 import org.klodnicki.exception.NotEnoughBookCopiesException;
+import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.service.AccountService;
 import org.klodnicki.service.BookService;
 import org.klodnicki.service.LendBookService;
@@ -53,7 +54,7 @@ public class LendBookController {
 
         try {
             lendBookService.lend(firstName, lastName, pesel, title, author, edition);
-        } catch (NotEnoughBookCopiesException | MaximumBookBorrowedLimitException e) {
+        } catch (NotEnoughBookCopiesException | MaximumBookBorrowedLimitException | NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
             menuController.displayOnMenu(ABORT_OPERATION);
             return;
