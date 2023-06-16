@@ -46,7 +46,7 @@ public class LendBookController {
         String author = menuController.displayOnMenuAndAskForInput(AUTHOR);
         String edition = null;
 
-        if (lendBookService.ifHasMoreThanOneEdition(title, author)) {
+        if (lendBookService.HasMoreThanOneEdition(title, author)) {
             menuController.displayOnMenu(MORE_THAN_ONE_EDITION);
             menuController.displayOnMenu(lendBookService.prepareListOfBooks(title, author));
             edition = menuController.displayOnMenuAndAskForInput(EDITION_CHOICE);
