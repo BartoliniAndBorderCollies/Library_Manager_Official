@@ -48,18 +48,18 @@ public class LendBookService {
         bookService.update(bookInfo);
     }
 
-    public boolean ifHasMoreThanOneEdition(String title, String author) {
-        return bookService.findBooksByTitleAndAuthorReturnList(title, author).size() > 1;
+    public boolean HasMoreThanOneEdition(String title, String author) {
+        return bookService.findBooksByTitleAndAuthor(title, author).size() > 1;
     }
 
-    public List<BookInfo> findBooksByTitleAndAuthorReturnList(String title, String author) {
-        return bookService.findBooksByTitleAndAuthorReturnList(title, author);
+    public List<BookInfo> findBooksByTitleAndAuthor(String title, String author) {
+        return bookService.findBooksByTitleAndAuthor(title, author);
     }
 
     public List<String> prepareListOfBooks(String title, String author) {
         List<String> results = new ArrayList<>();
-        for (int i = 0; i < findBooksByTitleAndAuthorReturnList(title, author).size(); i++) {
-            results.add(findBooksByTitleAndAuthorReturnList(title, author).get(i).toString());
+        for (int i = 0; i < findBooksByTitleAndAuthor(title, author).size(); i++) {
+            results.add(findBooksByTitleAndAuthor(title, author).get(i).toString());
         }
         return results;
     }

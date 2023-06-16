@@ -36,7 +36,7 @@ public class BookService {
         bookRepository.update(bookInfo);
     }
 
-    public List<BookInfo> findBooksByTitleAndAuthorReturnList (String title, String author) {
+    public List<BookInfo> findBooksByTitleAndAuthor(String title, String author) {
         return bookRepository.findBooksByTitleAndAuthor(title, author);
     }
 }
