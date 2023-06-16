@@ -31,10 +31,8 @@ public class LendBookController {
     private static final String EDITION_CHOICE = "Select edition of your choice:";
     private static final String ABORT_OPERATION = "An operation has been canceled.";
     private static final String LEND_BOOK_SUCCESS = "Success! The book has been successfully lent.";
-    private static final String NOT_FOUND = "No result found.";
 
-
-    public void lend() throws IllegalArgumentException, NoResultException {
+    public void lend() {
         menuController.displayOnMenu(LEND_BOOK_PROCEDURE);
         menuController.displayOnMenu(READER_INFORMATION);
         String firstName = menuController.displayOnMenuAndAskForInput(FIRST_NAME);
@@ -56,10 +54,6 @@ public class LendBookController {
             lendBookService.lend(firstName, lastName, pesel, title, author, edition);
         } catch (NotEnoughBookCopiesException | MaximumBookBorrowedLimitException | NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
-            menuController.displayOnMenu(ABORT_OPERATION);
-            return;
-        } catch (NoResultException e) {
-            menuController.displayOnMenu(NOT_FOUND);
             menuController.displayOnMenu(ABORT_OPERATION);
             return;
         }
