@@ -48,7 +48,7 @@ public class LendBookService {
         bookService.update(bookInfo);
     }
 
-    public boolean HasMoreThanOneEdition(String title, String author) {
+    public boolean hasMoreThanOneEdition(String title, String author) {
         return bookService.findBooksByTitleAndAuthor(title, author).size() > 1;
     }
 
