@@ -1,5 +1,6 @@
 package org.klodnicki.controller;
 
+import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.service.AccountService;
 import org.klodnicki.service.BookService;
 import org.klodnicki.service.ReturnBookService;
@@ -17,6 +18,8 @@ public class ReturnBookController {
     private static final String BOOK_TITLE = "Enter a title of book which is going to be returned:";
     private static final String BOOK_AUTHOR = "Enter the author of the book.";
     private static final String EDITION = "Enter the edition of the book";
+    private static final String ABORT_OPERATION = "Operation has been canceled";
+    private static final String RETURN_BOOK_SUCCESS = "Success! The book has been returned!";
 
     public ReturnBookController(MenuController menuController) {
         this.menuController = menuController;
@@ -32,10 +35,17 @@ public class ReturnBookController {
         menuController.displayOnMenu(BORROWED_BOOKS);
         menuController.displayOnMenu(returnBookService.prepareListOfBorrowedBooksByAccount(firstName, lastName, pesel));
 
-        menuController.displayOnMenuAndAskForInput(BOOK_TITLE);
-        menuController.displayOnMenuAndAskForInput(BOOK_AUTHOR);
-        menuController.displayOnMenuAndAskForInput(EDITION);
+        String title = menuController.displayOnMenuAndAskForInput(BOOK_TITLE);
+        String author = menuController.displayOnMenuAndAskForInput(BOOK_AUTHOR);
+        String edition = menuController.displayOnMenuAndAskForInput(EDITION);
 
-
+        try {
+            returnBookService.returnBook(firstName, lastName, pesel, title, author, edition);
+        } catch (NotFoundInDatabaseException e) {
+            menuController.displayOnMenu(e.getMessage());
+            menuController.displayOnMenu(ABORT_OPERATION);
+            return;
+        }
+        menuController.displayOnMenu(RETURN_BOOK_SUCCESS);
     }
 }
