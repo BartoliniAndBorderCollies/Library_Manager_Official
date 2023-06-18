@@ -1,8 +1,11 @@
 package org.klodnicki.service;
 
+import org.klodnicki.entity.Account;
 import org.klodnicki.entity.BookInfo;
 import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.repository.BookRepository;
+
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -38,5 +41,26 @@ public class BookService {
 
     public List<BookInfo> findBooksByTitleAndAuthor(String title, String author) {
         return bookRepository.findBooksByTitleAndAuthor(title, author);
+    }
+
+    public List<String> prepareListOfBorrowedBooksByAccount (Account account) {
+        return prepareListOfBooks(account);
+    }
+
+    private List<String> prepareListOfBooks(Account account) {
+        List<BookInfo> foundBooks = bookRepository.findBooksByAccount(account);
+        List<String> results = new ArrayList<>();
+        for(int i = 0; i< foundBooks.size(); i++) {
+            results.add(foundBooks.get(i).toString());
+        }
+        return results;
+    }
+
+    public List<String> prepareListOfBooks(String title, String author) {
+        List<String> results = new ArrayList<>();
+        for (int i = 0; i < findBooksByTitleAndAuthor(title, author).size(); i++) {
+            results.add(findBooksByTitleAndAuthor(title, author).get(i).toString());
+        }
+        return results;
     }
 }

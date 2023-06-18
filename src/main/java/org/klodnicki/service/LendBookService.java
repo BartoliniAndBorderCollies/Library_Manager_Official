@@ -6,7 +6,6 @@ import org.klodnicki.exception.MaximumBookBorrowedLimitException;
 import org.klodnicki.exception.NotEnoughBookCopiesException;
 import org.klodnicki.exception.NotFoundInDatabaseException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LendBookService {
@@ -52,15 +51,7 @@ public class LendBookService {
         return bookService.findBooksByTitleAndAuthor(title, author).size() > 1;
     }
 
-    public List<BookInfo> findBooksByTitleAndAuthor(String title, String author) {
-        return bookService.findBooksByTitleAndAuthor(title, author);
-    }
-
     public List<String> prepareListOfBooks(String title, String author) {
-        List<String> results = new ArrayList<>();
-        for (int i = 0; i < findBooksByTitleAndAuthor(title, author).size(); i++) {
-            results.add(findBooksByTitleAndAuthor(title, author).get(i).toString());
-        }
-        return results;
+        return bookService.prepareListOfBooks(title, author);
     }
 }
