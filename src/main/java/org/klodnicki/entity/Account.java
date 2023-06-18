@@ -46,4 +46,8 @@ public class Account {
     public List<BookInfo> getBooks() {
         return bookInfos;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

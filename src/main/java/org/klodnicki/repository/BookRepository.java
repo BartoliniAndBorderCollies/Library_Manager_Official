@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.TypedQuery;
+import org.klodnicki.entity.Account;
 import org.klodnicki.entity.BookInfo;
 
 import java.util.List;
@@ -70,6 +71,15 @@ public class BookRepository {
 
         return query.getResultList();
     }
+
+    public List<BookInfo> findBooksByAccount (Account account) {
+        String hqlQuery = "FROM BookInfo b JOIN b.accounts a WHERE a.id = :idAccount";
+        TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
+        query.setParameter("idAccount", account.getId());
+
+        return query.getResultList();
+    }
+
 
     public void update(BookInfo bookInfo) {
         entityManager.getTransaction().begin();
