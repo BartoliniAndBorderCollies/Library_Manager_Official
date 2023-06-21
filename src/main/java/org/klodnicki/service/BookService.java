@@ -43,24 +43,29 @@ public class BookService {
         return bookRepository.findBooksByTitleAndAuthor(title, author);
     }
 
-    public List<String> prepareListOfBorrowedBooksByAccount (Account account) {
-        return prepareListOfBooks(account);
+    private List<BookInfo> getBooksInfoFromDatabaseByAccount(Account account) {
+        return bookRepository.findBooksByAccount(account);
     }
 
-    private List<String> prepareListOfBooks(Account account) {
-        List<BookInfo> foundBooks = bookRepository.findBooksByAccount(account);
+    public List<String> prepareListOfBorrowedBooksByAccount(Account account) {
         List<String> results = new ArrayList<>();
-        for(int i = 0; i< foundBooks.size(); i++) {
-            results.add(foundBooks.get(i).toString());
+        List<BookInfo> records = getBooksInfoFromDatabaseByAccount(account);
+        for(int i = 0; i< records.size(); i++) {
+            results.add(records.get(i).toString());
         }
         return results;
     }
 
     public List<String> prepareListOfBooks(String title, String author) {
         List<String> results = new ArrayList<>();
-        for (int i = 0; i < findBooksByTitleAndAuthor(title, author).size(); i++) {
-            results.add(findBooksByTitleAndAuthor(title, author).get(i).toString());
+        List<BookInfo> records = getBooksInfoFromDatabaseByTitleAndAuthor(title, author);
+        for (int i = 0; i < records.size(); i++) {
+            results.add(records.get(i).toString());
         }
         return results;
+    }
+
+    private List<BookInfo> getBooksInfoFromDatabaseByTitleAndAuthor(String title, String author) {
+        return findBooksByTitleAndAuthor(title, author);
     }
 }
