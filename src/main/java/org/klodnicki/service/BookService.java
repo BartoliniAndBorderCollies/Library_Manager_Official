@@ -53,6 +53,11 @@ public class BookService {
         for (int i = 0; i < allBooksInDatabase.size(); i++) {
             results.add(allBooksInDatabase.get(i).toString());
         }
+
+        if(results.isEmpty()) {
+            throw new NotFoundInDatabaseException(BookInfo.class);
+        }
+
         return results;
     }
 
