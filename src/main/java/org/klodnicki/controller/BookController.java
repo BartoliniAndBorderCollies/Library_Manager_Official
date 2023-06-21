@@ -1,6 +1,5 @@
 package org.klodnicki.controller;
 
-import org.klodnicki.service.AccountService;
 import org.klodnicki.service.BookService;
 
 public class BookController {
@@ -20,8 +19,8 @@ public class BookController {
     private static final String COPIES_NUMBER = "Number of copies (must be a number):";
     private static final String ABORT_OPERATION = "An operation has been canceled.";
     private static final String SUCCESS_BOOK_ADDED = "A book has been successfully added.";
-
     private static final String MUST_BE_NUMBER = "Year, edition and copies must be numbers.";
+    private static final String LIST_OF_BOOKS_IN_DATABASE = "This is a list of all books in the library";
 
     public BookController(MenuController menuController) {
         this.menuController = menuController;
@@ -60,5 +59,10 @@ public class BookController {
             return;
         }
         menuController.displayOnMenu(SUCCESS_BOOK_ADDED);
+    }
+
+    public void showBooks() {
+        menuController.displayOnMenu(LIST_OF_BOOKS_IN_DATABASE);
+        menuController.displayOnMenu(bookService.showBooks());
     }
 }
