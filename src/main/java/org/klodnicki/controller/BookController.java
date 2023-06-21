@@ -66,8 +66,8 @@ public class BookController {
         menuController.displayOnMenu(LIST_OF_BOOKS_IN_DATABASE);
 
         try {
-            menuController.displayOnMenu(bookService.showBooks());
-        }catch (NotFoundInDatabaseException e) {
+            menuController.displayOnMenu(bookService.prepareListOfAllBooks());
+        } catch (NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
         }
     }
