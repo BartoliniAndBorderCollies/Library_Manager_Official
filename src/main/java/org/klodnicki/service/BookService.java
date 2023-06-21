@@ -15,7 +15,7 @@ public class BookService {
     public void add(String title, String author, String isbn, String publisher, int publicationYear, String edition,
                     String genre, String description, String language, int copiesNumber) {
 
-        if(title.equals("") || author.equals("")) {
+        if (title.equals("") || author.equals("")) {
             throw new IllegalArgumentException("Title and author must have a value.");
         }
 
@@ -29,7 +29,7 @@ public class BookService {
     }
 
     public BookInfo findBookByTitleAndAuthorAndEdition(String title, String author, String edition) throws
-            NotFoundInDatabaseException{
+            NotFoundInDatabaseException {
         return bookRepository.findBookByTitleAndAuthorAndEdition(title, author, edition).orElseThrow(() ->
                 new NotFoundInDatabaseException(BookInfo.class));
     }
@@ -47,18 +47,21 @@ public class BookService {
     }
 
     private List<String> prepareListOfAllBooks() throws NotFoundInDatabaseException {
-        List<BookInfo> allBooksInDatabase = bookRepository.findAllBooks();
+        List<BookInfo> allBooksInDatabase = getAllBooksFromDatabase();
         List<String> results = new ArrayList<>();
 
-        for (int i =0; i< allBooksInDatabase.size(); i++) {
-            results.add(allBooksInDatabase.get(i).toString());
-        }
-
-        if(results.isEmpty()) {
+        if (allBooksInDatabase.isEmpty()) {
             throw new NotFoundInDatabaseException(BookInfo.class);
         }
 
+        for (int i = 0; i < allBooksInDatabase.size(); i++) {
+            results.add(allBooksInDatabase.get(i).toString());
+        }
         return results;
+    }
+
+    private List<BookInfo> getAllBooksFromDatabase() {
+        return bookRepository.findAllBooks();
     }
 
     private List<BookInfo> getBooksInfoFromDatabaseByAccount(Account account) {
