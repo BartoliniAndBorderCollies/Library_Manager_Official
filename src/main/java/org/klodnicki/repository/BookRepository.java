@@ -72,6 +72,13 @@ public class BookRepository {
         return query.getResultList();
     }
 
+    public List<BookInfo> findAllBooks() {
+        String hqlQuery = "FROM BookInfo";
+        TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
+
+        return query.getResultList();
+    }
+
     public List<BookInfo> findBooksByAccount (Account account) {
         String hqlQuery = "FROM BookInfo b JOIN b.accounts a WHERE a.id = :idAccount";
         TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
