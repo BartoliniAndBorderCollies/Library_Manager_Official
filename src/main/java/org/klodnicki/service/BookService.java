@@ -42,17 +42,22 @@ public class BookService {
         return bookRepository.findBooksByTitleAndAuthor(title, author);
     }
 
-    public List<String> showBooks() {
+    public List<String> showBooks() throws NotFoundInDatabaseException {
         return prepareListOfAllBooks();
     }
 
-    private List<String> prepareListOfAllBooks(){
+    private List<String> prepareListOfAllBooks() throws NotFoundInDatabaseException {
         List<BookInfo> allBooksInDatabase = bookRepository.findAllBooks();
         List<String> results = new ArrayList<>();
 
         for (int i =0; i< allBooksInDatabase.size(); i++) {
             results.add(allBooksInDatabase.get(i).toString());
         }
+
+        if(results.isEmpty()) {
+            throw new NotFoundInDatabaseException(BookInfo.class);
+        }
+
         return results;
     }
 
