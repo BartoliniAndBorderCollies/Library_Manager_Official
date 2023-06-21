@@ -1,5 +1,6 @@
 package org.klodnicki.controller;
 
+import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.service.BookService;
 
 public class BookController {
@@ -63,6 +64,11 @@ public class BookController {
 
     public void showBooks() {
         menuController.displayOnMenu(LIST_OF_BOOKS_IN_DATABASE);
-        menuController.displayOnMenu(bookService.showBooks());
+
+        try {
+            menuController.displayOnMenu(bookService.showBooks());
+        }catch (NotFoundInDatabaseException e) {
+            menuController.displayOnMenu(e.getMessage());
+        }
     }
 }
