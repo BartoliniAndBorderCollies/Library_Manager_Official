@@ -95,6 +95,13 @@ public class BookRepository {
         return query.getResultList();
     }
 
+    public List<BookInfo> findAllBooksSortByAuthor() {
+        String hqlQuery = "FROM BookInfo b ORDER BY b.author";
+        TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
+
+        return query.getResultList();
+    }
+
     public void update(BookInfo bookInfo) {
         entityManager.getTransaction().begin();
         entityManager.merge(bookInfo);
