@@ -21,7 +21,10 @@ public class BookController {
     private static final String ABORT_OPERATION = "An operation has been canceled.";
     private static final String SUCCESS_BOOK_ADDED = "A book has been successfully added.";
     private static final String MUST_BE_NUMBER = "Year, edition and copies must be numbers.";
-    private static final String LIST_OF_BOOKS_IN_DATABASE = "This is a list of all books in the library";
+    private static final String LIST_OF_BOOKS_IN_DATABASE = "This is a list of all books in the library:";
+    private static final String SORTING_QUESTION = "Do you want to sort the results? Type yes or no:";
+    private static final String UNKNOWN_COMMAND = "Unknown command";
+    private static final String WHICH_FIELD_TO_SORT = "Which field do you want to sort?";
 
     public BookController(MenuController menuController) {
         this.menuController = menuController;
@@ -70,5 +73,28 @@ public class BookController {
         } catch (NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
         }
+
+        String sortAnswer = menuController.displayOnMenuAndAskForInput(SORTING_QUESTION);
+        if (sortAnswer.equals("no")) {
+            return;
+        }
+        if (sortAnswer.equals("yes")) {
+            String fieldToSort = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_SORT);
+
+            try {
+                switch (fieldToSort) {
+
+                    case "title" -> menuController.displayOnMenu(bookService.prepareListOfAllBooksSortByTitle());
+                }
+
+            } catch (NotFoundInDatabaseException e) {
+                menuController.displayOnMenu(e.getMessage());
+            }
+
+
+        } else {
+            menuController.displayOnMenu(UNKNOWN_COMMAND);
+        }
+
     }
 }
