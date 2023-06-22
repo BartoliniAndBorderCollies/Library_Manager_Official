@@ -108,4 +108,22 @@ public class BookService {
     private List<BookInfo> getBooksInfoFromDatabaseByTitleAndAuthor(String title, String author) {
         return findBooksByTitleAndAuthor(title, author);
     }
+
+    private List<BookInfo> getAllBooksFromDatabaseSortByAuthor() {
+        return bookRepository.findAllBooksSortByAuthor();
+    }
+
+    public List<String> prepareListOfAllBooksSortByAuthor() throws NotFoundInDatabaseException {
+        List<BookInfo> allBooksInDatabaseSortByAuthor = getAllBooksFromDatabaseSortByAuthor();
+        List<String> results = new ArrayList<>();
+
+        if (allBooksInDatabaseSortByAuthor.isEmpty()) {
+            throw new NotFoundInDatabaseException(BookInfo.class);
+        }
+
+        for (int i = 0; i < allBooksInDatabaseSortByAuthor.size(); i++) {
+            results.add(allBooksInDatabaseSortByAuthor.get(i).toString());
+        }
+        return results;
+    }
 }
