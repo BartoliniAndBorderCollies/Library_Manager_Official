@@ -85,6 +85,7 @@ public class BookController {
                 switch (fieldToSort) {
 
                     case "title" -> menuController.displayOnMenu(bookService.prepareListOfAllBooksSortByTitle());
+                    case "author" -> menuController.displayOnMenu(bookService.prepareListOfAllBooksSortByAuthor());
                 }
 
             } catch (NotFoundInDatabaseException e) {
