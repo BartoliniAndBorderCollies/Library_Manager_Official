@@ -112,17 +112,22 @@ public class BookService {
     private List<BookInfo> getAllBooksFromDatabaseSortByAuthor() {
         return bookRepository.findAllBooksSortByAuthor();
     }
+    private List<BookInfo> getAllBooksFromDatabaseSortByParameter(String parameter) {
+        return bookRepository.findAllBooksSortByParameter(parameter);
+    }
 
-    public List<String> prepareListOfAllBooksSortByAuthor() throws NotFoundInDatabaseException {
-        List<BookInfo> allBooksInDatabaseSortByAuthor = getAllBooksFromDatabaseSortByAuthor();
+
+    public List<String> prepareListOfAllBooksSortByParameter(String parameter) throws NotFoundInDatabaseException,
+            IllegalArgumentException {
+        List<BookInfo> allBooksInDatabaseSortByParameter = getAllBooksFromDatabaseSortByParameter(parameter);
         List<String> results = new ArrayList<>();
 
-        if (allBooksInDatabaseSortByAuthor.isEmpty()) {
+        if (allBooksInDatabaseSortByParameter.isEmpty()) {
             throw new NotFoundInDatabaseException(BookInfo.class);
         }
 
-        for (int i = 0; i < allBooksInDatabaseSortByAuthor.size(); i++) {
-            results.add(allBooksInDatabaseSortByAuthor.get(i).toString());
+        for (int i = 0; i < allBooksInDatabaseSortByParameter.size(); i++) {
+            results.add(allBooksInDatabaseSortByParameter.get(i).toString());
         }
         return results;
     }
