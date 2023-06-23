@@ -24,7 +24,9 @@ public class BookController {
     private static final String LIST_OF_BOOKS_IN_DATABASE = "This is a list of all books in the library:";
     private static final String SORTING_QUESTION = "Do you want to sort the results? Type yes or no:";
     private static final String UNKNOWN_COMMAND = "Unknown command";
-    private static final String WHICH_FIELD_TO_SORT = "Which field do you want to sort?";
+    private static final String WHICH_FIELD_TO_SORT = "Which field do you want to sort by?";
+    private static final String POSSIBLE_FIELDS_TO_SORT = "Possible options for sorting are: title, author, ISBN, publisher, publicationYear, edition, " +
+            "genre, description, language, copiesNumber";
 
     public BookController(MenuController menuController) {
         this.menuController = menuController;
@@ -79,19 +81,16 @@ public class BookController {
             return;
         }
         if (sortAnswer.equals("yes")) {
-            String fieldToSort = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_SORT);
+            menuController.displayOnMenu(POSSIBLE_FIELDS_TO_SORT);
+            String parameter = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_SORT);
 
             try {
-                switch (fieldToSort) {
-
-                    case "title" -> menuController.displayOnMenu(bookService.prepareListOfAllBooksSortByTitle());
-                    case "author" -> menuController.displayOnMenu(bookService.prepareListOfAllBooksSortByAuthor());
-                }
-
+                menuController.displayOnMenu(bookService.prepareListOfAllBooksSortByParameter(parameter));
             } catch (NotFoundInDatabaseException e) {
                 menuController.displayOnMenu(e.getMessage());
+            } catch (IllegalArgumentException e) {
+                menuController.displayOnMenu(UNKNOWN_COMMAND);
             }
-
 
         } else {
             menuController.displayOnMenu(UNKNOWN_COMMAND);
