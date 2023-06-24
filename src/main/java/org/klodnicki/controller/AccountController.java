@@ -1,5 +1,6 @@
 package org.klodnicki.controller;
 
+import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.service.AccountService;
 
 public class AccountController {
@@ -16,6 +17,8 @@ public class AccountController {
     private static final String ADDRESS = "Address:";
     private static final String ABORT_OPERATION = "An operation has been canceled.";
     private static final String SUCCESS_ACCOUNT_CREATION = "Success! An account has been created!";
+
+    private static final String LIST_OF_ACCOUNTS = "Below you will find list of all accounts in database:";
 
 
     public AccountController(MenuController menuController) {
@@ -41,5 +44,15 @@ public class AccountController {
             return;
         }
         menuController.displayOnMenu(SUCCESS_ACCOUNT_CREATION);
+    }
+
+    public void showAccounts() {
+        menuController.displayOnMenu(LIST_OF_ACCOUNTS);
+
+        try {
+            menuController.displayOnMenu(accountService.prepareListOfAllAccounts());
+        } catch (NotFoundInDatabaseException e) {
+            menuController.displayOnMenu(e.getMessage());
+        }
     }
 }
