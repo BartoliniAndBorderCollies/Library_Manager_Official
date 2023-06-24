@@ -3,6 +3,7 @@ package org.klodnicki.service;
 import org.klodnicki.entity.Account;
 import org.klodnicki.entity.BookInfo;
 import org.klodnicki.exception.NotFoundInDatabaseException;
+import org.klodnicki.exception.SortParameterNotFoundException;
 import org.klodnicki.repository.BookRepository;
 
 import java.util.ArrayList;
@@ -118,7 +119,15 @@ public class BookService {
 
 
     public List<String> prepareListOfAllBooksSortByParameter(String parameter) throws NotFoundInDatabaseException,
-            IllegalArgumentException {
+            IllegalArgumentException, SortParameterNotFoundException {
+
+        if (!(parameter.equalsIgnoreCase("title") || parameter.equalsIgnoreCase("author")
+                || parameter.equalsIgnoreCase("ISBN") || parameter.equalsIgnoreCase("publisher")
+                || parameter.equalsIgnoreCase("publicationYear") ||
+                parameter.equalsIgnoreCase("edition"))) {
+            throw new SortParameterNotFoundException();
+        }
+
         List<BookInfo> allBooksInDatabaseSortByParameter = getAllBooksFromDatabaseSortByParameter(parameter);
         List<String> results = new ArrayList<>();
 
