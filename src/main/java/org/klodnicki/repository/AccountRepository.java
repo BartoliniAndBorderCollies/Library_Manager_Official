@@ -4,6 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.klodnicki.entity.Account;
 
+import java.util.List;
+
 public class AccountRepository {
     private final EntityManager entityManager = HibernateUtil.getSessionFactory().createEntityManager();
 
@@ -21,5 +23,12 @@ public class AccountRepository {
         query.setParameter("pesel", pesel);
 
         return query.getSingleResult();
+    }
+
+    public List<Account> findAllAccounts() {
+        String hqlQuery = "FROM Account";
+        TypedQuery<Account> query = entityManager.createQuery(hqlQuery, Account.class);
+
+        return query.getResultList();
     }
 }
