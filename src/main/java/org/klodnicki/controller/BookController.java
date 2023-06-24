@@ -1,6 +1,7 @@
 package org.klodnicki.controller;
 
 import org.klodnicki.exception.NotFoundInDatabaseException;
+import org.klodnicki.exception.SortParameterNotFoundException;
 import org.klodnicki.service.BookService;
 
 public class BookController {
@@ -86,7 +87,7 @@ public class BookController {
 
             try {
                 menuController.displayOnMenu(bookService.prepareListOfAllBooksSortByParameter(parameter));
-            } catch (NotFoundInDatabaseException e) {
+            } catch (NotFoundInDatabaseException | SortParameterNotFoundException e) {
                 menuController.displayOnMenu(e.getMessage());
             } catch (IllegalArgumentException e) {
                 menuController.displayOnMenu(UNKNOWN_COMMAND);
