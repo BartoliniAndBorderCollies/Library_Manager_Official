@@ -23,7 +23,11 @@ public class AccountController {
     private static final String REMOVE_ACCOUNT = "Enter pesel of the account which you want to delete.";
     private static final String ASK_FOR_CONFIRMATION = "Are you sure you want to delete this account? Enter yes or no";
     private static final String SUCCESS_ACCOUNT_REMOVED = "Success! An account has been removed!";
+    private static final String MODIFY_ACCOUNT_INFO = "You are about to modify an account.";
+    private static final String CHOOSE_ACCOUNT_TO_MODIFY = "Choose account to modify. Enter the account's pesel ";
+    private static final String NEW_ACCOUNT_INSTRUCTION = "Now type all the new information.";
 
+    private static final String SUCCESS_ACCOUNT_MODIFICATION = "Success! An account has been modified!";
 
     public AccountController(MenuController menuController) {
         this.menuController = menuController;
@@ -77,5 +81,29 @@ public class AccountController {
             menuController.displayOnMenu(e.getMessage());
         }
         menuController.displayOnMenu(SUCCESS_ACCOUNT_REMOVED);
+    }
+
+    public void modifyAccount() {
+        menuController.displayOnMenu(MODIFY_ACCOUNT_INFO);
+        showAccounts();
+        String peselAccountToModify = menuController.displayOnMenuAndAskForInput(CHOOSE_ACCOUNT_TO_MODIFY);
+        menuController.displayOnMenu(NEW_ACCOUNT_INSTRUCTION);
+        String newFirstName = menuController.displayOnMenuAndAskForInput(FIRST_NAME);
+        String newSecondName = menuController.displayOnMenuAndAskForInput(SECOND_NAME);
+        String newLastName = menuController.displayOnMenuAndAskForInput(LAST_NAME);
+        String newPesel = menuController.displayOnMenuAndAskForInput(PESEL);
+        String newPhoneNumber = menuController.displayOnMenuAndAskForInput(PHONE_NUMBER);
+        String newEmail = menuController.displayOnMenuAndAskForInput(EMAIL);
+        String newAddress = menuController.displayOnMenuAndAskForInput(ADDRESS);
+
+        try {
+            accountService.modifyAccount(peselAccountToModify, newFirstName, newSecondName, newLastName, newPesel,
+                    newPhoneNumber, newEmail, newAddress);
+        } catch (IllegalArgumentException | NotFoundInDatabaseException e) {
+            menuController.displayOnMenu(e.getMessage());
+            menuController.displayOnMenu(ABORT_OPERATION);
+            return;
+        }
+        menuController.displayOnMenu(SUCCESS_ACCOUNT_MODIFICATION);
     }
 }
