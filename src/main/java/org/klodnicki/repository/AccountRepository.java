@@ -1,10 +1,10 @@
 package org.klodnicki.repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import org.klodnicki.entity.Account;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AccountRepository {
     private final EntityManager entityManager = HibernateUtil.getSessionFactory().createEntityManager();
@@ -31,4 +31,16 @@ public class AccountRepository {
 
         return query.getResultList();
     }
+
+    public void removeAccount(String pesel) {
+
+        entityManager.getTransaction().begin();
+        String hqlQuery = "DELETE FROM Account a WHERE a.pesel = :pesel";
+        Query query = entityManager.createQuery(hqlQuery);
+        query.setParameter("pesel", pesel);
+        query.executeUpdate();
+        entityManager.getTransaction().commit();
+    }
+
+
 }
