@@ -56,4 +56,23 @@ public class AccountService {
     private boolean accountExist(String pesel) {
         return accountRepository.findAccountByPesel(pesel).isPresent();
     }
+
+    public void modifyAccount(String peselAccountToModify, String newFirstName, String newSecondName, String newLastName,
+                              String newPesel, String newPhoneNumber, String newEmail, String newAddress)
+            throws IllegalArgumentException, NotFoundInDatabaseException {
+
+        if (!accountExist(peselAccountToModify)) {
+            throw new NotFoundInDatabaseException(Account.class);
+        }
+
+        if (newPesel.length() != 11) {
+            throw new IllegalArgumentException("Pesel must have 11 digits.");
+
+        }
+        if (newPhoneNumber.equals("") && newEmail.equals("")) {
+            throw new IllegalArgumentException("Phone number or email address must have a value.");
+        }
+        accountRepository.mergeAccount(peselAccountToModify, newFirstName, newSecondName, newLastName, newPesel,
+                newPhoneNumber, newEmail, newAddress);
+    }
 }
