@@ -45,4 +45,15 @@ public class AccountService {
     private List<Account> getAllAccountsFromDatabase() {
         return accountRepository.findAllAccounts();
     }
+
+    public void removeAccount(String pesel) throws NotFoundInDatabaseException {
+        if (!accountExist(pesel)) {
+            throw new NotFoundInDatabaseException(Account.class);
+        }
+        accountRepository.removeAccount(pesel);
+    }
+
+    private boolean accountExist(String pesel) {
+        return accountRepository.accountExist(pesel).isPresent();
+    }
 }
