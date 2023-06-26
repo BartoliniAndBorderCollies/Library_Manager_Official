@@ -2,6 +2,7 @@ package org.klodnicki.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,9 @@ public class BookInfo {
 
     @ManyToMany(fetch = FetchType.EAGER) // wiele kopii ksiazek moze przynalezec do wielu kont
     @JoinTable(name = "lending_info",
-            joinColumns = { @JoinColumn(name = "book_info_id") }, //join tyczy sie klasy tej(czyli w tym wypadki BookInfo)
+            joinColumns = {@JoinColumn(name = "book_info_id")}, //join tyczy sie klasy tej(czyli w tym wypadki BookInfo)
             //brackety są po to, żeby umiescić wiele wartości innych kolumn, w tym przypadku nie potrzebne
-            inverseJoinColumns = { @JoinColumn(name = "account_id") }// inverseJoinColumns tyczy sie klasy, którą łaczymy
+            inverseJoinColumns = {@JoinColumn(name = "account_id")}// inverseJoinColumns tyczy sie klasy, którą łaczymy
     )
     private List<Account> accounts = new ArrayList<>(); //to jest lista kont, które mają wypożyczone książki
     @Column(nullable = false)
@@ -40,6 +41,12 @@ public class BookInfo {
     private String language;
     @Column(name = "copies_number")
     private int copiesNumber;
+
+    @Column(name = "lending_date")
+    private LocalDateTime lendingDate;
+
+    @Column(name = "returning_date")
+    private LocalDateTime returningDate;
 
     public BookInfo() {
     }
@@ -82,6 +89,7 @@ public class BookInfo {
     public void addAccount(Account account) {
         accounts.add(account);
     }
+
     public void removeAccount(Account account) {
         accounts.remove(account);
     }
@@ -92,6 +100,22 @@ public class BookInfo {
 
     public String getEdition() {
         return edition;
+    }
+
+    public LocalDateTime getLendingDate() {
+        return lendingDate;
+    }
+
+    public LocalDateTime getReturningDate() {
+        return returningDate;
+    }
+
+    public void setLendingDate(LocalDateTime lendingDate) {
+        this.lendingDate = lendingDate;
+    }
+
+    public void setReturningDate(LocalDateTime returningDate) {
+        this.returningDate = returningDate;
     }
 
     @Override
