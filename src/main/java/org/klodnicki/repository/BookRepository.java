@@ -79,25 +79,10 @@ public class BookRepository {
         return query.getResultList();
     }
 
-    public List<BookInfo> findBooksByAccount (Account account) {
+    public List<BookInfo> findBooksByAccount(Account account) {
         String hqlQuery = "FROM BookInfo b JOIN b.accounts a WHERE a.id = :idAccount";
         TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
         query.setParameter("idAccount", account.getId());
-
-        return query.getResultList();
-    }
-
-
-    public List<BookInfo> findAllBooksSortByTitle() {
-        String hqlQuery = "FROM BookInfo b ORDER BY b.title";
-        TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
-
-        return query.getResultList();
-    }
-
-    public List<BookInfo> findAllBooksSortByAuthor() {
-        String hqlQuery = "FROM BookInfo b ORDER BY b.author";
-        TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
 
         return query.getResultList();
     }
