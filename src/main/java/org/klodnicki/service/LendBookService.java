@@ -6,6 +6,7 @@ import org.klodnicki.exception.MaximumBookBorrowedLimitException;
 import org.klodnicki.exception.NotEnoughBookCopiesException;
 import org.klodnicki.exception.NotFoundInDatabaseException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class LendBookService {
@@ -30,6 +31,8 @@ public class LendBookService {
         }
 
         // All the validation
+        bookInfo.setLendingDate(LocalDateTime.now());
+
         if (bookInfo.getCopiesNumber() <= 0) {
             throw new NotEnoughBookCopiesException();
         }
