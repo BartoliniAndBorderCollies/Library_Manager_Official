@@ -59,10 +59,6 @@ public class BookService {
             results.add(allBooksInDatabase.get(i).toString());
         }
 
-        if (results.isEmpty()) {
-            throw new NotFoundInDatabaseException(BookInfo.class);
-        }
-
         return results;
     }
 
