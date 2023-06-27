@@ -94,7 +94,7 @@ public class BookService {
 
 
     public List<String> prepareListOfAllBooksSortByParameter(String parameter) throws NotFoundInDatabaseException,
-            IllegalArgumentException, SortParameterNotFoundException {
+            SortParameterNotFoundException {
 
         if (!(parameter.equalsIgnoreCase("title") || parameter.equalsIgnoreCase("author")
                 || parameter.equalsIgnoreCase("ISBN") || parameter.equalsIgnoreCase("publisher")
