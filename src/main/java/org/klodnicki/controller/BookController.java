@@ -22,12 +22,11 @@ public class BookController {
     private static final String ABORT_OPERATION = "An operation has been canceled.";
     private static final String SUCCESS_BOOK_ADDED = "A book has been successfully added.";
     private static final String MUST_BE_NUMBER = "Year, edition and copies must be numbers.";
-    private static final String LIST_OF_BOOKS_IN_DATABASE = "This is a list of all books in the library:";
-    private static final String SORTING_QUESTION = "Do you want to sort the results? Type yes or no:";
     private static final String UNKNOWN_COMMAND = "Unknown command";
-    private static final String WHICH_FIELD_TO_SORT = "Which field do you want to sort by?";
-    private static final String POSSIBLE_FIELDS_TO_SORT = "Possible options for sorting are: title, author, ISBN, publisher, publicationYear, edition, " +
-            "genre, description, language, copiesNumber";
+    private static final String WHICH_FIELD_TO_SORT = "By which parameter you want to sort the book list? Type for " +
+            "example \"author\" ";
+    private static final String POSSIBLE_FIELDS_TO_SORT = "Possible options for sorting are: title, author, ISBN, " +
+            "publisher, publication year, edition, genre, description, language, copies number";
 
     public BookController(MenuController menuController) {
         this.menuController = menuController;
@@ -69,32 +68,14 @@ public class BookController {
     }
 
     public void showBooks() {
-        menuController.displayOnMenu(LIST_OF_BOOKS_IN_DATABASE);
+
+        menuController.displayOnMenu(POSSIBLE_FIELDS_TO_SORT);
+        String parameter = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_SORT);
 
         try {
-            menuController.displayOnMenu(bookService.prepareListOfAllBooks());
-        } catch (NotFoundInDatabaseException e) {
+            menuController.displayOnMenu(bookService.prepareListOfAllBooksSortByParameter(parameter));
+        } catch (NotFoundInDatabaseException | SortParameterNotFoundException e) {
             menuController.displayOnMenu(e.getMessage());
-            menuController.displayOnMenu(ABORT_OPERATION);
-            return;
         }
-
-        String sortAnswer = menuController.displayOnMenuAndAskForInput(SORTING_QUESTION);
-        if (sortAnswer.equals("no")) {
-            return;
-        }
-        if (sortAnswer.equals("yes")) {
-            menuController.displayOnMenu(POSSIBLE_FIELDS_TO_SORT);
-            String parameter = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_SORT);
-
-            try {
-                menuController.displayOnMenu(bookService.prepareListOfAllBooksSortByParameter(parameter));
-            } catch (NotFoundInDatabaseException | SortParameterNotFoundException e) {
-                menuController.displayOnMenu(e.getMessage());
-            }
-            return;
-        }
-
-        menuController.displayOnMenu(UNKNOWN_COMMAND);
     }
 }
