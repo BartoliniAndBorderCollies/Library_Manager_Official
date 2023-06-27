@@ -75,6 +75,8 @@ public class BookController {
             menuController.displayOnMenu(bookService.prepareListOfAllBooks());
         } catch (NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
+            menuController.displayOnMenu(ABORT_OPERATION);
+            return;
         }
 
         String sortAnswer = menuController.displayOnMenuAndAskForInput(SORTING_QUESTION);
