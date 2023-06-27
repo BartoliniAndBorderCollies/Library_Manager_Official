@@ -92,10 +92,9 @@ public class BookController {
             } catch (NotFoundInDatabaseException | SortParameterNotFoundException e) {
                 menuController.displayOnMenu(e.getMessage());
             }
-
-        } else {
-            menuController.displayOnMenu(UNKNOWN_COMMAND);
+            return;
         }
 
+        menuController.displayOnMenu(UNKNOWN_COMMAND);
     }
 }
