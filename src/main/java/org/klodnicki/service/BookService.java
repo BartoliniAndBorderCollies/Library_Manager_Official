@@ -95,11 +95,10 @@ public class BookService {
 
     public List<String> prepareListOfAllBooksSortByParameter(String parameter) throws NotFoundInDatabaseException,
             SortParameterNotFoundException {
-
-        if (!(parameter.equalsIgnoreCase("title") || parameter.equalsIgnoreCase("author")
-                || parameter.equalsIgnoreCase("ISBN") || parameter.equalsIgnoreCase("publisher")
-                || parameter.equalsIgnoreCase("publicationYear") ||
-                parameter.equalsIgnoreCase("edition"))) {
+        // enum z polami do sortowania
+        // pętla po tym enumie
+        // jeśli nie ma takiego enuma, to throw new SortParameterEx
+        if (!sortOptionValidation(parameter)) {
             throw new SortParameterNotFoundException();
         }
 
@@ -114,5 +113,15 @@ public class BookService {
             results.add(allBooksInDatabaseSortByParameter.get(i).toString());
         }
         return results;
+    }
+
+    private boolean sortOptionValidation(String parameter) {
+
+        for (SortOption sortOption : SortOption.values()) {
+            if (sortOption.getSortName().equalsIgnoreCase(parameter)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
