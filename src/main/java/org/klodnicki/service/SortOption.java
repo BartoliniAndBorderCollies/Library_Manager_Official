@@ -4,9 +4,13 @@ public enum SortOption {
     TITLE("title"),
     AUTHOR("author"),
     ISBN("isbn"),
-    PUBLICATION_YEAR("publication year"),
     PUBLISHER("publisher"),
-    EDITION("edition");
+    PUBLICATION_YEAR("publication year"),
+    EDITION("edition"),
+    GENRE("genre"),
+    DESCRIPTION("description"),
+    LANGUAGE("language"),
+    COPIES_NUMBER("copies number");
 
     private final String sortName;
 
