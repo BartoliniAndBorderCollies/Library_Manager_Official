@@ -89,8 +89,6 @@ public class BookController {
                 menuController.displayOnMenu(bookService.prepareListOfAllBooksSortByParameter(parameter));
             } catch (NotFoundInDatabaseException | SortParameterNotFoundException e) {
                 menuController.displayOnMenu(e.getMessage());
-            } catch (IllegalArgumentException e) {
-                menuController.displayOnMenu(UNKNOWN_COMMAND);
             }
 
         } else {
