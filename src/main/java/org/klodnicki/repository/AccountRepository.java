@@ -42,7 +42,7 @@ public class AccountRepository {
         entityManager.getTransaction().commit();
     }
 
-    public Optional<Account> accountExist(String pesel) {
+    public Optional<Account> findAccountByPesel(String pesel) {
         String hqlQuery = "FROM Account a WHERE a.pesel = :pesel";
         TypedQuery<Account> query = entityManager.createQuery(hqlQuery, Account.class);
         query.setParameter("pesel", pesel);

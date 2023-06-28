@@ -54,6 +54,6 @@ public class AccountService {
     }
 
     private boolean accountExist(String pesel) {
-        return accountRepository.accountExist(pesel).isPresent();
+        return accountRepository.findAccountByPesel(pesel).isPresent();
     }
 }
