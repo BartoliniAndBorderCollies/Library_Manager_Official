@@ -22,11 +22,8 @@ public class BookController {
     private static final String ABORT_OPERATION = "An operation has been canceled.";
     private static final String SUCCESS_BOOK_ADDED = "A book has been successfully added.";
     private static final String MUST_BE_NUMBER = "Year, edition and copies must be numbers.";
-    private static final String UNKNOWN_COMMAND = "Unknown command";
     private static final String WHICH_FIELD_TO_SORT = "By which parameter you want to sort the book list? Type for " +
             "example \"author\" ";
-    private static final String POSSIBLE_FIELDS_TO_SORT = "Possible options for sorting are: title, author, ISBN, " +
-            "publisher, publication year, edition, genre, description, language, copies number";
 
     public BookController(MenuController menuController) {
         this.menuController = menuController;
@@ -69,7 +66,7 @@ public class BookController {
 
     public void showBooks() {
 
-        menuController.displayOnMenu(POSSIBLE_FIELDS_TO_SORT);
+        menuController.displayOnMenu(bookService.sortOptionNames());
         String parameter = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_SORT);
 
         try {
