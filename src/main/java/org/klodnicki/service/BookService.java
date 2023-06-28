@@ -124,4 +124,13 @@ public class BookService {
         }
         return false;
     }
+
+    public List<String> sortOptionNames() {
+        List<String> namesList = new ArrayList<>();
+        for (SortOption sortOption : SortOption.values()) {
+            namesList.add(sortOption.getSortName());
+        }
+        return namesList;
+    }
+
 }
