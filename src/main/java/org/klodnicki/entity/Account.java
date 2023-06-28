@@ -22,7 +22,7 @@ public class Account {
     private String secondName;
     @Column(nullable = false, name = "last_name")
     private String lastName;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String pesel;
     @Column(name = "phone_number")
     private String phoneNumber;
