@@ -7,7 +7,6 @@ public class AccountController {
     private final AccountService accountService = new AccountService();
     private final MenuController menuController;
 
-    private static final String UNKNOWN_COMMAND = "Unknown command.";
     private static final String CREATE_INFO = "In order to create an account, please type the following information.";
     private static final String FIRST_NAME = "First name:";
     private static final String SECOND_NAME = "Second name:";
@@ -23,6 +22,7 @@ public class AccountController {
             "Be aware that this action cannot be rollback. ";
     private static final String REMOVE_ACCOUNT = "Enter pesel of the account which you want to delete.";
     private static final String ASK_FOR_CONFIRMATION = "Are you sure you want to delete this account? Enter yes or no";
+    private static final String SUCCESS_ACCOUNT_REMOVED = "Success! An account has been removed!";
 
 
     public AccountController(MenuController menuController) {
@@ -66,20 +66,16 @@ public class AccountController {
         String pesel = menuController.displayOnMenuAndAskForInput(REMOVE_ACCOUNT);
         String responseConfirmation = menuController.displayOnMenuAndAskForInput(ASK_FOR_CONFIRMATION);
 
-        if (responseConfirmation.equalsIgnoreCase("no")) {
+        if (!responseConfirmation.equalsIgnoreCase("yes")) {
             menuController.displayOnMenu(ABORT_OPERATION);
             return;
         }
-        if (responseConfirmation.equalsIgnoreCase("yes")) {
 
-            try {
-                accountService.removeAccount(pesel);
-            } catch (NotFoundInDatabaseException e) {
-                menuController.displayOnMenu(e.getMessage());
-            }
-
-        } else {
-            menuController.displayOnMenu(UNKNOWN_COMMAND);
+        try {
+            accountService.removeAccount(pesel);
+        } catch (NotFoundInDatabaseException e) {
+            menuController.displayOnMenu(e.getMessage());
         }
+        menuController.displayOnMenu(SUCCESS_ACCOUNT_REMOVED);
     }
 }
