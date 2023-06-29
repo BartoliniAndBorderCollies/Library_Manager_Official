@@ -1,6 +1,6 @@
 package org.klodnicki.service;
 
-public enum SortOption {
+public enum SortOptionBookInfo {
     TITLE("title"),
     AUTHOR("author"),
     ISBN("isbn"),
@@ -14,7 +14,7 @@ public enum SortOption {
 
     private final String sortName;
 
-    SortOption(String sortName) {
+    SortOptionBookInfo(String sortName) {
         this.sortName = sortName;
     }
 
