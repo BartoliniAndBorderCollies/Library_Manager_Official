@@ -117,8 +117,8 @@ public class BookService {
 
     private boolean sortOptionValidation(String parameter) {
 
-        for (SortOption sortOption : SortOption.values()) {
-            if (sortOption.getSortName().equalsIgnoreCase(parameter)) {
+        for (SortOptionBookInfo sortOptionBookInfo : SortOptionBookInfo.values()) {
+            if (sortOptionBookInfo.getSortName().equalsIgnoreCase(parameter)) {
                 return true;
             }
         }
@@ -127,8 +127,8 @@ public class BookService {
 
     public List<String> sortOptionNames() {
         List<String> namesList = new ArrayList<>();
-        for (SortOption sortOption : SortOption.values()) {
-            namesList.add(sortOption.getSortName());
+        for (SortOptionBookInfo sortOptionBookInfo : SortOptionBookInfo.values()) {
+            namesList.add(sortOptionBookInfo.getSortName());
         }
         return namesList;
     }
