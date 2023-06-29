@@ -25,8 +25,8 @@ public class AccountController {
     private static final String SUCCESS_ACCOUNT_REMOVED = "Success! An account has been removed!";
     private static final String MODIFY_ACCOUNT_INFO = "You are about to modify an account.";
     private static final String CHOOSE_ACCOUNT_TO_MODIFY = "Choose account to modify. Enter the account's pesel ";
-    private static final String NEW_ACCOUNT_INSTRUCTION = "Now type all the new information.";
-
+    private static final String WHICH_FIELD_TO_MODIFY = "What is going to be modified? Enter a parameter:";
+    private static final String ENTER_NEW_DATA = "Enter the new data:";
     private static final String SUCCESS_ACCOUNT_MODIFICATION = "Success! An account has been modified!";
 
     public AccountController(MenuController menuController) {
@@ -87,18 +87,12 @@ public class AccountController {
         menuController.displayOnMenu(MODIFY_ACCOUNT_INFO);
         showAccounts();
         String peselAccountToModify = menuController.displayOnMenuAndAskForInput(CHOOSE_ACCOUNT_TO_MODIFY);
-        menuController.displayOnMenu(NEW_ACCOUNT_INSTRUCTION);
-        String newFirstName = menuController.displayOnMenuAndAskForInput(FIRST_NAME);
-        String newSecondName = menuController.displayOnMenuAndAskForInput(SECOND_NAME);
-        String newLastName = menuController.displayOnMenuAndAskForInput(LAST_NAME);
-        String newPesel = menuController.displayOnMenuAndAskForInput(PESEL);
-        String newPhoneNumber = menuController.displayOnMenuAndAskForInput(PHONE_NUMBER);
-        String newEmail = menuController.displayOnMenuAndAskForInput(EMAIL);
-        String newAddress = menuController.displayOnMenuAndAskForInput(ADDRESS);
+        menuController.displayOnMenu(accountService.sortOptionNames());
+        String parameterToModify = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_MODIFY);
+        String newData = menuController.displayOnMenuAndAskForInput(ENTER_NEW_DATA);
 
         try {
-            accountService.modifyAccount(peselAccountToModify, newFirstName, newSecondName, newLastName, newPesel,
-                    newPhoneNumber, newEmail, newAddress);
+            accountService.modifyAccount(peselAccountToModify, parameterToModify, newData);
         } catch (IllegalArgumentException | NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
             menuController.displayOnMenu(ABORT_OPERATION);
