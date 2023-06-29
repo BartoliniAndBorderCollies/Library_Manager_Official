@@ -25,22 +25,14 @@ public class AccountRepository {
         return query.getSingleResult();
     }
 
-    public void mergeAccount(String peselAccountToModify, String newFirstName, String newSecondName, String newLastName,
-                             String newPesel, String newPhoneNumber, String newEmail, String newAddress) {
+    public void mergeAccount(String peselAccountToModify, String parameterToModify, String newData) {
 
         entityManager.getTransaction().begin();
-        String hqlQuery = "UPDATE Account a SET a.firstName = :newFirstName, a.secondName = :newSecondName, " +
-                "a.lastName = :newLastName, a.pesel = :newPesel, a.phoneNumber = :newPhoneNumber, a.email = :newEmail, " +
-                "a.address = :newAddress WHERE a.pesel = :peselAccountToModify";
+        String hqlQuery = "UPDATE Account a SET a." + parameterToModify + " = :" + parameterToModify +
+                " WHERE a.pesel = :peselAccountToModify";
 
         Query query = entityManager.createQuery(hqlQuery);
-        query.setParameter("newFirstName", newFirstName);
-        query.setParameter("newSecondName", newSecondName);
-        query.setParameter("newLastName", newLastName);
-        query.setParameter("newPesel", newPesel);
-        query.setParameter("newPhoneNumber", newPhoneNumber);
-        query.setParameter("newEmail", newEmail);
-        query.setParameter("newAddress", newAddress);
+        query.setParameter(parameterToModify, newData);
         query.setParameter("peselAccountToModify", peselAccountToModify);
         query.executeUpdate();
         entityManager.getTransaction().commit();
