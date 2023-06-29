@@ -76,7 +76,7 @@ public class AccountService {
 
         for (SortOptionAccount sortOption : SortOptionAccount.values()) {
             if (sortOption.getSortName().equalsIgnoreCase(parameter)) {
-                parameter = sortOption.getSortName();
+                parameter = sortOption.getHqlParameter();
             }
         }
         return parameter;
