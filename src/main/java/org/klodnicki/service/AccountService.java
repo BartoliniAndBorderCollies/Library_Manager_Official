@@ -47,21 +47,21 @@ public class AccountService {
     }
 
     public void removeAccount(String pesel) throws NotFoundInDatabaseException {
-        if (!accountExist(pesel)) {
+        if (accountNotExist(pesel)) {
             throw new NotFoundInDatabaseException(Account.class);
         }
         accountRepository.removeAccount(pesel);
     }
 
-    private boolean accountExist(String pesel) {
-        return accountRepository.findAccountByPesel(pesel).isPresent();
+    private boolean accountNotExist(String pesel) {
+        return accountRepository.findAccountByPesel(pesel).isEmpty();
     }
 
     public void modifyAccount(String peselAccountToModify, String newFirstName, String newSecondName, String newLastName,
                               String newPesel, String newPhoneNumber, String newEmail, String newAddress)
             throws IllegalArgumentException, NotFoundInDatabaseException {
 
-        if (!accountExist(peselAccountToModify)) {
+        if (accountNotExist(peselAccountToModify)) {
             throw new NotFoundInDatabaseException(Account.class);
         }
 
