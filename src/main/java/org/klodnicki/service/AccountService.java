@@ -57,22 +57,32 @@ public class AccountService {
         return accountRepository.findAccountByPesel(pesel).isEmpty();
     }
 
-    public void modifyAccount(String peselAccountToModify, String newFirstName, String newSecondName, String newLastName,
-                              String newPesel, String newPhoneNumber, String newEmail, String newAddress)
+    public void modifyAccount(String peselAccountToModify, String parameterToModify, String newData)
             throws IllegalArgumentException, NotFoundInDatabaseException {
 
         if (accountNotExist(peselAccountToModify)) {
             throw new NotFoundInDatabaseException(Account.class);
         }
 
-        if (newPesel.length() != 11) {
-            throw new IllegalArgumentException("Pesel must have 11 digits.");
-
-        }
-        if (newPhoneNumber.equals("") && newEmail.equals("")) {
-            throw new IllegalArgumentException("Phone number or email address must have a value.");
-        }
-        accountRepository.mergeAccount(peselAccountToModify, newFirstName, newSecondName, newLastName, newPesel,
-                newPhoneNumber, newEmail, newAddress);
+        accountRepository.mergeAccount(peselAccountToModify, prepareParameterToDatabase(parameterToModify), newData);
     }
+
+    private String prepareParameterToDatabase(String parameter) {
+
+        for (SortOptionAccount sortOption : SortOptionAccount.values()) {
+            if (sortOption.getSortName().equalsIgnoreCase(parameter)) {
+                parameter = sortOption.getSortName();
+            }
+        }
+        return parameter;
+    }
+
+    public List<String> sortOptionNames() {
+        List<String> namesList = new ArrayList<>();
+        for (SortOptionAccount sortOption : SortOptionAccount.values()) {
+            namesList.add(sortOption.getSortName());
+        }
+        return namesList;
+    }
+
 }
