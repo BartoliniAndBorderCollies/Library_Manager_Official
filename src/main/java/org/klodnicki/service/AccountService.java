@@ -64,7 +64,7 @@ public class AccountService {
             throw new NotFoundInDatabaseException(Account.class);
         }
 
-        if (parameterToModify.equalsIgnoreCase("pesel") && newData.length() != 11) {
+        if (parameterToModify.equalsIgnoreCase(SortOptionAccount.PESEL.getSortName()) && newData.length() != 11) {
             throw new IllegalArgumentException("Pesel must have 11 digits.");
 
         }
