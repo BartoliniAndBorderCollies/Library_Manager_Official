@@ -61,14 +61,13 @@ public class AccountController {
         menuController.displayOnMenu(SUCCESS_ACCOUNT_CREATION);
     }
 
-    public void showAccounts() {
-        menuController.displayOnMenu(LIST_OF_ACCOUNTS);
-
+    public void showAllAccounts() {
         try {
             menuController.displayOnMenu(accountService.prepareListOfAllAccounts());
         } catch (NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
         }
+    }
 
         String searchOption = menuController.displayOnMenuAndAskForInput(SEARCH_QUESTION);
 
