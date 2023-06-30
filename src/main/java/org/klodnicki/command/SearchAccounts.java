@@ -2,22 +2,22 @@ package org.klodnicki.command;
 
 import org.klodnicki.controller.AccountController;
 
-public class ShowAccounts implements MenuCommand {
+public class SearchAccounts implements MenuCommand {
 
     private final AccountController accountController;
 
-    public ShowAccounts(AccountController accountController) {
+    public SearchAccounts(AccountController accountController) {
         this.accountController = accountController;
     }
 
     @Override
     public String getName() {
-        return "show accounts";
+        return "search accounts";
     }
 
     @Override
     public void execute() {
-        accountController.showAccounts();
+        accountController.searchAccounts();
 
     }
 }
