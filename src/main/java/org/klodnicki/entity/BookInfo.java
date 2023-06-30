@@ -15,9 +15,9 @@ public class BookInfo {
 
     @ManyToMany(fetch = FetchType.EAGER) // wiele kopii ksiazek moze przynalezec do wielu kont
     @JoinTable(name = "lending_info",
-            joinColumns = { @JoinColumn(name = "book_info_id") }, //join tyczy sie klasy tej(czyli w tym wypadki BookInfo)
+            joinColumns = {@JoinColumn(name = "book_info_id")}, //join tyczy sie klasy tej(czyli w tym wypadki BookInfo)
             //brackety są po to, żeby umiescić wiele wartości innych kolumn, w tym przypadku nie potrzebne
-            inverseJoinColumns = { @JoinColumn(name = "account_id") }// inverseJoinColumns tyczy sie klasy, którą łaczymy
+            inverseJoinColumns = {@JoinColumn(name = "account_id")}// inverseJoinColumns tyczy sie klasy, którą łaczymy
     )
     private List<Account> accounts = new ArrayList<>(); //to jest lista kont, które mają wypożyczone książki
     @Column(nullable = false)
@@ -82,6 +82,7 @@ public class BookInfo {
     public void addAccount(Account account) {
         accounts.add(account);
     }
+
     public void removeAccount(Account account) {
         accounts.remove(account);
     }
@@ -97,16 +98,16 @@ public class BookInfo {
     @Override
     public String toString() {
         return "BookInfo{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", publisher='" + publisher + '\'' +
-                ", publicationYear=" + publicationYear +
-                ", edition='" + edition + '\'' +
-                ", genre='" + genre + '\'' +
-                ", description='" + description + '\'' +
-                ", language='" + language + '\'' +
-                ", copiesNumber=" + copiesNumber +
+                "title: '" + title + '\'' +
+                ", author: '" + author + '\'' +
+                ", isbn: '" + isbn + '\'' +
+                ", publisher: '" + publisher + '\'' +
+                ", publication year: " + publicationYear +
+                ", edition: '" + edition + '\'' +
+                ", genre: '" + genre + '\'' +
+                ", description: '" + description + '\'' +
+                ", language: '" + language + '\'' +
+                ", copiesNumber: " + copiesNumber +
                 '}';
     }
 }
