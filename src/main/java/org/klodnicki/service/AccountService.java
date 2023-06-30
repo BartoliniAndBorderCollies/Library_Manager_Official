@@ -90,4 +90,33 @@ public class AccountService {
         return namesList;
     }
 
+    public List<String> prepareListOfAccountsByFirstNameAndLastName(String firstName, String lastName)
+            throws NotFoundInDatabaseException {
+        List<Account> accountsByFirstNameAndLastName = accountRepository.findAccountsByFirstNameAndLastName
+                (firstName, lastName);
+        List<String> results = new ArrayList<>();
+
+        if (accountsByFirstNameAndLastName.isEmpty()) {
+            throw new NotFoundInDatabaseException(Account.class);
+        }
+
+        for (Account account : accountsByFirstNameAndLastName) {
+            results.add(account.toString());
+        }
+        return results;
+    }
+
+    public List<String> prepareListOfAccountsByFirstNameAndLastNameAndParameter
+            (String firstName, String lastName, String parameter) {
+        List<Account> accountsByFirstNameAndLastNameAndParameter = accountRepository.
+                findAccountsByFirstNameAndLastNameAndParameter(firstName, lastName, prepareParameterToDatabase(parameter));
+        List<String> results = new ArrayList<>();
+
+        for (int i = 0; i < accountsByFirstNameAndLastNameAndParameter.size(); i++) {
+            results.add(accountsByFirstNameAndLastNameAndParameter.get(i).toString());
+        }
+        return results;
+    }
+
+
 }
