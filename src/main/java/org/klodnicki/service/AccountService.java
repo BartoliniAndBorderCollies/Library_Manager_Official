@@ -118,5 +118,7 @@ public class AccountService {
         return results;
     }
 
-
+    public String prepareAccountByPeselWithBooks(String pesel) {
+        return accountRepository.findAccountByPeselWithBooks(pesel).toString();
+    }
 }
