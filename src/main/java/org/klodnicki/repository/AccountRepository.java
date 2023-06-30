@@ -25,6 +25,24 @@ public class AccountRepository {
         return query.getSingleResult();
     }
 
+    public List<Account> findAccountsByFirstNameAndLastName(String firstName, String lastName) {
+        String hqlQuery = "FROM Account a WHERE a.firstName = :firstName AND a.lastName = :lastName";
+        TypedQuery<Account> query = entityManager.createQuery(hqlQuery, Account.class);
+        query.setParameter("firstName", firstName);
+        query.setParameter("lastName", lastName);
+
+        return query.getResultList();
+    }
+
+    public List<Account> findAccountsByFirstNameAndLastNameAndParameter(String firstName, String lastName, String parameter) {
+        String hqlQuery = "FROM Account a WHERE a.firstName = :firstName AND a.lastName = :lastName ORDER BY a." + parameter;
+        TypedQuery<Account> query = entityManager.createQuery(hqlQuery, Account.class);
+        query.setParameter("firstName", firstName);
+        query.setParameter("lastName", lastName);
+
+        return query.getResultList();
+    }
+
     public void mergeAccount(String peselAccountToModify, String parameterToModify, String newData) {
 
         entityManager.getTransaction().begin();
