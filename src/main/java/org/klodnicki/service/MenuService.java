@@ -19,6 +19,7 @@ public class MenuService {
         menu.addCommand(new SearchAccounts(new AccountController(menuController)));
         menu.addCommand(new RemoveAccount(new AccountController(menuController)));
         menu.addCommand(new ModifyAccount(new AccountController(menuController)));
+        menu.addCommand(new ShowAllAccounts(new AccountController(menuController)));
     }
 
     public boolean executeCommand(String userInput) {
