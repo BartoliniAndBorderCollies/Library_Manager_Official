@@ -68,15 +68,15 @@ public class Account {
     @Override
     public String toString() {
         return "Account{" +
-                "id=" + id +
-                ", bookInfos=" + bookInfos +
-                ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", pesel='" + pesel + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
+                "id number: " + id +
+                ", borrowed books: " + bookInfos +
+                ", first name: " + firstName + '\'' +
+                ", second name: '" + secondName + '\'' +
+                ", last name: '" + lastName + '\'' +
+                ", pesel: '" + pesel + '\'' +
+                ", phone number: '" + phoneNumber + '\'' +
+                ", email: '" + email + '\'' +
+                ", address: '" + address + '\'' +
                 '}';
     }
 }
