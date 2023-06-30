@@ -28,6 +28,13 @@ public class AccountController {
     private static final String WHICH_FIELD_TO_MODIFY = "What is going to be modified? Enter a parameter:";
     private static final String ENTER_NEW_DATA = "Enter the new data:";
     private static final String SUCCESS_ACCOUNT_MODIFICATION = "Success! An account has been modified!";
+    private static final String HOW_TO_SORT = "Which field you want to use to sort the results by? " +
+            "Enter for example \"pesel\"";
+    private static final String SEARCH_QUESTION = "Do you want to search for a specific account? Enter yes/no";
+    private static final String SEARCH_FIRST_NAME = "Enter the first name of an account which you want to search:";
+    private static final String SEARCH_LAST_NAME = "Enter the last name:";
+    private static final String SORTING_QUESTION = "Do you want to sort the results? Type yes/no";
+
 
     public AccountController(MenuController menuController) {
         this.menuController = menuController;
@@ -62,6 +69,35 @@ public class AccountController {
         } catch (NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
         }
+
+        String searchOption = menuController.displayOnMenuAndAskForInput(SEARCH_QUESTION);
+
+        if (!searchOption.equalsIgnoreCase("yes")) {
+            menuController.displayOnMenu(ABORT_OPERATION);
+            return;
+        }
+        String searchFirstName = menuController.displayOnMenuAndAskForInput(SEARCH_FIRST_NAME);
+        String searchLastName = menuController.displayOnMenuAndAskForInput(SEARCH_LAST_NAME);
+
+        try {
+            menuController.displayOnMenu(accountService.prepareListOfAccountsByFirstNameAndLastName
+                    (searchFirstName, searchLastName));
+        } catch (NotFoundInDatabaseException e) {
+            menuController.displayOnMenu(e.getMessage());
+        }
+
+        String sortingResponse = menuController.displayOnMenuAndAskForInput(SORTING_QUESTION);
+
+        if (!sortingResponse.equalsIgnoreCase("yes")) {
+            menuController.displayOnMenu(ABORT_OPERATION);
+            return;
+        }
+
+        menuController.displayOnMenu(accountService.sortOptionNames());
+        String sortParameter = menuController.displayOnMenuAndAskForInput(HOW_TO_SORT);
+        menuController.displayOnMenu(accountService.prepareListOfAccountsByFirstNameAndLastNameAndParameter
+                (searchFirstName, searchLastName, sortParameter));
+
     }
 
     public void removeAccount() {
