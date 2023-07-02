@@ -6,7 +6,6 @@ import org.klodnicki.service.AccountService;
 public class AccountController {
     private final AccountService accountService = new AccountService();
     private final MenuController menuController;
-
     private static final String CREATE_INFO = "In order to create an account, please type the following information.";
     private static final String FIRST_NAME = "First name:";
     private static final String SECOND_NAME = "Second name:";
@@ -28,13 +27,14 @@ public class AccountController {
     private static final String WHICH_FIELD_TO_MODIFY = "What is going to be modified? Enter a parameter:";
     private static final String ENTER_NEW_DATA = "Enter the new data:";
     private static final String SUCCESS_ACCOUNT_MODIFICATION = "Success! An account has been modified!";
-    private static final String HOW_TO_SORT = "Which field you want to use to sort the results by? " +
+    private static final String HOW_TO_SORT = "Which field you want to use to sort the results? " +
             "Enter for example \"pesel\"";
-    private static final String SEARCH_QUESTION = "Do you want to search for a specific account? Enter yes/no";
     private static final String SEARCH_FIRST_NAME = "Enter the first name of an account which you want to search:";
     private static final String SEARCH_LAST_NAME = "Enter the last name:";
     private static final String SORTING_QUESTION = "Do you want to sort the results? Type yes/no";
-
+    private static final String SEE_BOOKS_OF_ACCOUNT_QUESTION = "Do you want to see the books borrowed by the account? " +
+            "Type yes/no";
+    private static final String ACCOUNT_PESEL_TO_SEE_BOOKS = "Enter pesel of an account:";
 
     public AccountController(MenuController menuController) {
         this.menuController = menuController;
@@ -62,6 +62,7 @@ public class AccountController {
     }
 
     public void showAllAccounts() {
+        menuController.displayOnMenu(LIST_OF_ACCOUNTS);
         try {
             menuController.displayOnMenu(accountService.prepareListOfAllAccounts());
         } catch (NotFoundInDatabaseException e) {
@@ -69,12 +70,8 @@ public class AccountController {
         }
     }
 
-        String searchOption = menuController.displayOnMenuAndAskForInput(SEARCH_QUESTION);
+    public void searchAccounts() {
 
-        if (!searchOption.equalsIgnoreCase("yes")) {
-            menuController.displayOnMenu(ABORT_OPERATION);
-            return;
-        }
         String searchFirstName = menuController.displayOnMenuAndAskForInput(SEARCH_FIRST_NAME);
         String searchLastName = menuController.displayOnMenuAndAskForInput(SEARCH_LAST_NAME);
 
@@ -86,9 +83,8 @@ public class AccountController {
         }
 
         String sortingResponse = menuController.displayOnMenuAndAskForInput(SORTING_QUESTION);
-
         if (!sortingResponse.equalsIgnoreCase("yes")) {
-            menuController.displayOnMenu(ABORT_OPERATION);
+            showListOfBooksOfAccount(searchFirstName, searchLastName);
             return;
         }
 
@@ -97,11 +93,27 @@ public class AccountController {
         menuController.displayOnMenu(accountService.prepareListOfAccountsByFirstNameAndLastNameAndParameter
                 (searchFirstName, searchLastName, sortParameter));
 
+        showListOfBooksOfAccount(searchFirstName, searchLastName);
+    }
+
+    private void showListOfBooksOfAccount(String firstName, String lastName) {
+        String showBooksResponse = menuController.displayOnMenuAndAskForInput(SEE_BOOKS_OF_ACCOUNT_QUESTION);
+        if (!showBooksResponse.equalsIgnoreCase("yes")) {
+            menuController.displayOnMenu(ABORT_OPERATION);
+            return;
+        }
+
+        String peselAccount = menuController.displayOnMenuAndAskForInput(ACCOUNT_PESEL_TO_SEE_BOOKS);
+        try {
+            menuController.displayOnMenu(accountService.prepareAccountByPeselWithBooks(firstName, lastName, peselAccount));
+        } catch (NotFoundInDatabaseException e) {
+            menuController.displayOnMenu(e.getMessage());
+        }
     }
 
     public void removeAccount() {
         menuController.displayOnMenu(REMOVE_WARNING);
-        showAccounts();
+        searchAccounts();
         String pesel = menuController.displayOnMenuAndAskForInput(REMOVE_ACCOUNT);
         String responseConfirmation = menuController.displayOnMenuAndAskForInput(ASK_FOR_CONFIRMATION);
 
@@ -120,7 +132,7 @@ public class AccountController {
 
     public void modifyAccount() {
         menuController.displayOnMenu(MODIFY_ACCOUNT_INFO);
-        showAccounts();
+        searchAccounts();
         String peselAccountToModify = menuController.displayOnMenuAndAskForInput(CHOOSE_ACCOUNT_TO_MODIFY);
         menuController.displayOnMenu(accountService.sortOptionNames());
         String parameterToModify = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_MODIFY);
