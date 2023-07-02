@@ -79,4 +79,16 @@ public class Account {
                 ", address: '" + address + '\'' +
                 '}';
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPesel() {
+        return pesel;
+    }
 }

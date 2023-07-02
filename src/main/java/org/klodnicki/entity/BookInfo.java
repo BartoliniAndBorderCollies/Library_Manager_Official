@@ -110,5 +110,13 @@ public class BookInfo {
                 ", copiesNumber: " + copiesNumber +
                 '}';
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
 }
 
