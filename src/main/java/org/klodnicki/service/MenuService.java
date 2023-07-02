@@ -16,7 +16,7 @@ public class MenuService {
         menu.addCommand(new LendBook(new LendBookController(menuController)));
         menu.addCommand(new ShowBooks(new BookController(menuController)));
         menu.addCommand(new ReturnBook(new ReturnBookController(menuController)));
-        menu.addCommand(new SearchAccounts(new AccountController(menuController)));
+        menu.addCommand(new SearchAccount(new AccountController(menuController)));
         menu.addCommand(new RemoveAccount(new AccountController(menuController)));
         menu.addCommand(new ModifyAccount(new AccountController(menuController)));
         menu.addCommand(new ShowAllAccounts(new AccountController(menuController)));
