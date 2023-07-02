@@ -118,7 +118,45 @@ public class AccountService {
         return results;
     }
 
-    public String prepareAccountByPeselWithBooks(String pesel) {
-        return accountRepository.findAccountByPeselWithBooks(pesel).toString();
+    private boolean peselExist(String pesel, String firstName, String lastName) {
+        List<Account> accountList = accountRepository.findAccountsByFirstNameAndLastName(firstName, lastName);
+
+        for (int i = 0; i < accountList.size(); i++) {
+            if (pesel.equalsIgnoreCase(accountList.get(i).getPesel())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<String> prepareAccountByPeselWithBooks(String firstName, String lastName, String peselAccount)
+            throws NotFoundInDatabaseException {
+        List<String> results = new ArrayList<>();
+        List<Account> preparedList = accountRepository.findAccountsByFirstNameAndLastName(firstName, lastName);
+
+        for (int i = 0; i < preparedList.size(); i++) {
+            if (peselExist(peselAccount, firstName, lastName)) {
+
+                String fName = preparedList.get(i).getFirstName();
+                String lName = preparedList.get(i).getLastName();
+                String pesel = preparedList.get(i).getPesel();
+
+                for (int j = 0; j < preparedList.get(i).getBooks().size(); j++) {
+                    String title = preparedList.get(i).getBooks().get(i).getTitle();
+                    String author = preparedList.get(i).getBooks().get(i).getAuthor();
+                    String edition = preparedList.get(i).getBooks().get(i).getEdition();
+
+                    results.add(SortOptionAccount.FIRST_NAME.getSortName() + fName);
+                    results.add(SortOptionAccount.LAST_NAME.getSortName() + lName);
+                    results.add(SortOptionAccount.PESEL.getSortName() + pesel);
+                    results.add(SortOptionBookInfo.TITLE.getSortName() + title);
+                    results.add(SortOptionBookInfo.AUTHOR.getSortName() + author);
+                    results.add(SortOptionBookInfo.EDITION.getSortName() + edition);
+                }
+            } else {
+                throw new NotFoundInDatabaseException(Account.class);
+            }
+        }
+        return results;
     }
 }
