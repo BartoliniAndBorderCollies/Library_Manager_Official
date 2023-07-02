@@ -43,6 +43,15 @@ public class AccountRepository {
         return query.getResultList();
     }
 
+//    public Tuple findAccountByPeselWithBooks(String pesel) {
+//        String hqlQuery = "SELECT a.firstName, a.lastName, a.pesel, b.title, b.author, b.edition " +
+//                "FROM Account a Join a.bookInfos b WHERE a.pesel = :pesel";
+//        TypedQuery<Tuple> query = entityManager.createQuery(hqlQuery, Tuple.class);
+//        query.setParameter("pesel", pesel);
+//
+//        return query.getSingleResult();
+//    }
+
     public void mergeAccount(String peselAccountToModify, String parameterToModify, String newData) {
 
         entityManager.getTransaction().begin();
