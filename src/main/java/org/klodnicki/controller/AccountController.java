@@ -70,7 +70,7 @@ public class AccountController {
         }
     }
 
-    public void searchAccounts() {
+    public void searchAccount() {
 
         String searchFirstName = menuController.displayOnMenuAndAskForInput(SEARCH_FIRST_NAME);
         String searchLastName = menuController.displayOnMenuAndAskForInput(SEARCH_LAST_NAME);
@@ -113,7 +113,7 @@ public class AccountController {
 
     public void removeAccount() {
         menuController.displayOnMenu(REMOVE_WARNING);
-        searchAccounts();
+        searchAccount();
         String pesel = menuController.displayOnMenuAndAskForInput(REMOVE_ACCOUNT);
         String responseConfirmation = menuController.displayOnMenuAndAskForInput(ASK_FOR_CONFIRMATION);
 
@@ -132,7 +132,7 @@ public class AccountController {
 
     public void modifyAccount() {
         menuController.displayOnMenu(MODIFY_ACCOUNT_INFO);
-        searchAccounts();
+        searchAccount();
         String peselAccountToModify = menuController.displayOnMenuAndAskForInput(CHOOSE_ACCOUNT_TO_MODIFY);
         menuController.displayOnMenu(accountService.sortOptionNames());
         String parameterToModify = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_MODIFY);
