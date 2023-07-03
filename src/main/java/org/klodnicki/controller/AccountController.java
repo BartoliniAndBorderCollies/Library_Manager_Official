@@ -134,7 +134,7 @@ public class AccountController {
 
     public void modifyAccount() {
         menuController.displayOnMenu(MODIFY_ACCOUNT_INFO);
-        searchAccount();
+        showAllAccounts();
         String peselAccountToModify = menuController.displayOnMenuAndAskForInput(CHOOSE_ACCOUNT_TO_MODIFY);
         menuController.displayOnMenu(accountService.sortOptionNames());
         String parameterToModify = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_MODIFY);
