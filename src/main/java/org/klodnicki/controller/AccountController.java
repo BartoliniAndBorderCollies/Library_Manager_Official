@@ -69,6 +69,19 @@ public class AccountController {
         } catch (NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
         }
+        sortResults();
+    }
+
+    private void sortResults() {
+
+        String sortingResponse = menuController.displayOnMenuAndAskForInput(SORTING_QUESTION);
+        if (!sortingResponse.equalsIgnoreCase("yes")) {
+            return;
+        }
+
+        menuController.displayOnMenu(accountService.sortOptionNames());
+        String sortParameter = menuController.displayOnMenuAndAskForInput(HOW_TO_SORT);
+        menuController.displayOnMenu(accountService.prepareAllAccountsOrderByParameter(sortParameter));
     }
 
     public void searchAccount() {
@@ -84,17 +97,7 @@ public class AccountController {
             menuController.displayOnMenu(e.getMessage());
         }
 
-        String sortingResponse = menuController.displayOnMenuAndAskForInput(SORTING_QUESTION);
-        if (!sortingResponse.equalsIgnoreCase("yes")) {
-            showListOfBooksOfAccount(searchFirstName, searchLastName);
-            return;
-        }
-
-        menuController.displayOnMenu(accountService.sortOptionNames());
-        String sortParameter = menuController.displayOnMenuAndAskForInput(HOW_TO_SORT);
-        menuController.displayOnMenu(accountService.prepareListOfAccountsByFirstNameAndLastNameAndParameter
-                (searchFirstName, searchLastName, sortParameter));
-
+        sortResults();
         showListOfBooksOfAccount(searchFirstName, searchLastName);
     }
 
