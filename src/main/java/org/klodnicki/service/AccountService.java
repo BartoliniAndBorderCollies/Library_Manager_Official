@@ -153,9 +153,9 @@ public class AccountService {
                 String pesel = preparedList.get(i).getPesel();
 
                 for (int j = 0; j < preparedList.get(i).getBooks().size(); j++) {
-                    String title = preparedList.get(i).getBooks().get(i).getTitle();
-                    String author = preparedList.get(i).getBooks().get(i).getAuthor();
-                    String edition = preparedList.get(i).getBooks().get(i).getEdition();
+                    String title = preparedList.get(i).getBooks().get(j).getTitle();
+                    String author = preparedList.get(i).getBooks().get(j).getAuthor();
+                    String edition = preparedList.get(i).getBooks().get(j).getEdition();
 
                     results.add(SortOptionAccount.FIRST_NAME.getSortName() + ": " + fName);
                     results.add(SortOptionAccount.LAST_NAME.getSortName() + ": " + lName);
@@ -163,6 +163,7 @@ public class AccountService {
                     results.add(SortOptionBookInfo.TITLE.getSortName() + ": " + title);
                     results.add(SortOptionBookInfo.AUTHOR.getSortName() + ": " + author);
                     results.add(SortOptionBookInfo.EDITION.getSortName() + ": " + edition);
+                    results.add("-----------------------------------------------------------");
                 }
             }
         }
