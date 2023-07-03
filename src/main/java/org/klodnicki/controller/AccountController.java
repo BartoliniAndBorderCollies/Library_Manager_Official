@@ -23,6 +23,7 @@ public class AccountController {
     private static final String ASK_FOR_CONFIRMATION = "Are you sure you want to delete this account? Enter yes or no";
     private static final String SUCCESS_ACCOUNT_REMOVED = "Success! An account has been removed!";
     private static final String MODIFY_ACCOUNT_INFO = "You are about to modify an account.";
+    private static final String LIST_PRESENTATION = "This is the list of results:";
     private static final String CHOOSE_ACCOUNT_TO_MODIFY = "Choose account to modify. Enter the account's pesel ";
     private static final String WHICH_FIELD_TO_MODIFY = "What is going to be modified? Enter a parameter:";
     private static final String ENTER_NEW_DATA = "Enter the new data:";
@@ -76,6 +77,7 @@ public class AccountController {
         String searchLastName = menuController.displayOnMenuAndAskForInput(SEARCH_LAST_NAME);
 
         try {
+            menuController.displayOnMenu(LIST_PRESENTATION);
             menuController.displayOnMenu(accountService.prepareListOfAccountsByFirstNameAndLastName
                     (searchFirstName, searchLastName));
         } catch (NotFoundInDatabaseException e) {
