@@ -43,6 +43,13 @@ public class AccountRepository {
         return query.getResultList();
     }
 
+    public List<Account> findAllAccountsOrderByParameter(String parameter) {
+        String hqlQuery = "FROM Account a ORDER BY a." + parameter;
+        TypedQuery<Account> query = entityManager.createQuery(hqlQuery, Account.class);
+
+        return query.getResultList();
+    }
+
 //    public Tuple findAccountByPeselWithBooks(String pesel) {
 //        String hqlQuery = "SELECT a.firstName, a.lastName, a.pesel, b.title, b.author, b.edition " +
 //                "FROM Account a Join a.bookInfos b WHERE a.pesel = :pesel";
