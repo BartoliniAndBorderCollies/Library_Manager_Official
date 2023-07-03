@@ -157,15 +157,13 @@ public class AccountService {
                     String author = preparedList.get(i).getBooks().get(i).getAuthor();
                     String edition = preparedList.get(i).getBooks().get(i).getEdition();
 
-                    results.add(SortOptionAccount.FIRST_NAME.getSortName() + fName);
-                    results.add(SortOptionAccount.LAST_NAME.getSortName() + lName);
-                    results.add(SortOptionAccount.PESEL.getSortName() + pesel);
-                    results.add(SortOptionBookInfo.TITLE.getSortName() + title);
-                    results.add(SortOptionBookInfo.AUTHOR.getSortName() + author);
-                    results.add(SortOptionBookInfo.EDITION.getSortName() + edition);
+                    results.add(SortOptionAccount.FIRST_NAME.getSortName() + ": " + fName);
+                    results.add(SortOptionAccount.LAST_NAME.getSortName() + ": " + lName);
+                    results.add(SortOptionAccount.PESEL.getSortName() + ": " + pesel);
+                    results.add(SortOptionBookInfo.TITLE.getSortName() + ": " + title);
+                    results.add(SortOptionBookInfo.AUTHOR.getSortName() + ": " + author);
+                    results.add(SortOptionBookInfo.EDITION.getSortName() + ": " + edition);
                 }
-            } else {
-                throw new NotFoundInDatabaseException(Account.class);
             }
         }
         return results;
