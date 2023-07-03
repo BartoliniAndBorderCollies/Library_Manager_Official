@@ -106,6 +106,17 @@ public class AccountService {
         return results;
     }
 
+    public List<String> prepareAllAccountsOrderByParameter(String parameter) {
+        List<Account> accountsOrderByParameter = accountRepository.findAllAccountsOrderByParameter
+                (prepareParameterToDatabase(parameter));
+        List<String> results = new ArrayList<>();
+
+        for (int i = 0; i < accountsOrderByParameter.size(); i++) {
+            results.add(accountsOrderByParameter.get(i).toString());
+        }
+        return results;
+    }
+
     public List<String> prepareListOfAccountsByFirstNameAndLastNameAndParameter
             (String firstName, String lastName, String parameter) {
         List<Account> accountsByFirstNameAndLastNameAndParameter = accountRepository.
