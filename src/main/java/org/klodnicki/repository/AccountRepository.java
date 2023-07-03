@@ -34,15 +34,6 @@ public class AccountRepository {
         return query.getResultList();
     }
 
-    public List<Account> findAccountsByFirstNameAndLastNameAndParameter(String firstName, String lastName, String parameter) {
-        String hqlQuery = "FROM Account a WHERE a.firstName = :firstName AND a.lastName = :lastName ORDER BY a." + parameter;
-        TypedQuery<Account> query = entityManager.createQuery(hqlQuery, Account.class);
-        query.setParameter("firstName", firstName);
-        query.setParameter("lastName", lastName);
-
-        return query.getResultList();
-    }
-
     public List<Account> findAllAccountsOrderByParameter(String parameter) {
         String hqlQuery = "FROM Account a ORDER BY a." + parameter;
         TypedQuery<Account> query = entityManager.createQuery(hqlQuery, Account.class);

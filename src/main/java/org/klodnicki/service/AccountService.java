@@ -117,18 +117,6 @@ public class AccountService {
         return results;
     }
 
-    public List<String> prepareListOfAccountsByFirstNameAndLastNameAndParameter
-            (String firstName, String lastName, String parameter) {
-        List<Account> accountsByFirstNameAndLastNameAndParameter = accountRepository.
-                findAccountsByFirstNameAndLastNameAndParameter(firstName, lastName, prepareParameterToDatabase(parameter));
-        List<String> results = new ArrayList<>();
-
-        for (int i = 0; i < accountsByFirstNameAndLastNameAndParameter.size(); i++) {
-            results.add(accountsByFirstNameAndLastNameAndParameter.get(i).toString());
-        }
-        return results;
-    }
-
     private boolean peselExist(String pesel, String firstName, String lastName) {
         List<Account> accountList = accountRepository.findAccountsByFirstNameAndLastName(firstName, lastName);
 
