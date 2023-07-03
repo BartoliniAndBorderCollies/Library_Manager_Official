@@ -113,7 +113,7 @@ public class AccountController {
 
     public void removeAccount() {
         menuController.displayOnMenu(REMOVE_WARNING);
-        searchAccount();
+        showAllAccounts();
         String pesel = menuController.displayOnMenuAndAskForInput(REMOVE_ACCOUNT);
         String responseConfirmation = menuController.displayOnMenuAndAskForInput(ASK_FOR_CONFIRMATION);
 
