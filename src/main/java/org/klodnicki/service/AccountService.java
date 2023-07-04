@@ -117,8 +117,7 @@ public class AccountService {
         return results;
     }
 
-    private boolean peselExist(String pesel, String firstName, String lastName) {
-        List<Account> accountList = accountRepository.findAccountsByFirstNameAndLastName(firstName, lastName);
+    private boolean peselExist(String pesel, List<Account> accountList) {
 
         for (int i = 0; i < accountList.size(); i++) {
             if (pesel.equalsIgnoreCase(accountList.get(i).getPesel())) {
@@ -134,7 +133,7 @@ public class AccountService {
         List<Account> preparedList = accountRepository.findAccountsByFirstNameAndLastName(firstName, lastName);
 
         for (int i = 0; i < preparedList.size(); i++) {
-            if (peselExist(peselAccount, firstName, lastName)) {
+            if (peselExist(peselAccount, preparedList)) {
 
                 String fName = preparedList.get(i).getFirstName();
                 String lName = preparedList.get(i).getLastName();
