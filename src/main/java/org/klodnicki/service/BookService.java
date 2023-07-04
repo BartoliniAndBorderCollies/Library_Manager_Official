@@ -73,6 +73,15 @@ public class BookService {
         return bookRepository.findAllBooksSortByParameter(parameter);
     }
 
+    private String prepareParameterToDatabase(String parameter) {
+        for (SortOption sort : SortOption.values()) {
+            if (sort.getSortName().equalsIgnoreCase(parameter)) {
+                parameter = sort.getHqlParameter();
+            }
+        }
+        return parameter;
+    }
+
 
     public List<String> prepareListOfAllBooksSortByParameter(String parameter) throws NotFoundInDatabaseException,
             SortParameterNotFoundException {
@@ -83,7 +92,8 @@ public class BookService {
             throw new SortParameterNotFoundException();
         }
 
-        List<BookInfo> allBooksInDatabaseSortByParameter = getAllBooksFromDatabaseSortByParameter(parameter);
+        List<BookInfo> allBooksInDatabaseSortByParameter = getAllBooksFromDatabaseSortByParameter
+                (prepareParameterToDatabase(parameter));
         List<String> results = new ArrayList<>();
 
         if (allBooksInDatabaseSortByParameter.isEmpty()) {
