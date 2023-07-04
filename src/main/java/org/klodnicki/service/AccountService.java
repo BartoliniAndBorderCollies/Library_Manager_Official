@@ -57,19 +57,19 @@ public class AccountService {
         return accountRepository.findAccountByPesel(pesel).isEmpty();
     }
 
-    public void modifyAccount(String peselAccountToModify, String parameterToModify, String newData)
+    public void modifyAccount(String pesel, String parameterToModify, String newInput)
             throws IllegalArgumentException, NotFoundInDatabaseException {
 
-        if (accountNotExist(peselAccountToModify)) {
+        if (accountNotExist(pesel)) {
             throw new NotFoundInDatabaseException(Account.class);
         }
 
-        if (parameterToModify.equalsIgnoreCase(SortOptionAccount.PESEL.getSortName()) && newData.length() != 11) {
+        if (parameterToModify.equalsIgnoreCase(SortOptionAccount.PESEL.getSortName()) && newInput.length() != 11) {
             throw new IllegalArgumentException("Pesel must have 11 digits.");
 
         }
 
-        accountRepository.mergeAccount(peselAccountToModify, prepareParameterToDatabase(parameterToModify), newData);
+        accountRepository.mergeAccount(pesel, prepareParameterToDatabase(parameterToModify), newInput);
     }
 
     private String prepareParameterToDatabase(String parameter) throws NotFoundInDatabaseException {
