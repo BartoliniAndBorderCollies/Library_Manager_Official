@@ -72,14 +72,14 @@ public class AccountService {
         accountRepository.mergeAccount(peselAccountToModify, prepareParameterToDatabase(parameterToModify), newData);
     }
 
-    private String prepareParameterToDatabase(String parameter) {
+    private String prepareParameterToDatabase(String parameter) throws NotFoundInDatabaseException {
 
         for (SortOptionAccount sortOption : SortOptionAccount.values()) {
             if (sortOption.getSortName().equalsIgnoreCase(parameter)) {
-                parameter = sortOption.getHqlParameter();
+                return sortOption.getHqlParameter();
             }
         }
-        return parameter;
+        throw new NotFoundInDatabaseException(Account.class);
     }
 
     public List<String> sortOptionNames() {
@@ -106,7 +106,7 @@ public class AccountService {
         return results;
     }
 
-    public List<String> prepareAllAccountsOrderByParameter(String parameter) {
+    public List<String> prepareAllAccountsOrderByParameter(String parameter) throws NotFoundInDatabaseException {
         List<Account> accountsOrderByParameter = accountRepository.findAllAccountsOrderByParameter
                 (prepareParameterToDatabase(parameter));
         List<String> results = new ArrayList<>();

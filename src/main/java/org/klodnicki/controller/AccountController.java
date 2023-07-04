@@ -81,7 +81,11 @@ public class AccountController {
 
         menuController.displayOnMenu(accountService.sortOptionNames());
         String sortParameter = menuController.displayOnMenuAndAskForInput(HOW_TO_SORT);
-        menuController.displayOnMenu(accountService.prepareAllAccountsOrderByParameter(sortParameter));
+        try {
+            menuController.displayOnMenu(accountService.prepareAllAccountsOrderByParameter(sortParameter));
+        } catch (NotFoundInDatabaseException e) {
+            menuController.displayOnMenu(e.getMessage());
+        }
     }
 
     public void searchAccount() {
@@ -138,13 +142,13 @@ public class AccountController {
     public void modifyAccount() {
         menuController.displayOnMenu(MODIFY_ACCOUNT_INFO);
         showAllAccounts();
-        String peselAccountToModify = menuController.displayOnMenuAndAskForInput(CHOOSE_ACCOUNT_TO_MODIFY);
+        String peselOfAccountToModify = menuController.displayOnMenuAndAskForInput(CHOOSE_ACCOUNT_TO_MODIFY);
         menuController.displayOnMenu(accountService.sortOptionNames());
         String parameterToModify = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_MODIFY);
         String newData = menuController.displayOnMenuAndAskForInput(ENTER_NEW_DATA);
 
         try {
-            accountService.modifyAccount(peselAccountToModify, parameterToModify, newData);
+            accountService.modifyAccount(peselOfAccountToModify, parameterToModify, newData);
         } catch (IllegalArgumentException | NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
             menuController.displayOnMenu(ABORT_OPERATION);
