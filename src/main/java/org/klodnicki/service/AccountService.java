@@ -128,14 +128,16 @@ public class AccountService {
         List<BookInfo> books = accountRepository.findAccountByFirstNameAndLastNameAndPesel(firstName,
                 lastName, peselAccount).getBooks();
 
+        results.add(SortOptionAccount.FIRST_NAME.getSortName() + ": " + firstName);
+        results.add(SortOptionAccount.LAST_NAME.getSortName() + ": " + lastName);
+        results.add(SortOptionAccount.PESEL.getSortName() + ": " + peselAccount);
+        results.add("-----------------------------------------------------------");
+
         for (BookInfo book : books) {
             String title = book.getTitle();
             String author = book.getAuthor();
             String edition = book.getEdition();
 
-            results.add(SortOptionAccount.FIRST_NAME.getSortName() + ": " + firstName);
-            results.add(SortOptionAccount.LAST_NAME.getSortName() + ": " + lastName);
-            results.add(SortOptionAccount.PESEL.getSortName() + ": " + peselAccount);
             results.add(SortOptionBookInfo.TITLE.getSortName() + ": " + title);
             results.add(SortOptionBookInfo.AUTHOR.getSortName() + ": " + author);
             results.add(SortOptionBookInfo.EDITION.getSortName() + ": " + edition);
