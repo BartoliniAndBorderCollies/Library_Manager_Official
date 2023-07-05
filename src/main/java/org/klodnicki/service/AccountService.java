@@ -129,6 +129,10 @@ public class AccountService {
         List<BookInfo> books = accountRepository.findAccountByFirstNameAndLastNameAndPesel(firstName,
                 lastName, peselAccount).getBooks();
 
+        if (books.isEmpty()) {
+            throw new NotFoundInDatabaseException(BookInfo.class);
+        }
+
         results.add(SortOptionAccount.FIRST_NAME.getSortName() + ": " + firstName);
         results.add(SortOptionAccount.LAST_NAME.getSortName() + ": " + lastName);
         results.add(SortOptionAccount.PESEL.getSortName() + ": " + peselAccount);
