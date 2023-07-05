@@ -1,6 +1,7 @@
 package org.klodnicki.controller;
 
 import org.klodnicki.exception.NotFoundInDatabaseException;
+import org.klodnicki.exception.SortParameterNotFoundException;
 import org.klodnicki.service.AccountService;
 
 public class AccountController {
@@ -82,7 +83,7 @@ public class AccountController {
         String sortParameter = menuController.displayOnMenuAndAskForInput(HOW_TO_SORT);
         try {
             menuController.displayOnMenu(accountService.prepareAllAccountsOrderByParameter(sortParameter));
-        } catch (NotFoundInDatabaseException e) {
+        } catch (SortParameterNotFoundException e) {
             menuController.displayOnMenu(e.getMessage());
         }
     }
@@ -150,7 +151,7 @@ public class AccountController {
 
         try {
             accountService.modifyAccount(peselOfAccountToModify, parameterToModify, newData);
-        } catch (IllegalArgumentException | NotFoundInDatabaseException e) {
+        } catch (IllegalArgumentException | NotFoundInDatabaseException | SortParameterNotFoundException e) {
             menuController.displayOnMenu(e.getMessage());
             menuController.displayOnMenu(ABORT_OPERATION);
             return;

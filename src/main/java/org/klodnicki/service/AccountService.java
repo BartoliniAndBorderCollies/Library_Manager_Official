@@ -2,6 +2,7 @@ package org.klodnicki.service;
 
 import org.klodnicki.entity.BookInfo;
 import org.klodnicki.exception.NotFoundInDatabaseException;
+import org.klodnicki.exception.SortParameterNotFoundException;
 import org.klodnicki.repository.AccountRepository;
 import org.klodnicki.entity.Account;
 
@@ -62,7 +63,7 @@ public class AccountService {
     }
 
     public void modifyAccount(String pesel, String parameterToModify, String newInput)
-            throws IllegalArgumentException, NotFoundInDatabaseException {
+            throws IllegalArgumentException, NotFoundInDatabaseException, SortParameterNotFoundException {
 
         if (accountNotExist(pesel)) {
             throw new NotFoundInDatabaseException(Account.class);
@@ -76,14 +77,14 @@ public class AccountService {
         accountRepository.mergeAccount(pesel, prepareParameterToDatabase(parameterToModify), newInput);
     }
 
-    private String prepareParameterToDatabase(String parameter) throws NotFoundInDatabaseException {
+    private String prepareParameterToDatabase(String parameter) throws SortParameterNotFoundException {
 
         for (SortOptionAccount sortOption : SortOptionAccount.values()) {
             if (sortOption.getSortName().equalsIgnoreCase(parameter)) {
                 return sortOption.getHqlParameter();
             }
         }
-        throw new NotFoundInDatabaseException(Account.class);
+        throw new SortParameterNotFoundException();
     }
 
     public List<String> sortOptionNames() {
@@ -110,7 +111,7 @@ public class AccountService {
         return results;
     }
 
-    public List<String> prepareAllAccountsOrderByParameter(String parameter) throws NotFoundInDatabaseException {
+    public List<String> prepareAllAccountsOrderByParameter(String parameter) throws SortParameterNotFoundException {
         List<Account> accountsOrderByParameter = accountRepository.findAllAccountsOrderByParameter
                 (prepareParameterToDatabase(parameter));
         List<String> results = new ArrayList<>();
