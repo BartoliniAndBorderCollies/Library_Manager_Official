@@ -125,28 +125,21 @@ public class AccountService {
             throws NotFoundInDatabaseException {
 
         List<String> results = new ArrayList<>();
-        List<Account> preparedList = accountRepository.findAccountsByFirstNameAndLastName(firstName, lastName);
+        List<BookInfo> books = accountRepository.findAccountByFirstNameAndLastNameAndPesel(firstName,
+                lastName, peselAccount).getBooks();
 
-        for (Account account : preparedList) {
-            if (peselExist(peselAccount, preparedList)) {
-                String fName = account.getFirstName();
-                String lName = account.getLastName();
-                String pesel = account.getPesel();
+        for (BookInfo book : books) {
+            String title = book.getTitle();
+            String author = book.getAuthor();
+            String edition = book.getEdition();
 
-                for (BookInfo bookInfo : account.getBooks()) {
-                    String title = bookInfo.getTitle();
-                    String author = bookInfo.getAuthor();
-                    String edition = bookInfo.getEdition();
-
-                    results.add(SortOptionAccount.FIRST_NAME.getSortName() + ": " + fName);
-                    results.add(SortOptionAccount.LAST_NAME.getSortName() + ": " + lName);
-                    results.add(SortOptionAccount.PESEL.getSortName() + ": " + pesel);
-                    results.add(SortOptionBookInfo.TITLE.getSortName() + ": " + title);
-                    results.add(SortOptionBookInfo.AUTHOR.getSortName() + ": " + author);
-                    results.add(SortOptionBookInfo.EDITION.getSortName() + ": " + edition);
-                    results.add("-----------------------------------------------------------");
-                }
-            }
+            results.add(SortOptionAccount.FIRST_NAME.getSortName() + ": " + firstName);
+            results.add(SortOptionAccount.LAST_NAME.getSortName() + ": " + lastName);
+            results.add(SortOptionAccount.PESEL.getSortName() + ": " + peselAccount);
+            results.add(SortOptionBookInfo.TITLE.getSortName() + ": " + title);
+            results.add(SortOptionBookInfo.AUTHOR.getSortName() + ": " + author);
+            results.add(SortOptionBookInfo.EDITION.getSortName() + ": " + edition);
+            results.add("-----------------------------------------------------------");
         }
         return results;
     }
