@@ -69,7 +69,6 @@ public class AccountController {
         } catch (NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
         }
-        sortResults();
     }
 
     private void sortResults() {
@@ -123,6 +122,7 @@ public class AccountController {
     public void removeAccount() {
         menuController.displayOnMenu(REMOVE_WARNING);
         showAllAccounts();
+        sortResults();
         String pesel = menuController.displayOnMenuAndAskForInput(REMOVE_ACCOUNT);
         String responseConfirmation = menuController.displayOnMenuAndAskForInput(ASK_FOR_CONFIRMATION);
 
@@ -142,6 +142,7 @@ public class AccountController {
     public void modifyAccount() {
         menuController.displayOnMenu(MODIFY_ACCOUNT_INFO);
         showAllAccounts();
+        sortResults();
         String peselOfAccountToModify = menuController.displayOnMenuAndAskForInput(CHOOSE_ACCOUNT_TO_MODIFY);
         menuController.displayOnMenu(accountService.sortOptionNames());
         String parameterToModify = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_MODIFY);
