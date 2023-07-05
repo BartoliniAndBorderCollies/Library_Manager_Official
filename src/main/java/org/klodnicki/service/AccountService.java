@@ -29,8 +29,10 @@ public class AccountService {
         accountRepository.create(new Account(firstName, secondName, lastName, pesel, phoneNumber, email, address));
     }
 
-    public Account findAccountByFirstNameAndLastNameAndPesel(String firstName, String lastName, String pesel) {
-        return accountRepository.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
+    public Account findAccountByFirstNameAndLastNameAndPesel(String firstName, String lastName, String pesel)
+            throws NotFoundInDatabaseException {
+        return accountRepository.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel).
+                orElseThrow(() -> new NotFoundInDatabaseException(Account.class));
     }
 
     public List<String> prepareListOfAllAccounts() throws NotFoundInDatabaseException {
@@ -126,8 +128,8 @@ public class AccountService {
             throws NotFoundInDatabaseException {
 
         List<String> results = new ArrayList<>();
-        List<BookInfo> books = accountRepository.findAccountByFirstNameAndLastNameAndPesel(firstName,
-                lastName, peselAccount).getBooks();
+        Account account = findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, peselAccount);
+        List<BookInfo> books = account.getBooks();
 
         if (books.isEmpty()) {
             throw new NotFoundInDatabaseException(BookInfo.class);
