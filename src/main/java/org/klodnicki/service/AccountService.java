@@ -1,5 +1,6 @@
 package org.klodnicki.service;
 
+import org.klodnicki.entity.BookInfo;
 import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.repository.AccountRepository;
 import org.klodnicki.entity.Account;
@@ -132,20 +133,20 @@ public class AccountService {
 
     public List<String> prepareAccountByPeselWithBooks(String firstName, String lastName, String peselAccount)
             throws NotFoundInDatabaseException {
+
         List<String> results = new ArrayList<>();
         List<Account> preparedList = accountRepository.findAccountsByFirstNameAndLastName(firstName, lastName);
 
-        for (int i = 0; i < preparedList.size(); i++) {
+        for (Account account : preparedList) {
             if (peselExist(peselAccount, preparedList)) {
+                String fName = account.getFirstName();
+                String lName = account.getLastName();
+                String pesel = account.getPesel();
 
-                String fName = preparedList.get(i).getFirstName();
-                String lName = preparedList.get(i).getLastName();
-                String pesel = preparedList.get(i).getPesel();
-
-                for (int j = 0; j < preparedList.get(i).getBooks().size(); j++) {
-                    String title = preparedList.get(i).getBooks().get(j).getTitle();
-                    String author = preparedList.get(i).getBooks().get(j).getAuthor();
-                    String edition = preparedList.get(i).getBooks().get(j).getEdition();
+                for (BookInfo bookInfo : account.getBooks()) {
+                    String title = bookInfo.getTitle();
+                    String author = bookInfo.getAuthor();
+                    String edition = bookInfo.getEdition();
 
                     results.add(SortOptionAccount.FIRST_NAME.getSortName() + ": " + fName);
                     results.add(SortOptionAccount.LAST_NAME.getSortName() + ": " + lName);
