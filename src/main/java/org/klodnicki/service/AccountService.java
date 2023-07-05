@@ -121,16 +121,6 @@ public class AccountService {
         return results;
     }
 
-    private boolean peselExist(String pesel, List<Account> accountList) {
-
-        for (int i = 0; i < accountList.size(); i++) {
-            if (pesel.equalsIgnoreCase(accountList.get(i).getPesel())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public List<String> prepareAccountByPeselWithBooks(String firstName, String lastName, String peselAccount)
             throws NotFoundInDatabaseException {
 
