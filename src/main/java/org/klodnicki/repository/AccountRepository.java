@@ -15,14 +15,21 @@ public class AccountRepository {
         entityManager.getTransaction().commit();
     }
 
-    public Account findAccountByFirstNameAndLastNameAndPesel(String firstName, String lastName, String pesel) {
+    public Optional<Account> findAccountByFirstNameAndLastNameAndPesel(String firstName, String lastName, String pesel) {
         String hqlQuery = "FROM Account a WHERE a.firstName = :firstName AND a.lastName = :lastName AND a.pesel = :pesel";
         TypedQuery<Account> query = entityManager.createQuery(hqlQuery, Account.class);
         query.setParameter("firstName", firstName);
         query.setParameter("lastName", lastName);
         query.setParameter("pesel", pesel);
 
-        return query.getSingleResult();
+        Account singleResult;
+
+        try {
+            singleResult = query.getSingleResult();
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(singleResult);
     }
 
     public List<Account> findAccountsByFirstNameAndLastName(String firstName, String lastName) {
