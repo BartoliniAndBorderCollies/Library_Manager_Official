@@ -17,7 +17,8 @@ public class ReturnBookService {
         this.bookService = bookService;
     }
 
-    public List<String> prepareListOfBorrowedBooksByAccount(String  firstName, String lastName, String pesel) {
+    public List<String> prepareListOfBorrowedBooksByAccount(String firstName, String lastName, String pesel)
+            throws NotFoundInDatabaseException {
         Account account = accountService.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
 
         return bookService.prepareListOfBorrowedBooksByAccount(account);
@@ -34,8 +35,6 @@ public class ReturnBookService {
 
         bookService.update(bookInfo);
     }
-
-
 
 
 }
