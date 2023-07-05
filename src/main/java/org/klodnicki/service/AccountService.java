@@ -10,15 +10,18 @@ import java.util.List;
 public class AccountService {
     private final AccountRepository accountRepository = new AccountRepository();
 
+    private static final String PESEL_MIN_DIGITS = "Pesel must have 11 digits";
+    private static final String PHONE_AND_EMAIL_MUST_HAVE_VALUE = "Phone number or email address must have a value.";
+
     public void create(String firstName, String secondName, String lastName, String pesel, String phoneNumber,
                        String email, String address) {
 
         if (pesel.length() != 11) {
-            throw new IllegalArgumentException("Pesel must have 11 digits.");
+            throw new IllegalArgumentException(PESEL_MIN_DIGITS);
 
         }
         if (phoneNumber.equals("") && email.equals("")) {
-            throw new IllegalArgumentException("Phone number or email address must have a value.");
+            throw new IllegalArgumentException(PHONE_AND_EMAIL_MUST_HAVE_VALUE);
         }
 
         accountRepository.create(new Account(firstName, secondName, lastName, pesel, phoneNumber, email, address));
@@ -65,7 +68,7 @@ public class AccountService {
         }
 
         if (parameterToModify.equalsIgnoreCase(SortOptionAccount.PESEL.getSortName()) && newInput.length() != 11) {
-            throw new IllegalArgumentException("Pesel must have 11 digits.");
+            throw new IllegalArgumentException(PESEL_MIN_DIGITS);
 
         }
 
