@@ -43,25 +43,6 @@ public class BookService {
         return bookRepository.findBooksByTitleAndAuthor(title, author);
     }
 
-    private List<BookInfo> getAllBooksFromDatabase() {
-        return bookRepository.findAllBooks();
-    }
-
-    public List<String> prepareListOfAllBooks() throws NotFoundInDatabaseException {
-        List<BookInfo> allBooksInDatabase = getAllBooksFromDatabase();
-        List<String> results = new ArrayList<>();
-
-        if (allBooksInDatabase.isEmpty()) {
-            throw new NotFoundInDatabaseException(BookInfo.class);
-        }
-
-        for (int i = 0; i < allBooksInDatabase.size(); i++) {
-            results.add(allBooksInDatabase.get(i).toString());
-        }
-
-        return results;
-    }
-
     private List<BookInfo> getBooksInfoFromDatabaseByAccount(Account account) {
         return bookRepository.findBooksByAccount(account);
     }
