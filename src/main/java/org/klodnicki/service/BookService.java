@@ -74,7 +74,7 @@ public class BookService {
     }
 
     private String prepareParameterToDatabase(String parameter) {
-        for (SortOption sort : SortOption.values()) {
+        for (SortOptionBookInfo sort : SortOptionBookInfo.values()) {
             if (sort.getSortName().equalsIgnoreCase(parameter)) {
                 parameter = sort.getHqlParameter();
             }
