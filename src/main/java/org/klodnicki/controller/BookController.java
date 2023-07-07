@@ -24,6 +24,7 @@ public class BookController {
     private static final String MUST_BE_NUMBER = "Year, edition and copies must be numbers.";
     private static final String WHICH_FIELD_TO_SORT = "By which parameter you want to sort the book list? Type for " +
             "example \"author\" ";
+    private static final String SEARCH_PROCEDURE = "You are going to search a book. Type the required information.";
 
     public BookController(MenuController menuController) {
         this.menuController = menuController;
@@ -71,6 +72,19 @@ public class BookController {
 
         try {
             menuController.displayOnMenu(bookService.prepareListOfAllBooksSortByParameter(parameter));
+        } catch (NotFoundInDatabaseException | SortParameterNotFoundException e) {
+            menuController.displayOnMenu(e.getMessage());
+        }
+    }
+
+    public void searchBook() {
+        menuController.displayOnMenu(SEARCH_PROCEDURE);
+        String title = menuController.displayOnMenuAndAskForInput(TITLE);
+        menuController.displayOnMenu(bookService.sortOptionNames());
+        String parameter = menuController.displayOnMenuAndAskForInput(WHICH_FIELD_TO_SORT);
+
+        try {
+            menuController.displayOnMenu(bookService.prepareListOfBooksTitleSortByParameter(parameter, title));
         } catch (NotFoundInDatabaseException | SortParameterNotFoundException e) {
             menuController.displayOnMenu(e.getMessage());
         }
