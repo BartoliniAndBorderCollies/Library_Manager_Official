@@ -110,11 +110,15 @@ public class BookService {
         return namesList;
     }
 
+    private List<BookInfo> findListOfBooksTitleSortByParameter(String parameter, String title)
+            throws SortParameterNotFoundException {
+        return bookRepository.findBooksByTitleSortByParameter(prepareParameterToDatabase(parameter), title);
+    }
+
     public List<String> prepareListOfBooksTitleSortByParameter(String parameter, String title) throws
             NotFoundInDatabaseException, SortParameterNotFoundException {
         List<String> results = new ArrayList<>();
-        List<BookInfo> listOfBooksTitleSortByParameter = bookRepository.findBooksByTitleSortByParameter
-                (prepareParameterToDatabase(parameter), title);
+        List<BookInfo> listOfBooksTitleSortByParameter = findListOfBooksTitleSortByParameter(parameter, title);
 
         if (listOfBooksTitleSortByParameter.isEmpty()) {
             throw new NotFoundInDatabaseException(BookInfo.class);
