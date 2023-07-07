@@ -73,24 +73,20 @@ public class BookService {
         return bookRepository.findAllBooksSortByParameter(parameter);
     }
 
-    private String prepareParameterToDatabase(String parameter) {
+    private String prepareParameterToDatabase(String parameter) throws SortParameterNotFoundException {
         for (SortOptionBookInfo sort : SortOptionBookInfo.values()) {
             if (sort.getSortName().equalsIgnoreCase(parameter)) {
-                parameter = sort.getHqlParameter();
+                return sort.getHqlParameter();
             }
         }
-        return parameter;
+        throw new SortParameterNotFoundException();
     }
-
-
+    
     public List<String> prepareListOfAllBooksSortByParameter(String parameter) throws NotFoundInDatabaseException,
             SortParameterNotFoundException {
         // enum z polami do sortowania
         // pętla po tym enumie
         // jeśli nie ma takiego enuma, to throw new SortParameterEx
-        if (!sortOptionValidation(parameter)) {
-            throw new SortParameterNotFoundException();
-        }
 
         List<BookInfo> allBooksInDatabaseSortByParameter = getAllBooksFromDatabaseSortByParameter
                 (prepareParameterToDatabase(parameter));
@@ -106,16 +102,6 @@ public class BookService {
         return results;
     }
 
-    private boolean sortOptionValidation(String parameter) {
-
-        for (SortOptionBookInfo sortOptionBookInfo : SortOptionBookInfo.values()) {
-            if (sortOptionBookInfo.getSortName().equalsIgnoreCase(parameter)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public List<String> sortOptionNames() {
         List<String> namesList = new ArrayList<>();
         for (SortOptionBookInfo sortOptionBookInfo : SortOptionBookInfo.values()) {
@@ -123,5 +109,4 @@ public class BookService {
         }
         return namesList;
     }
-
 }
