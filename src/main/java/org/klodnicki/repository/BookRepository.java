@@ -80,6 +80,14 @@ public class BookRepository {
         return query.getResultList();
     }
 
+    public List<BookInfo> findBooksByTitleSortByParameter(String parameter, String title) {
+        String hqlQuery = "FROM BookInfo b WHERE b.title = :title ORDER BY b." + parameter;
+        TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
+        query.setParameter("title", title);
+
+        return query.getResultList();
+    }
+
     public List<BookInfo> findAllBooksSortByParameter(String parameter) {
         String hqlQuery = "FROM BookInfo b ORDER BY b." + parameter;
         TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
