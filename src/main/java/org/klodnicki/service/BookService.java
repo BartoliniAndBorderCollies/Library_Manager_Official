@@ -81,7 +81,7 @@ public class BookService {
         }
         throw new SortParameterNotFoundException();
     }
-    
+
     public List<String> prepareListOfAllBooksSortByParameter(String parameter) throws NotFoundInDatabaseException,
             SortParameterNotFoundException {
         // enum z polami do sortowania
@@ -108,5 +108,20 @@ public class BookService {
             namesList.add(sortOptionBookInfo.getSortName());
         }
         return namesList;
+    }
+
+    public List<String> prepareListOfBooksTitleSortByParameter(String parameter, String title) throws
+            NotFoundInDatabaseException, SortParameterNotFoundException {
+        List<String> results = new ArrayList<>();
+        List<BookInfo> listOfBooksTitleSortByParameter = bookRepository.findBooksByTitleSortByParameter
+                (prepareParameterToDatabase(parameter), title);
+
+        if (listOfBooksTitleSortByParameter.isEmpty()) {
+            throw new NotFoundInDatabaseException(BookInfo.class);
+        }
+        for (BookInfo bookInfo : listOfBooksTitleSortByParameter) {
+            results.add(bookInfo.toString());
+        }
+        return results;
     }
 }
