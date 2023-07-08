@@ -14,7 +14,11 @@ public class ReturnBookService {
     private final BookService bookService;
     private final LendingInformation lendingInformation;
 
-    public ReturnBookService(AccountService accountService, BookService bookService) {
+    private static final int MAX_DAYS_LEND = 100;
+    private static final int FINE_PER_DAY = 2;
+    private static final String FINE_TO_BE_PAID = "Fine to be paid in $: ";
+
+    public ReturnBookService(AccountService accountService, BookService bookService, LendingInformation lendingInformation) {
         this.accountService = accountService;
         this.bookService = bookService;
         this.lendingInformation = lendingInformation;
@@ -39,5 +43,21 @@ public class ReturnBookService {
         bookService.update(bookInfo);
     }
 
+    private int countFineForKeepingBook(Long accountId, Long bookInfoId, LocalDateTime lendingDate) {
+        accountId = lendingInformation.getAccountId();
+        bookInfoId = lendingInformation.getBookInfoId();
+        lendingDate = lendingInformation.getLendingDate();
+        LocalDateTime returningDate = LocalDateTime.now();
 
+        int daysOfYearWhenBookWasBorrowed = lendingDate.getDayOfYear();
+        int daysOfYearTillNow = returningDate.getDayOfYear();
+
+        int totalDays = daysOfYearTillNow - daysOfYearWhenBookWasBorrowed;
+        int fine = 0;
+
+        if (totalDays > MAX_DAYS_LEND) {
+            fine = (totalDays - MAX_DAYS_LEND) * FINE_PER_DAY;
+        }
+        return fine;
+    }
 }
