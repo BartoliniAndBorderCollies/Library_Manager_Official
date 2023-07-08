@@ -5,12 +5,12 @@ import org.klodnicki.entity.BookInfo;
 import org.klodnicki.entity.LendingInformation;
 import org.klodnicki.exception.NotFoundInDatabaseException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ReturnBookService {
 
     private final AccountService accountService;
-
     private final BookService bookService;
     private final LendingInformation lendingInformation;
 
@@ -35,6 +35,13 @@ public class ReturnBookService {
                            String edition) throws NotFoundInDatabaseException {
         Account account = accountService.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
         BookInfo bookInfo = bookService.findBookByTitleAndAuthorAndEdition(title, author, edition);
+
+        if (countFineForKeepingBook(lendingInformation.getAccountId(), lendingInformation.getBookInfoId(),
+                lendingInformation.getLendingDate()) > 0) {
+            System.out.println(FINE_TO_BE_PAID + countFineForKeepingBook(lendingInformation.getAccountId(),
+                    lendingInformation.getBookInfoId(), lendingInformation.getLendingDate()));
+        }
+
 
         bookInfo.removeAccount(account);
         int bookCopiesUpdate = bookInfo.getCopiesNumber() + 1;
