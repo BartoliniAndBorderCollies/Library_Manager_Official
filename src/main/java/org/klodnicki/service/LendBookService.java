@@ -7,6 +7,7 @@ import org.klodnicki.exception.MaximumBookBorrowedLimitException;
 import org.klodnicki.exception.NotEnoughBookCopiesException;
 import org.klodnicki.exception.NotFoundInDatabaseException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class LendBookService {
@@ -32,6 +33,9 @@ public class LendBookService {
         } else {
             bookInfo = bookService.findBookByTitleAndAuthorAndEdition(title, author, edition);
         }
+
+        lendingInformation.setLendingDate(LocalDateTime.now(), lendingInformation.getAccountId(),
+                lendingInformation.getBookInfoId());
 
         // All the validation
         if (bookInfo.getCopiesNumber() <= 0) {
