@@ -1,5 +1,6 @@
 package org.klodnicki.controller;
 
+import org.klodnicki.entity.LendingInformation;
 import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.service.AccountService;
 import org.klodnicki.service.BookService;
@@ -8,7 +9,8 @@ import org.klodnicki.service.ReturnBookService;
 public class ReturnBookController {
 
     private final MenuController menuController;
-    private final ReturnBookService returnBookService = new ReturnBookService(new AccountService(), new BookService());
+    private final ReturnBookService returnBookService = new ReturnBookService(new AccountService(), new BookService(),
+            new LendingInformation());
     private static final String RETURN_PROCEDURE = "You are about to start a return book procedure. " +
             "\nFollow the instructions.";
     private static final String ACCOUNT_FIRST_NAME = "Enter the first name of a reader";
