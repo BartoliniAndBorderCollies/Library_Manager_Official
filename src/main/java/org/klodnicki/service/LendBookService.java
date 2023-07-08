@@ -13,9 +13,9 @@ public class LendBookService {
 
     private final AccountService accountService;
     private final BookService bookService;
-    public static final int LENT_BOOK_LIMIT = 10;
-
     private final LendingInformation lendingInformation;
+
+    public static final int LENT_BOOK_LIMIT = 10;
 
     public LendBookService(AccountService accountService, BookService bookService, LendingInformation lendingInformation) {
         this.accountService = accountService;
