@@ -2,6 +2,7 @@ package org.klodnicki.service;
 
 import org.klodnicki.entity.Account;
 import org.klodnicki.entity.BookInfo;
+import org.klodnicki.entity.LendingInformation;
 import org.klodnicki.exception.NotFoundInDatabaseException;
 
 import java.util.List;
@@ -11,10 +12,12 @@ public class ReturnBookService {
     private final AccountService accountService;
 
     private final BookService bookService;
+    private final LendingInformation lendingInformation;
 
     public ReturnBookService(AccountService accountService, BookService bookService) {
         this.accountService = accountService;
         this.bookService = bookService;
+        this.lendingInformation = lendingInformation;
     }
 
     public List<String> prepareListOfBorrowedBooksByAccount(String firstName, String lastName, String pesel)

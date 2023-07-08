@@ -2,6 +2,7 @@ package org.klodnicki.service;
 
 import org.klodnicki.entity.Account;
 import org.klodnicki.entity.BookInfo;
+import org.klodnicki.entity.LendingInformation;
 import org.klodnicki.exception.MaximumBookBorrowedLimitException;
 import org.klodnicki.exception.NotEnoughBookCopiesException;
 import org.klodnicki.exception.NotFoundInDatabaseException;
@@ -14,9 +15,12 @@ public class LendBookService {
     private final BookService bookService;
     public static final int LENT_BOOK_LIMIT = 10;
 
-    public LendBookService(AccountService accountService, BookService bookService) {
+    private final LendingInformation lendingInformation;
+
+    public LendBookService(AccountService accountService, BookService bookService, LendingInformation lendingInformation) {
         this.accountService = accountService;
         this.bookService = bookService;
+        this.lendingInformation = lendingInformation;
     }
 
     public void lend(String firstName, String lastName, String pesel, String title, String author, String edition)
