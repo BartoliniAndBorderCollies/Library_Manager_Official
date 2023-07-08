@@ -41,6 +41,8 @@ public class ReturnBookService {
             System.out.println(FINE_TO_BE_PAID + countFineForKeepingBook(lendingInformation.getAccountId(),
                     lendingInformation.getBookInfoId(), lendingInformation.getLendingDate()));
         }
+        lendingInformation.setReturningDate(LocalDateTime.now(), lendingInformation.getAccountId(),
+                lendingInformation.getBookInfoId());
 
 
         bookInfo.removeAccount(account);
