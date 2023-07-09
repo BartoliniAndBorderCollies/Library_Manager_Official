@@ -140,10 +140,10 @@ public class AccountService {
         results.add(SortOptionAccount.PESEL.getSortName() + ": " + peselAccount);
         results.add("-----------------------------------------------------------");
 
-        for (BookInfo book : books) {
-            String title = book.getTitle();
-            String author = book.getAuthor();
-            String edition = book.getEdition();
+        for (LendingInformation book : books) {
+            String title = book.getBookInfo().getTitle();
+            String author = book.getBookInfo().getAuthor();
+            String edition = book.getBookInfo().getEdition();
 
             results.add(SortOptionBookInfo.TITLE.getSortName() + ": " + title);
             results.add(SortOptionBookInfo.AUTHOR.getSortName() + ": " + author);
