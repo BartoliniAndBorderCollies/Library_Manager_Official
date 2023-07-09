@@ -14,14 +14,14 @@ public class LendBookService {
 
     private final AccountService accountService;
     private final BookService bookService;
-    private final LendingInformation lendingInformation;
+    private final LendingInformationService lendingInformationService;
 
     public static final int LENT_BOOK_LIMIT = 10;
 
-    public LendBookService(AccountService accountService, BookService bookService, LendingInformation lendingInformation) {
+    public LendBookService(AccountService accountService, BookService bookService, LendingInformationService lendingInformationService) {
         this.accountService = accountService;
         this.bookService = bookService;
-        this.lendingInformation = lendingInformation;
+        this.lendingInformationService = lendingInformationService;
     }
 
     public void lend(String firstName, String lastName, String pesel, String title, String author, String edition)
@@ -33,26 +33,23 @@ public class LendBookService {
         } else {
             bookInfo = bookService.findBookByTitleAndAuthorAndEdition(title, author, edition);
         }
-
-        lendingInformation.setLendingDate(LocalDateTime.now(), lendingInformation.getAccountId(),
-                lendingInformation.getBookInfoId());
-
         // All the validation
         if (bookInfo.getCopiesNumber() <= 0) {
             throw new NotEnoughBookCopiesException();
         }
 
         Account account = accountService.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
-        if (account.getBooks().size() > LENT_BOOK_LIMIT) {
+        if (account.getLendingInformationAboutAccountList().size() > LENT_BOOK_LIMIT) { //TODO tu była zamiana było (account.getBooks().size()
             throw new MaximumBookBorrowedLimitException(LENT_BOOK_LIMIT);
         }
 
-        bookInfo.addAccount(account);
+        LendingInformation lendingInformation = new LendingInformation(bookInfo, account, LocalDateTime.now());
 
         int leftCopiesNumber = bookInfo.getCopiesNumber() - 1;
         bookInfo.setCopiesNumber(leftCopiesNumber);
 
         bookService.update(bookInfo);
+        lendingInformationService.add(lendingInformation);
     }
 
     public boolean hasMoreThanOneEdition(String title, String author) {
