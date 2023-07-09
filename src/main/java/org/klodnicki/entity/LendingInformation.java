@@ -36,23 +36,32 @@ public class LendingInformation {
         return lendingDate;
     }
 
-    public Long getAccountId() {
-        return accountId;
+    public BookInfo getBookInfo() {
+        return bookInfo;
     }
 
-    public Long getBookInfoId() {
-        return bookInfoId;
+    public LendingInformation() {
     }
 
-    public void setLendingDate(LocalDateTime lendingDate, Long accountId, Long bookInfoId) {
+    public LendingInformation(BookInfo bookInfo, Account account, LocalDateTime lendingDate) {
+        this.bookInfo = bookInfo;
+        this.account = account;
         this.lendingDate = lendingDate;
-        this.accountId = accountId;
-        this.bookInfoId = bookInfoId;
     }
 
-    public void setReturningDate(LocalDateTime returningDate, Long accountId, Long bookInfoId) {
+    public Account getAccount() {
+        return account;
+    }
+
+    public LocalDateTime getReturningDate() {
+        return returningDate;
+    }
+
+    public void setLendingDate(LocalDateTime lendingDate) {
+        this.lendingDate = lendingDate;
+    }
+
+    public void setReturningDate(LocalDateTime returningDate) {
         this.returningDate = returningDate;
-        this.accountId = accountId;
-        this.bookInfoId = bookInfoId;
     }
 }
