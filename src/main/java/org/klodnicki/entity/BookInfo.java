@@ -12,14 +12,9 @@ public class BookInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
-    @ManyToMany(fetch = FetchType.EAGER) // wiele kopii ksiazek moze przynalezec do wielu kont
-    @JoinTable(name = "lending_info",
-            joinColumns = {@JoinColumn(name = "book_info_id")}, //join tyczy sie klasy tej(czyli w tym wypadki BookInfo)
-            //brackety są po to, żeby umiescić wiele wartości innych kolumn, w tym przypadku nie potrzebne
-            inverseJoinColumns = {@JoinColumn(name = "account_id")}// inverseJoinColumns tyczy sie klasy, którą łaczymy
-    )
-    private List<Account> accounts = new ArrayList<>(); //to jest lista kont, które mają wypożyczone książki
+    @OneToMany(mappedBy = "bookInfo")
+    //Pierwsza zmienna to klasa, w której się znajduję> One-> jedno BookInfo do wielu wypożyczen
+    private List<LendingInformation> lendingInformationAboutBooksList = new ArrayList<>(); //jest to lista wypożyczen. BookInfo jest jedno, wypozyczeń moze byc wiele
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
