@@ -47,6 +47,14 @@ public class Account {
         return id;
     }
 
+    public List<LendingInformation> getLendingInformationAboutAccountList() {
+        return lendingInformationAboutAccountList;
+    }
+
+    public void addLendingInformationAboutAccountList(LendingInformation lendingInformation) {
+        lendingInformationAboutAccountList.add(lendingInformation);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
