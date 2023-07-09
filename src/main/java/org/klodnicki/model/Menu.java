@@ -1,6 +1,5 @@
 package org.klodnicki.model;
 
-import org.klodnicki.command.CreateAccount;
 import org.klodnicki.command.MenuCommand;
 
 import java.util.ArrayList;
