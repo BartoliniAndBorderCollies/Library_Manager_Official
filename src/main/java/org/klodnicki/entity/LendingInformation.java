@@ -11,11 +11,14 @@ public class LendingInformation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @ManyToOne
+    // Bo wypożyczeń jest wiele, a druga strona - book info - jest jedno. Pierwsza zmienna to klasa w ktorej sie znajduje
+    @JoinColumn(name = "book_info_id")
+    private BookInfo bookInfo;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 
-    @Column(name = "account_id")
-    private Long accountId;
-    @Column(name = "book_info_id")
-    private Long bookInfoId;
     @Column(name = "lending_date")
     private LocalDateTime lendingDate;
     @Column(name = "returning_date")
