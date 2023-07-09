@@ -54,12 +54,12 @@ public class BookInfo {
         this.copiesNumber = copiesNumber;
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
+    public List<LendingInformation> getLendingInformationAboutBooksList() {
+        return lendingInformationAboutBooksList;
     }
 
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
+    public void setLendingInformationAboutBooksList(List<LendingInformation> lendingInformationAboutBooksList) {
+        this.lendingInformationAboutBooksList = lendingInformationAboutBooksList;
     }
 
     public Long getId() {
@@ -74,12 +74,12 @@ public class BookInfo {
         return copiesNumber;
     }
 
-    public void addAccount(Account account) {
-        accounts.add(account);
+    public void addLendingInformationAboutBooksList(LendingInformation lendingInformation) {
+        lendingInformationAboutBooksList.add(lendingInformation);
     }
 
-    public void removeAccount(Account account) {
-        accounts.remove(account);
+    public void removeLendingInformationAboutBooksList(LendingInformation lendingInformation) {
+        lendingInformationAboutBooksList.remove(lendingInformation);
     }
 
     public void setCopiesNumber(int copiesNumber) {
