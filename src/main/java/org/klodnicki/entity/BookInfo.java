@@ -93,16 +93,18 @@ public class BookInfo {
     @Override
     public String toString() {
         return "BookInfo{" +
-                "title: '" + title + '\'' +
-                ", author: '" + author + '\'' +
-                ", isbn: '" + isbn + '\'' +
-                ", publisher: '" + publisher + '\'' +
-                ", publication year: " + publicationYear +
-                ", edition: '" + edition + '\'' +
-                ", genre: '" + genre + '\'' +
-                ", description: '" + description + '\'' +
-                ", language: '" + language + '\'' +
-                ", copiesNumber: " + copiesNumber +
+                "id=" + id +
+
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", publication year=" + publicationYear +
+                ", edition='" + edition + '\'' +
+                ", genre='" + genre + '\'' +
+                ", description='" + description + '\'' +
+                ", language='" + language + '\'' +
+                ", copies number=" + copiesNumber +
                 '}';
     }
 

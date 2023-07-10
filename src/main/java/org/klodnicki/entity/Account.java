@@ -72,15 +72,24 @@ public class Account {
     public String toString() {
         return "Account{" +
                 "id=" + id +
-                ", lendingInformationList=" + lendingInformationAboutAccountList +
-                ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", lendingInformationList=" + prepareListOfLendingInformationAboutBooks() +
+                ", first name='" + firstName + '\'' +
+                ", second name='" + secondName + '\'' +
+                ", last name='" + lastName + '\'' +
                 ", pesel='" + pesel + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
+                ", phone number='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    public List<String> prepareListOfLendingInformationAboutBooks() {
+        List<String> results = new ArrayList<>();
+        List<LendingInformation> lendingInfo = lendingInformationAboutAccountList;
+        for (LendingInformation lendingInformation : lendingInfo) {
+            results.add(lendingInformation.getBookInfo().toString());
+        }
+        return results;
     }
 
     public String getFirstName() {
