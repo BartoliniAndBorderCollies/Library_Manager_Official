@@ -17,4 +17,7 @@ public class LendingInformationService {
         lendingInformationRepository.remove(lendingInformation);
     }
 
+    public LendingInformation findLendingInformationByAccountAndBookInfo(Account account, BookInfo bookInfo) {
+        return lendingInformationRepository.findLendingInformationByAccountAndBookInfo(account, bookInfo);
+    }
 }
