@@ -1,5 +1,7 @@
 package org.klodnicki.service;
 
+import org.klodnicki.entity.Account;
+import org.klodnicki.entity.BookInfo;
 import org.klodnicki.entity.LendingInformation;
 import org.klodnicki.repository.LendingInformationRepository;
 
@@ -11,5 +13,8 @@ public class LendingInformationService {
         lendingInformationRepository.add(lendingInformation);
     }
 
+    public void remove(LendingInformation lendingInformation) {
+        lendingInformationRepository.remove(lendingInformation);
+    }
 
 }
