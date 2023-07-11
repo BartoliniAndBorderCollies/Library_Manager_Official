@@ -24,12 +24,17 @@ public class LendingInformation {
     @Column(name = "returning_date")
     private LocalDateTime returningDate;
 
-    public Long getId() {
-        return id;
+    public LendingInformation() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public LendingInformation(BookInfo bookInfo, Account account, LocalDateTime lendingDate) {
+        this.bookInfo = bookInfo;
+        this.account = account;
+        this.lendingDate = lendingDate;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public LocalDateTime getLendingDate() {
@@ -40,21 +45,16 @@ public class LendingInformation {
         return bookInfo;
     }
 
-    public LendingInformation() {
-    }
-
-    public LendingInformation(BookInfo bookInfo, Account account, LocalDateTime lendingDate) {
-        this.bookInfo = bookInfo;
-        this.account = account;
-        this.lendingDate = lendingDate;
-    }
-
     public Account getAccount() {
         return account;
     }
 
     public LocalDateTime getReturningDate() {
         return returningDate;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setLendingDate(LocalDateTime lendingDate) {
