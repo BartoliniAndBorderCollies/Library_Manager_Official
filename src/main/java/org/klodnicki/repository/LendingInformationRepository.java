@@ -30,5 +30,19 @@ public class LendingInformationRepository {
         entityManager.getTransaction().commit();
     }
 
+    public Optional<LendingInformation> findLendingInformationByAccountAndBookInfo(Account account, BookInfo bookInfo) {
+        String hqlQuery = "FROM LendingInformation l WHERE l.account = :account AND l.bookInfo = :bookInfo";
+        TypedQuery<LendingInformation> query = entityManager.createQuery(hqlQuery, LendingInformation.class);
+        query.setParameter("account", account);
+        query.setParameter("bookInfo", bookInfo);
 
+        LendingInformation singleResult;
+
+        try {
+            singleResult = query.getSingleResult();
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(singleResult);
+    }
 }
