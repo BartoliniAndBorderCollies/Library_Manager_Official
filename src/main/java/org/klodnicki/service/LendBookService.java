@@ -39,7 +39,7 @@ public class LendBookService {
         }
 
         Account account = accountService.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
-        if (account.getLendingInformationAboutAccountList().size() > LENT_BOOK_LIMIT) { //TODO tu była zamiana było (account.getBooks().size()
+        if (account.getLendingInformationAboutAccountList().size() > LENT_BOOK_LIMIT) {
             throw new MaximumBookBorrowedLimitException(LENT_BOOK_LIMIT);
         }
 
