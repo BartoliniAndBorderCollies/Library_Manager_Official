@@ -12,16 +12,16 @@ public class ReturnBookService {
 
     private final AccountService accountService;
     private final BookService bookService;
-    private final LendingInformation lendingInformation;
+    private final LendingInformationService lendingInformationService;
 
     private static final int MAX_DAYS_LEND = 100;
     private static final int FINE_PER_DAY = 2;
     private static final String FINE_TO_BE_PAID = "Fine to be paid in $: ";
 
-    public ReturnBookService(AccountService accountService, BookService bookService, LendingInformation lendingInformation) {
+    public ReturnBookService(AccountService accountService, BookService bookService, LendingInformationService lendingInformationService) {
         this.accountService = accountService;
         this.bookService = bookService;
-        this.lendingInformation = lendingInformation;
+        this.lendingInformationService = lendingInformationService;
     }
 
     public List<String> prepareListOfBorrowedBooksByAccount(String firstName, String lastName, String pesel)
@@ -36,13 +36,8 @@ public class ReturnBookService {
         Account account = accountService.findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, pesel);
         BookInfo bookInfo = bookService.findBookByTitleAndAuthorAndEdition(title, author, edition);
 
-        if (countFineForKeepingBook(lendingInformation.getAccountId(), lendingInformation.getBookInfoId(),
-                lendingInformation.getLendingDate()) > 0) {
-            System.out.println(FINE_TO_BE_PAID + countFineForKeepingBook(lendingInformation.getAccountId(),
-                    lendingInformation.getBookInfoId(), lendingInformation.getLendingDate()));
-        }
-        lendingInformation.setReturningDate(LocalDateTime.now(), lendingInformation.getAccountId(),
-                lendingInformation.getBookInfoId());
+        LendingInformation lendingInformation = lendingInformationService.findLendingInformationByAccountAndBookInfo
+                (account, bookInfo);
 
 
         bookInfo.removeAccount(account);
