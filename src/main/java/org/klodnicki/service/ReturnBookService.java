@@ -45,6 +45,7 @@ public class ReturnBookService {
         bookInfo.setCopiesNumber(bookCopiesUpdate);
 
         bookService.update(bookInfo);
+        lendingInformationService.remove(lendingInformation);
     }
 
     private int countFineForKeepingBook(Long accountId, Long bookInfoId, LocalDateTime lendingDate) {
