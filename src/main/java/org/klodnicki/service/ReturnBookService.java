@@ -39,8 +39,10 @@ public class ReturnBookService {
         LendingInformation lendingInformation = lendingInformationService.findLendingInformationByAccountAndBookInfo
                 (account, bookInfo);
 
+        if (countFineForKeepingBook(lendingInformation) > 0) {
+            System.out.println(FINE_TO_BE_PAID + countFineForKeepingBook(lendingInformation));
+        }
 
-        bookInfo.removeAccount(account);
         int bookCopiesUpdate = bookInfo.getCopiesNumber() + 1;
         bookInfo.setCopiesNumber(bookCopiesUpdate);
 
@@ -48,10 +50,9 @@ public class ReturnBookService {
         lendingInformationService.remove(lendingInformation);
     }
 
-    private int countFineForKeepingBook(Long accountId, Long bookInfoId, LocalDateTime lendingDate) {
-        accountId = lendingInformation.getAccountId();
-        bookInfoId = lendingInformation.getBookInfoId();
-        lendingDate = lendingInformation.getLendingDate();
+    private int countFineForKeepingBook(LendingInformation lendingInformation) {
+
+        LocalDateTime lendingDate = lendingInformation.getLendingDate();
         LocalDateTime returningDate = LocalDateTime.now();
 
         int daysOfYearWhenBookWasBorrowed = lendingDate.getDayOfYear();
