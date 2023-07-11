@@ -34,12 +34,13 @@ public class ReturnBookController {
         String lastName = menuController.displayOnMenuAndAskForInput(ACCOUNT_LAST_NAME);
         String pesel = menuController.displayOnMenuAndAskForInput(ACCOUNT_PESEL);
 
-        menuController.displayOnMenu(BORROWED_BOOKS);
         try {
             menuController.displayOnMenu(returnBookService.prepareListOfBorrowedBooksByAccount(firstName, lastName, pesel));
         } catch (NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
+            return;
         }
+        menuController.displayOnMenu(BORROWED_BOOKS);
 
         String title = menuController.displayOnMenuAndAskForInput(BOOK_TITLE);
         String author = menuController.displayOnMenuAndAskForInput(BOOK_AUTHOR);
