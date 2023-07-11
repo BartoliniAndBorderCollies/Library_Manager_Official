@@ -12,14 +12,9 @@ public class BookInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
-    @ManyToMany(fetch = FetchType.EAGER) // wiele kopii ksiazek moze przynalezec do wielu kont
-    @JoinTable(name = "lending_info",
-            joinColumns = {@JoinColumn(name = "book_info_id")}, //join tyczy sie klasy tej(czyli w tym wypadki BookInfo)
-            //brackety są po to, żeby umiescić wiele wartości innych kolumn, w tym przypadku nie potrzebne
-            inverseJoinColumns = {@JoinColumn(name = "account_id")}// inverseJoinColumns tyczy sie klasy, którą łaczymy
-    )
-    private List<Account> accounts = new ArrayList<>(); //to jest lista kont, które mają wypożyczone książki
+    @OneToMany(mappedBy = "bookInfo")
+    //Pierwsza zmienna to klasa, w której się znajduję> One-> jedno BookInfo do wielu wypożyczen
+    private List<LendingInformation> lendingInformationAboutBooksList = new ArrayList<>(); //jest to lista wypożyczen. BookInfo jest jedno, wypozyczeń moze byc wiele
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
@@ -59,12 +54,12 @@ public class BookInfo {
         this.copiesNumber = copiesNumber;
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
+    public List<LendingInformation> getLendingInformationAboutBooksList() {
+        return lendingInformationAboutBooksList;
     }
 
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
+    public void setLendingInformationAboutBooksList(List<LendingInformation> lendingInformationAboutBooksList) {
+        this.lendingInformationAboutBooksList = lendingInformationAboutBooksList;
     }
 
     public Long getId() {
@@ -79,12 +74,12 @@ public class BookInfo {
         return copiesNumber;
     }
 
-    public void addAccount(Account account) {
-        accounts.add(account);
+    public void addLendingInformationAboutBooksList(LendingInformation lendingInformation) {
+        lendingInformationAboutBooksList.add(lendingInformation);
     }
 
-    public void removeAccount(Account account) {
-        accounts.remove(account);
+    public void removeLendingInformationAboutBooksList(LendingInformation lendingInformation) {
+        lendingInformationAboutBooksList.remove(lendingInformation);
     }
 
     public void setCopiesNumber(int copiesNumber) {
@@ -98,16 +93,18 @@ public class BookInfo {
     @Override
     public String toString() {
         return "BookInfo{" +
-                "title: '" + title + '\'' +
-                ", author: '" + author + '\'' +
-                ", isbn: '" + isbn + '\'' +
-                ", publisher: '" + publisher + '\'' +
-                ", publication year: " + publicationYear +
-                ", edition: '" + edition + '\'' +
-                ", genre: '" + genre + '\'' +
-                ", description: '" + description + '\'' +
-                ", language: '" + language + '\'' +
-                ", copiesNumber: " + copiesNumber +
+                "id=" + id +
+
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", publication year=" + publicationYear +
+                ", edition='" + edition + '\'' +
+                ", genre='" + genre + '\'' +
+                ", description='" + description + '\'' +
+                ", language='" + language + '\'' +
+                ", copies number=" + copiesNumber +
                 '}';
     }
 

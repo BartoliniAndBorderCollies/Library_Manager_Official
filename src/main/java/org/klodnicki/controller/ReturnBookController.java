@@ -3,12 +3,14 @@ package org.klodnicki.controller;
 import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.service.AccountService;
 import org.klodnicki.service.BookService;
+import org.klodnicki.service.LendingInformationService;
 import org.klodnicki.service.ReturnBookService;
 
 public class ReturnBookController {
 
     private final MenuController menuController;
-    private final ReturnBookService returnBookService = new ReturnBookService(new AccountService(), new BookService());
+    private final ReturnBookService returnBookService = new ReturnBookService(new AccountService(), new BookService(),
+            new LendingInformationService());
     private static final String RETURN_PROCEDURE = "You are about to start a return book procedure. " +
             "\nFollow the instructions.";
     private static final String ACCOUNT_FIRST_NAME = "Enter the first name of a reader";
@@ -32,12 +34,13 @@ public class ReturnBookController {
         String lastName = menuController.displayOnMenuAndAskForInput(ACCOUNT_LAST_NAME);
         String pesel = menuController.displayOnMenuAndAskForInput(ACCOUNT_PESEL);
 
-        menuController.displayOnMenu(BORROWED_BOOKS);
         try {
             menuController.displayOnMenu(returnBookService.prepareListOfBorrowedBooksByAccount(firstName, lastName, pesel));
         } catch (NotFoundInDatabaseException e) {
             menuController.displayOnMenu(e.getMessage());
+            return;
         }
+        menuController.displayOnMenu(BORROWED_BOOKS);
 
         String title = menuController.displayOnMenuAndAskForInput(BOOK_TITLE);
         String author = menuController.displayOnMenuAndAskForInput(BOOK_AUTHOR);

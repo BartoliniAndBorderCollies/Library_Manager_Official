@@ -1,18 +1,19 @@
 package org.klodnicki.controller;
 
-import jakarta.persistence.NoResultException;
 import org.klodnicki.exception.MaximumBookBorrowedLimitException;
 import org.klodnicki.exception.NotEnoughBookCopiesException;
 import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.service.AccountService;
 import org.klodnicki.service.BookService;
 import org.klodnicki.service.LendBookService;
+import org.klodnicki.service.LendingInformationService;
 
 public class LendBookController {
 
     private final MenuController menuController;
 
-    private final LendBookService lendBookService = new LendBookService(new AccountService(), new BookService());
+    private final LendBookService lendBookService = new LendBookService(new AccountService(), new BookService(),
+            new LendingInformationService());
 
     public LendBookController(MenuController menuController) {
         this.menuController = menuController;

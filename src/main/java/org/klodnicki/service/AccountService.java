@@ -1,6 +1,7 @@
 package org.klodnicki.service;
 
 import org.klodnicki.entity.BookInfo;
+import org.klodnicki.entity.LendingInformation;
 import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.exception.SortParameterNotFoundException;
 import org.klodnicki.repository.AccountRepository;
@@ -129,9 +130,9 @@ public class AccountService {
 
         List<String> results = new ArrayList<>();
         Account account = findAccountByFirstNameAndLastNameAndPesel(firstName, lastName, peselAccount);
-        List<BookInfo> books = account.getBooks();
+        List<LendingInformation> listOfBorrowedBooks = account.getLendingInformationAboutAccountList();
 
-        if (books.isEmpty()) {
+        if (listOfBorrowedBooks.isEmpty()) {
             throw new NotFoundInDatabaseException(BookInfo.class);
         }
 
@@ -140,10 +141,10 @@ public class AccountService {
         results.add(SortOptionAccount.PESEL.getSortName() + ": " + peselAccount);
         results.add("-----------------------------------------------------------");
 
-        for (BookInfo book : books) {
-            String title = book.getTitle();
-            String author = book.getAuthor();
-            String edition = book.getEdition();
+        for (LendingInformation book : listOfBorrowedBooks) {
+            String title = book.getBookInfo().getTitle();
+            String author = book.getBookInfo().getAuthor();
+            String edition = book.getBookInfo().getEdition();
 
             results.add(SortOptionBookInfo.TITLE.getSortName() + ": " + title);
             results.add(SortOptionBookInfo.AUTHOR.getSortName() + ": " + author);

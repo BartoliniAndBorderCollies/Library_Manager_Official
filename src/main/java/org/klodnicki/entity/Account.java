@@ -13,9 +13,8 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @ManyToMany(fetch = FetchType.LAZY, //jak robię manyToMany to po obu stronach tej czynnosci musi byc adnotacja manyToMany
-            mappedBy = "accounts")
-    private List<BookInfo> bookInfos = new ArrayList<>(); //lista informacji o ksiązkach, które to konta ma wypożyczone
+    @OneToMany(mappedBy = "account")
+    private List<LendingInformation> lendingInformationAboutAccountList = new ArrayList<>();
     @Column(nullable = false, name = "first_name")
     private String firstName;
     @Column(name = "second_name")
@@ -44,12 +43,16 @@ public class Account {
         this.address = address;
     }
 
-    public List<BookInfo> getBooks() {
-        return bookInfos;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public List<LendingInformation> getLendingInformationAboutAccountList() {
+        return lendingInformationAboutAccountList;
+    }
+
+    public void addLendingInformationAboutAccountList(LendingInformation lendingInformation) {
+        lendingInformationAboutAccountList.add(lendingInformation);
     }
 
     @Override
@@ -68,16 +71,25 @@ public class Account {
     @Override
     public String toString() {
         return "Account{" +
-                "id number: " + id +
-                ", borrowed books: " + bookInfos +
-                ", first name: " + firstName + '\'' +
-                ", second name: '" + secondName + '\'' +
-                ", last name: '" + lastName + '\'' +
-                ", pesel: '" + pesel + '\'' +
-                ", phone number: '" + phoneNumber + '\'' +
-                ", email: '" + email + '\'' +
-                ", address: '" + address + '\'' +
+                "id=" + id +
+                ", lendingInformationList=" + prepareListOfLendingInformationAboutBooks() +
+                ", first name='" + firstName + '\'' +
+                ", second name='" + secondName + '\'' +
+                ", last name='" + lastName + '\'' +
+                ", pesel='" + pesel + '\'' +
+                ", phone number='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
                 '}';
+    }
+
+    public List<String> prepareListOfLendingInformationAboutBooks() {
+        List<String> results = new ArrayList<>();
+        List<LendingInformation> lendingInfo = lendingInformationAboutAccountList;
+        for (LendingInformation lendingInformation : lendingInfo) {
+            results.add(lendingInformation.getBookInfo().toString());
+        }
+        return results;
     }
 
     public String getFirstName() {
