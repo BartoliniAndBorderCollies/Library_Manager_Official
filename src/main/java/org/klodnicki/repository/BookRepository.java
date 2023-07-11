@@ -73,7 +73,7 @@ public class BookRepository {
     }
 
     public List<BookInfo> findBooksByAccount(Account account) {
-        String hqlQuery = "FROM BookInfo b JOIN b.accounts a WHERE a.id = :idAccount";
+        String hqlQuery = "FROM BookInfo b JOIN b.lendingInformationAboutBooksList l WHERE l.account.id = :idAccount";
         TypedQuery<BookInfo> query = entityManager.createQuery(hqlQuery, BookInfo.class);
         query.setParameter("idAccount", account.getId());
 
