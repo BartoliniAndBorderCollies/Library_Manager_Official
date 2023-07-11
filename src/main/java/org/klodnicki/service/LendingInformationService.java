@@ -3,6 +3,7 @@ package org.klodnicki.service;
 import org.klodnicki.entity.Account;
 import org.klodnicki.entity.BookInfo;
 import org.klodnicki.entity.LendingInformation;
+import org.klodnicki.exception.NotFoundInDatabaseException;
 import org.klodnicki.repository.LendingInformationRepository;
 
 public class LendingInformationService {
@@ -17,7 +18,9 @@ public class LendingInformationService {
         lendingInformationRepository.remove(lendingInformation);
     }
 
-    public LendingInformation findLendingInformationByAccountAndBookInfo(Account account, BookInfo bookInfo) {
-        return lendingInformationRepository.findLendingInformationByAccountAndBookInfo(account, bookInfo);
+    public LendingInformation findLendingInformationByAccountAndBookInfo(Account account, BookInfo bookInfo)
+            throws NotFoundInDatabaseException {
+        return lendingInformationRepository.findLendingInformationByAccountAndBookInfo(account, bookInfo).orElseThrow(()
+                -> new NotFoundInDatabaseException(LendingInformation.class));
     }
 }
